@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WTI MORNING CHECK | JS KIM</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #0A2647;
+  --accent:  #1597BB;
+  --green:   #27ae60;
+  --red:     #E74C3C;
+  --orange:  #D35400;
+  --gold:    #FFD700;
+}
+body { background:#f0f2f5; font-family:'Pretendard','Segoe UI',sans-serif; min-height:100vh; margin:0; }
+
+/* ── TOP BAR ── */
+.top-bar { background:var(--primary); padding:16px 28px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 3px 15px rgba(0,0,0,.25); }
+.top-bar .brand { font-size:.95rem; font-weight:900; color:var(--gold); letter-spacing:.05em; }
+.top-bar .sub   { font-size:.65rem; color:rgba(255,255,255,.5); margin-top:2px; }
+.btn-input-top  { background:var(--accent); color:white; border:none; padding:9px 18px; border-radius:20px; font-weight:900; font-size:.78rem; cursor:pointer; transition:background .2s; display:flex; align-items:center; gap:7px; }
+.btn-input-top:hover { background:#0d86a8; }
+
+/* ── PAGE ── */
+.page-wrap { max-width:860px; margin:32px auto; padding:0 20px 80px; }
+
+/* ── HISTORY CARDS ── */
+.hcard { background:white; border-radius:14px; padding:22px 26px; box-shadow:0 6px 22px rgba(0,0,0,.07); margin-bottom:14px; border-left:5px solid #dee2e6; }
+.hcard.up  { border-left-color:var(--green); }
+.hcard.dn  { border-left-color:var(--red); }
+.hcard.flt { border-left-color:#aaa; }
+
+.hcard-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; }
+.hcard-date { font-size:1rem; font-weight:900; color:var(--primary); }
+.hcard-sub  { font-size:.65rem; color:#bbb; margin-top:2px; }
+
+.price-badge { display:inline-flex; align-items:baseline; gap:6px; padding:6px 14px; border-radius:20px; font-weight:900; flex-shrink:0; }
+.price-badge.up  { background:#e8f8f0; color:#1e8449; }
+.price-badge.dn  { background:#fce8e8; color:#c0392b; }
+.price-badge.flt { background:#f0f0f0; color:#666; }
+.price-badge .pv { font-size:1.15rem; }
+.price-badge .pc { font-size:.78rem; }
+
+.row-item { display:flex; border-bottom:1px solid #f5f5f5; padding:8px 0; align-items:flex-start; }
+.row-item:last-child { border-bottom:none; }
+.rl { width:110px; flex-shrink:0; font-size:.72rem; color:#aaa; font-weight:700; padding-top:2px; }
+.rv { font-size:.86rem; color:#2d3436; font-weight:500; word-break:break-word; }
+.rv.hi { color:var(--accent); font-weight:900; }
+.cmt-box { background:#f8fafc; border-radius:8px; padding:10px 12px; border-left:4px solid #dee2e6; font-size:.78rem; color:#555; line-height:1.65; width:100%; margin-top:4px; }
+
+.factor-tags { display:flex; flex-wrap:wrap; gap:5px; }
+.ftag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:.7rem; font-weight:700; }
+.ftag.bear { background:#fce8e8; color:#c0392b; }
+.ftag.bull { background:#e8f8f0; color:#1e8449; }
+
+#empty-msg { text-align:center; padding:55px; color:#ccc; font-size:.9rem; }
+
+/* ── MODAL ── */
+#overlay { position:fixed; inset:0; background:rgba(5,20,50,.88); z-index:9000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
+#overlay.open { display:flex; }
+#modal { width:680px; max-height:94vh; background:white; border-radius:18px; box-shadow:0 24px 70px rgba(0,0,0,.5); display:flex; flex-direction:column; overflow:hidden; animation:mIn .22s ease; }
+@keyframes mIn { from{opacity:0;transform:translateY(18px) scale(.97)} to{opacity:1;transform:none} }
+
+.mhead { background:var(--primary); color:white; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+.mhead h3 { margin:0; font-size:.95rem; font-weight:900; }
+.mhead .ver { background:var(--accent); font-size:.6rem; padding:3px 9px; border-radius:9px; font-weight:900; }
+
+.mbody { padding:18px 22px; overflow-y:auto; flex:1; }
+.mlabel { font-size:.65rem; font-weight:900; color:#aaa; text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:7px; }
+
+#news-input { width:100%; height:180px; border:2px solid #e2e8f0; border-radius:10px; padding:12px; font-size:.78rem; font-family:'Segoe UI',sans-serif; resize:vertical; line-height:1.72; color:#333; transition:border-color .2s; box-sizing:border-box; }
+#news-input:focus { outline:none; border-color:var(--accent); }
+#news-input::placeholder { color:#c5c9d0; line-height:1.9; }
+
+/* 파싱 결과 그리드 */
+#pv-wrap { display:none; margin-top:16px; border:1.5px solid #e2e8f0; border-radius:12px; overflow:hidden; }
+.pv-head { background:#f0f5f9; padding:10px 14px; font-size:.67rem; font-weight:900; color:var(--primary); border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; }
+.pbadge { font-size:.63rem; padding:3px 9px; border-radius:7px; font-weight:900; }
+.pb-ok   { background:#d4efdf; color:#1e8449; }
+.pb-warn { background:#fdebd0; color:#d35400; }
+
+.pg { display:grid; grid-template-columns:1fr 1fr; }
+.pf { padding:10px 14px; border-bottom:1px solid #f2f2f2; border-right:1px solid #f2f2f2; }
+.pf:nth-child(2n) { border-right:none; }
+.pf.full { grid-column:1/-1; border-right:none; }
+.pf.price-ok   { background:linear-gradient(135deg,#eaf5fb,#d4edf5); border:1.5px solid var(--accent); }
+.pl { font-size:.56rem; color:#bbb; text-transform:uppercase; font-weight:800; letter-spacing:.08em; }
+.pv-input { width:100%; border:1.5px solid #e2e8f0; border-radius:7px; padding:6px 9px; font-size:.83rem; font-weight:700; color:#1a1a2e; background:white; box-sizing:border-box; transition:border-color .2s; }
+.pv-input:focus { outline:none; border-color:var(--accent); }
+.pv-input.hi { color:var(--accent); }
+.pv-input.up { color:var(--green); }
+.pv-input.dn { color:var(--red); }
+select.pv-input { cursor:pointer; }
+
+/* 요인 체크리스트 */
+.factor-section { padding:10px 14px; border-bottom:1px solid #f2f2f2; grid-column:1/-1; }
+.factor-section-title { font-size:.58rem; font-weight:900; color:#aaa; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.factor-section-title .dot { width:8px; height:8px; border-radius:50%; }
+.chip-grid { display:flex; flex-wrap:wrap; gap:5px; }
+.fchip { padding:4px 11px; border-radius:14px; font-size:.72rem; font-weight:700; border:1.5px solid #e2e8f0; color:#999; cursor:pointer; transition:all .12s; user-select:none; }
+.fchip:hover { border-color:#ccc; color:#666; }
+.fchip.sel-bear { background:#fce8e8; border-color:#e74c3c; color:#c0392b; }
+.fchip.sel-bull { background:#e8f8f0; border-color:#27ae60; color:#1e8449; }
+
+/* 코멘터리 출력 */
+.commentary-out { display:none; margin-top:14px; border:1.5px solid #e2e8f0; border-radius:12px; overflow:hidden; }
+.co-head { background:#f0f5f9; padding:10px 14px; font-size:.67rem; font-weight:900; color:var(--primary); border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; }
+.co-grid { display:grid; grid-template-columns:1fr 1fr; }
+.co-pane { display:flex; flex-direction:column; border-right:1px solid #f2f2f2; }
+.co-pane:last-child { border-right:none; }
+.co-pane-label { font-size:.58rem; font-weight:900; color:#aaa; text-transform:uppercase; letter-spacing:.1em; padding:8px 12px; background:#fafafa; border-bottom:1px solid #f2f2f2; }
+.co-ta { border:none; outline:none; resize:none; width:100%; min-height:130px; padding:10px 12px; font-size:.78rem; line-height:1.75; color:#333; background:white; font-family:'Segoe UI',sans-serif; }
+.co-ta.kr { font-family:'Pretendard','Segoe UI',sans-serif; }
+
+.mfoot { padding:12px 22px; border-top:1px solid #eee; display:flex; gap:8px; flex-shrink:0; background:#fafafa; }
+.btn-m { padding:11px 16px; border:none; border-radius:9px; cursor:pointer; font-weight:900; font-size:.8rem; transition:all .2s; }
+.btn-parse    { flex:1; background:var(--accent); color:white; }
+.btn-parse:hover { background:#0d86a8; }
+.btn-generate { flex:1; background:var(--green); color:white; display:none; }
+.btn-generate:hover { background:#1e8449; }
+.btn-copy     { flex:1; background:var(--primary); color:white; display:none; }
+.btn-copy:hover { background:#0a1e38; }
+.btn-close    { padding:11px 14px; background:#ecf0f1; color:#666; border:none; border-radius:9px; cursor:pointer; font-weight:700; font-size:.8rem; }
+
+/* TOAST */
+#toast { position:fixed; bottom:26px; right:26px; padding:12px 18px; border-radius:10px; font-size:.79rem; font-weight:700; z-index:19999; opacity:0; transform:translateY(14px); transition:all .26s; pointer-events:none; max-width:280px; color:white; }
+#toast.show { opacity:1; transform:translateY(0); }
+#toast.ok  { background:#1e8449; }
+#toast.er  { background:#c0392b; }
+#toast.inf { background:var(--primary); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div>
+    <div class="brand">WTI MORNING CHECK | JS KIM</div>
+    <div class="sub" id="topClock">원유 시황 모니터링</div>
+  </div>
+  <button class="btn-input-top" onclick="openModal()">
+    <span>📋</span> 뉴스 입력·파싱
+  </button>
+</div>
+
+<!-- 모달 -->
+<div id="overlay">
+  <div id="modal">
+    <div class="mhead">
+      <h3>📋 WTI 뉴스 파싱 & 코멘터리 생성</h3>
+      <span class="ver">No API</span>
+    </div>
+
+    <div class="mbody">
+      <span class="mlabel">한국 뉴스 기사 텍스트 붙여넣기 (연합·KBS·초이스경제 등)</span>
+      <textarea id="news-input" placeholder="아침 WTI 뉴스 기사 전문을 여기에 붙여넣으세요.
+
+예시:
+뉴욕상업거래소에서 3월물 미국 서부 텍사스산 원유(WTI)는
+전 거래일 대비 0.62달러(0.99%) 하락한 배럴당 62.27달러에 거래됐다.
+런던 ICE선물거래소에서 4월물 브렌트유는 1.24달러(1.81%) 내린
+배럴당 67.41달러로 집계됐다.
+
+미국과 이란이 핵 협상에서 기본 원칙에 합의..."></textarea>
+
+      <!-- 파싱 결과 -->
+      <div id="pv-wrap">
+        <div class="pv-head">
+          <span>📊 파싱 결과 — 수정 가능</span>
+          <span id="pbadge" class="pbadge pb-ok">✅ 파싱 완료</span>
+        </div>
+        <div class="pg" id="pg"></div>
+      </div>
+
+      <!-- 코멘터리 출력 -->
+      <div class="commentary-out" id="co-wrap">
+        <div class="co-head">
+          <span>📝 생성된 코멘터리 — 직접 편집 가능</span>
+          <span style="font-size:.63rem;color:#888">Copy Both 버튼으로 한번에 복사</span>
+        </div>
+        <div class="co-grid">
+          <div class="co-pane">
+            <div class="co-pane-label">🇺🇸 English</div>
+            <textarea class="co-ta" id="co-en"></textarea>
+          </div>
+          <div class="co-pane">
+            <div class="co-pane-label">🇰🇷 한국어</div>
+            <textarea class="co-ta kr" id="co-kr"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mfoot">
+      <button class="btn-m btn-parse"    id="btn-parse"    onclick="doParse()">🔍 파싱</button>
+      <button class="btn-m btn-generate" id="btn-gen"      onclick="doGenerate()">✍️ 코멘터리 생성</button>
+      <button class="btn-m btn-copy"     id="btn-copy"     onclick="doCopyBoth()">⧉ Copy Both</button>
+      <button class="btn-close"                            onclick="closeModal()">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 이력 카드 영역 -->
+<div class="page-wrap">
+  <div id="empty-msg">
+    📋 우측 상단 <strong>뉴스 입력·파싱</strong> 버튼으로 오늘 WTI 시황을 입력하세요.<br>
+    <span style="font-size:.8rem;color:#bbb;margin-top:6px;display:block">입력된 시황은 아래에 카드로 누적됩니다.</span>
+  </div>
+  <div id="historyArea"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── CLOCK ──
+function tick() {
+  const k = new Date(Date.now() + 9*3600000);
+  const s = k.toISOString();
+  document.getElementById('topClock').textContent =
+    s.slice(0,10).replace(/-/g,'.') + '  ' + s.slice(11,19) + ' KST · WTI 원유 시황';
+}
+tick(); setInterval(tick, 1000);
+
+// ── FACTOR DATA ──
+const FACTORS = [
+  { t:'bear', kr:'미·이란 핵 협상 진전', en:'US-Iran nuclear deal progress' },
+  { t:'bear', kr:'중동 지정학 리스크 완화', en:'Easing Middle East risk premium' },
+  { t:'bear', kr:'IEA 수요 전망 하향', en:'IEA demand forecast downgraded' },
+  { t:'bear', kr:'OPEC+ 증산 논의', en:'OPEC+ output increase discussed' },
+  { t:'bear', kr:'카자흐 텡기즈 유전 생산 재개', en:'Tengiz oilfield ramping up (Kazakhstan)' },
+  { t:'bear', kr:'미 원유 재고 증가(EIA)', en:'US crude inventory build (EIA)' },
+  { t:'bear', kr:'달러 강세', en:'USD strengthened' },
+  { t:'bear', kr:'경기침체 우려', en:'Recession/slowdown concerns' },
+  { t:'bull', kr:'중동 긴장 고조', en:'Middle East tensions escalating' },
+  { t:'bull', kr:'호르무즈 해협 리스크', en:'Hormuz Strait disruption risk' },
+  { t:'bull', kr:'OPEC+ 감산 유지·강화', en:'OPEC+ maintained/deepened cuts' },
+  { t:'bull', kr:'미 원유 재고 감소(EIA)', en:'US crude inventory draw (EIA)' },
+  { t:'bull', kr:'IEA/EIA 수요 전망 상향', en:'IEA/EIA demand upgrade' },
+  { t:'bull', kr:'달러 약세', en:'USD weakened' },
+];
+
+const selFactors = new Set();
+let history = JSON.parse(localStorage.getItem('wti_history') || '[]');
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('news-input').value = '';
+  document.getElementById('pv-wrap').style.display = 'none';
+  document.getElementById('co-wrap').style.display = 'none';
+  document.getElementById('btn-gen').style.display = 'none';
+  document.getElementById('btn-copy').style.display = 'none';
+  selFactors.clear();
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(() => document.getElementById('news-input').focus(), 120);
+}
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) closeModal();
+});
+
+// ── PARSE ──
+function doParse() {
+  const txt = document.getElementById('news-input').value.trim();
+  if (!txt) { toast('기사 텍스트를 붙여넣어 주세요.', 'er'); return; }
+
+  const f = {};
+  let m;
+
+  // WTI 종가
+  m = txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);
+  if (m) f.wti = parseFloat(m[1]);
+  if (!f.wti) {
+    m = txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/);
+    if (m) f.wti = parseFloat(m[1]);
+  }
+
+  // 전일比 $ & %
+  const wtiSeg = (txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,200}/) || [''])[0];
+  m = wtiSeg.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
+  if (m) { f.abs = -parseFloat(m[1]); f.pct = -parseFloat(m[2]); }
+  if (!f.abs) { m = wtiSeg.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/); if (m) { f.abs = parseFloat(m[1]); f.pct = parseFloat(m[2]); } }
+  if (!f.abs) { m = txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/); if (m) { f.abs = -parseFloat(m[1]); f.pct = -parseFloat(m[2]); } }
+  if (!f.pct) { m = txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/); if (m) f.pct = m[2]==='하락' ? -parseFloat(m[1]) : parseFloat(m[1]); }
+
+  // 브렌트 종가
+  const brSegs = txt.match(/브렌트유[^\n。]{0,150}/g) || [];
+  for (const seg of brSegs) {
+    const pm = seg.match(/(?:배럴당|가격은)\s*([\d.]+)달러/);
+    if (pm && parseFloat(pm[1]) > 10) { f.brent = parseFloat(pm[1]); break; }
+  }
+  // 브렌트 변동률
+  for (const seg of brSegs) {
+    let bm = seg.match(/[\d.]+달러\(([\d.]+)%\)\s*(?:내린|하락한|떨어진)/);
+    if (bm) { f.brentPct = -parseFloat(bm[1]); break; }
+    bm = seg.match(/달러로\s*([\d.]+)%\s*(하락|상승)/);
+    if (bm) { f.brentPct = bm[2]==='하락' ? -parseFloat(bm[1]) : parseFloat(bm[1]); break; }
+    bm = seg.match(/\(([\d.]+)%\)\s*(?:내린|하락)/);
+    if (bm) { f.brentPct = -parseFloat(bm[1]); break; }
+  }
+
+  // 기사 날짜 추출 (YYYY-MM-DD)
+  const dateM = txt.match(/20(\d{2})[.\-\/](\d{1,2})[.\-\/](\d{1,2})/);
+  const today = new Date(Date.now() + 9*3600000).toISOString().slice(0,10);
+  f.date = dateM ? `20${dateM[1]}-${String(dateM[2]).padStart(2,'0')}-${String(dateM[3]).padStart(2,'0')}` : today;
+
+  const priceOk = f.wti !== undefined;
+  const allOk   = priceOk && f.abs !== undefined && f.pct !== undefined;
+
+  // 요인 키워드 자동 감지 (선택 도움)
+  const autoSel = new Set();
+  const lo = txt.toLowerCase();
+  if (lo.includes('이란') && (lo.includes('합의')||lo.includes('진전'))) autoSel.add(0);
+  if (lo.includes('중동') && lo.includes('완화')) autoSel.add(1);
+  if (lo.includes('iea') && lo.includes('하향')) autoSel.add(2);
+  if (lo.includes('opec') && (lo.includes('증산')||lo.includes('증가'))) autoSel.add(3);
+  if (lo.includes('텡기즈') || lo.includes('카자흐')) autoSel.add(4);
+  if (lo.includes('재고') && lo.includes('증가')) autoSel.add(5);
+  if (lo.includes('달러') && (lo.includes('강세')||lo.includes('상승'))) autoSel.add(6);
+  if (lo.includes('이란') && (lo.includes('긴장')||lo.includes('갈등'))) autoSel.add(8);
+  if (lo.includes('호르무즈')) autoSel.add(9);
+  if (lo.includes('opec') && lo.includes('감산')) autoSel.add(10);
+  if (lo.includes('재고') && lo.includes('감소')) autoSel.add(11);
+  autoSel.forEach(i => selFactors.add(i));
+
+  // 그리드 렌더
+  const pctStr = f.pct !== undefined ? `${f.pct >= 0 ? '+' : ''}${f.pct.toFixed(2)}%` : '-';
+  const absStr = f.abs !== undefined ? `${f.abs >= 0 ? '+' : ''}${f.abs.toFixed(2)}` : '-';
+  const pctCls = f.pct > 0 ? 'up' : f.pct < 0 ? 'dn' : '';
+
+  document.getElementById('pg').innerHTML = `
+    <div class="pf price-ok">
+      <div class="pl">WTI 종가 ($/bbl) *</div>
+      <input class="pv-input hi" id="ed-wti" value="${f.wti !== undefined ? f.wti.toFixed(2) : ''}" placeholder="직접 입력">
+    </div>
+    <div class="pf">
+      <div class="pl">전일比 $</div>
+      <input class="pv-input ${pctCls}" id="ed-abs" value="${f.abs !== undefined ? f.abs.toFixed(2) : ''}" placeholder="예: -0.56">
+    </div>
+    <div class="pf">
+      <div class="pl">변동률 %</div>
+      <input class="pv-input ${pctCls}" id="ed-pct" value="${f.pct !== undefined ? f.pct.toFixed(2) : ''}" placeholder="예: -0.89">
+    </div>
+    <div class="pf">
+      <div class="pl">브렌트 종가 ($/bbl)</div>
+      <input class="pv-input" id="ed-brent" value="${f.brent !== undefined ? f.brent.toFixed(2) : ''}" placeholder="예: 67.29">
+    </div>
+    <div class="pf">
+      <div class="pl">브렌트 변동률 %</div>
+      <input class="pv-input" id="ed-brentpct" value="${f.brentPct !== undefined ? f.brentPct.toFixed(2) : ''}" placeholder="예: -1.98">
+    </div>
+    <div class="pf">
+      <div class="pl">월물</div>
+      <select class="pv-input" id="ed-cont">
+        <option value="3월물(Mar)">3월물 (Mar)</option>
+        <option value="4월물(Apr)">4월물 (Apr)</option>
+        <option value="5월물(May)">5월물 (May)</option>
+      </select>
+    </div>
+    <div class="pf">
+      <div class="pl">기사 기준일</div>
+      <input class="pv-input" id="ed-date" value="${f.date}" type="date">
+    </div>
+    <div class="pf">
+      <div class="pl">추가 시장 메모</div>
+      <input class="pv-input" id="ed-memo" placeholder="Nat.Gas -6.26% / DXY +0.24%">
+    </div>
+
+    <!-- 하락 요인 -->
+    <div class="factor-section">
+      <div class="factor-section-title">
+        <span class="dot" style="background:#e74c3c"></span>▼ 하락 요인 (클릭 선택 · 자동 감지 표시됨)
+      </div>
+      <div class="chip-grid" id="bear-chips"></div>
+    </div>
+    <!-- 상승 요인 -->
+    <div class="factor-section" style="border-bottom:none">
+      <div class="factor-section-title">
+        <span class="dot" style="background:#27ae60"></span>▲ 상승 요인
+      </div>
+      <div class="chip-grid" id="bull-chips"></div>
+    </div>`;
+
+  // 칩 렌더
+  ['bear','bull'].forEach(t => {
+    const container = document.getElementById(`${t}-chips`);
+    FACTORS.forEach((f, i) => {
+      if (f.t !== t) return;
+      const ch = document.createElement('div');
+      ch.className = 'fchip' + (selFactors.has(i) ? ` sel-${t}` : '');
+      ch.textContent = f.kr;
+      ch.addEventListener('click', () => {
+        if (selFactors.has(i)) { selFactors.delete(i); ch.className = 'fchip'; }
+        else { selFactors.add(i); ch.className = `fchip sel-${t}`; }
+      });
+      container.appendChild(ch);
+    });
+  });
+
+  const badge = document.getElementById('pbadge');
+  badge.textContent = allOk ? '✅ 파싱 완료' : priceOk ? '⚠️ 일부 미인식 — 확인 필요' : '❌ 수동 입력 필요';
+  badge.className   = `pbadge ${allOk ? 'pb-ok' : 'pb-warn'}`;
+
+  document.getElementById('pv-wrap').style.display = 'block';
+  document.getElementById('btn-gen').style.display = 'block';
+  document.getElementById('co-wrap').style.display = 'none';
+  document.getElementById('btn-copy').style.display = 'none';
+
+  toast(allOk ? `✅ WTI $${f.wti?.toFixed(2)} (${pctStr}) 파싱 완료` : '⚠️ 수치 확인 후 수정하세요.', allOk ? 'ok' : 'inf');
+}
+
+// ── GENERATE COMMENTARY ──
+function doGenerate() {
+  const wti     = parseFloat(document.getElementById('ed-wti').value);
+  const abs     = parseFloat(document.getElementById('ed-abs').value);
+  const pct     = parseFloat(document.getElementById('ed-pct').value);
+  const brent   = parseFloat(document.getElementById('ed-brent').value);
+  const brentPct= parseFloat(document.getElementById('ed-brentpct').value);
+  const cont    = document.getElementById('ed-cont').value;
+  const dateV   = document.getElementById('ed-date').value;
+  const memo    = document.getElementById('ed-memo').value.trim();
+
+  if (isNaN(wti) || isNaN(pct)) { toast('WTI 종가와 변동률을 입력하세요.', 'er'); return; }
+
+  const pctStr  = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+  const absStr  = (abs >= 0 ? '+' : '') + abs.toFixed(2);
+  const dir     = pct > 0 ? 'higher' : pct < 0 ? 'lower' : 'unchanged';
+  const dirKR   = pct > 0 ? '상승' : pct < 0 ? '하락' : '보합';
+
+  const d       = new Date(dateV + 'T00:00:00Z');
+  const enDate  = d.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});
+  const krDate  = dateV.replace(/-/g,'.');
+  const contEN  = cont.match(/\((\w+)\)/)?.[1] || 'Mar';
+
+  const bears = [], bulls = [];
+  selFactors.forEach(i => { FACTORS[i].t === 'bear' ? bears.push(FACTORS[i]) : bulls.push(FACTORS[i]); });
+
+  // EN
+  let en = `[WTI] ${d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})} · $${wti.toFixed(2)}/bbl (${pctStr})\n${'─'.repeat(50)}\n\n`;
+  en += `WTI crude (${contEN} contract, NYMEX) settled ${dir} on ${enDate}, closing at $${wti.toFixed(2)}/bbl (${absStr} USD, ${pctStr}).`;
+  if (!isNaN(brent) && !isNaN(brentPct)) en += ` Brent (ICE): $${brent.toFixed(2)}/bbl (${(brentPct>=0?'+':'')+brentPct.toFixed(2)}%).`;
+  en += '\n\n';
+  if (bears.length) { en += 'Downside drivers:\n'; bears.forEach(f => { en += `  • ${f.en}\n`; }); en += '\n'; }
+  if (bulls.length) { en += 'Upside drivers:\n';   bulls.forEach(f => { en += `  • ${f.en}\n`; }); en += '\n'; }
+  if (memo) en += `Market: ${memo}\n\n`;
+  if (pct < 0 && bears.length) en += `Bearish pressure from ${bears[0].en.toLowerCase()} dominated sentiment.`;
+  else if (pct > 0 && bulls.length) en += `Prices supported by ${bulls[0].en.toLowerCase()}.`;
+  else if (bears.length || bulls.length) en += `Mixed signals kept prices range-bound.`;
+
+  // KR
+  let kr = `[WTI 시황] ${krDate} · $${wti.toFixed(2)} (${pctStr})\n${'─'.repeat(36)}\n\n`;
+  kr += `WTI 원유(${cont}, NYMEX)는 ${krDate} 전 거래일 대비 ${absStr} USD(${pctStr}) ${dirKR}한 배럴당 $${wti.toFixed(2)}에 마감했다.`;
+  if (!isNaN(brent) && !isNaN(brentPct)) kr += ` 브렌트유(ICE)는 $${brent.toFixed(2)}/배럴(${(brentPct>=0?'+':'')+brentPct.toFixed(2)}%).`;
+  kr += '\n\n';
+  if (bears.length) { kr += '▼ 하락 요인\n'; bears.forEach(f => { kr += `  • ${f.kr}\n`; }); kr += '\n'; }
+  if (bulls.length) { kr += '▲ 상승 요인\n'; bulls.forEach(f => { kr += `  • ${f.kr}\n`; }); kr += '\n'; }
+  if (memo) kr += `[관련 시장] ${memo}\n\n`;
+  if (pct < 0 && bears.length) kr += `${bears[0].kr} 등 하방 재료 압박으로 약세 마감.`;
+  else if (pct > 0 && bulls.length) kr += `${bulls[0].kr} 등이 유가를 지지하며 강세 마감.`;
+  else if (bears.length || bulls.length) kr += `상·하방 재료 혼재 속 방향성 탐색.`;
+
+  document.getElementById('co-en').value = en;
+  document.getElementById('co-kr').value = kr;
+  document.getElementById('co-wrap').style.display = 'block';
+  document.getElementById('btn-copy').style.display = 'block';
+
+  // 이력에 저장
+  const entry = { wti, abs, pct, brent, brentPct, cont, date: dateV, memo, bears: bears.map(f=>f.kr), bulls: bulls.map(f=>f.kr), en, kr };
+  history.unshift(entry);
+  if (history.length > 30) history = history.slice(0, 30);
+  localStorage.setItem('wti_history', JSON.stringify(history));
+  renderHistory();
+
+  toast('✍️ 코멘터리 생성 완료!', 'ok');
+}
+
+// ── COPY ──
+function doCopyBoth() {
+  const en = document.getElementById('co-en').value;
+  const kr = document.getElementById('co-kr').value;
+  navigator.clipboard.writeText(en + '\n\n' + '━'.repeat(50) + '\n\n' + kr).then(() => {
+    toast('✅ EN + KR 복사 완료!', 'ok');
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = '⧉ Copy Both'; }, 2000);
+  });
+}
+
+// ── HISTORY CARDS ──
+function renderHistory() {
+  const area = document.getElementById('historyArea');
+  const empty = document.getElementById('empty-msg');
+  if (!history.length) { empty.style.display='block'; area.innerHTML=''; return; }
+  empty.style.display = 'none';
+
+  area.innerHTML = history.map((h, i) => {
+    const pctStr = (h.pct >= 0 ? '+' : '') + h.pct.toFixed(2) + '%';
+    const absStr = (h.abs >= 0 ? '+' : '') + h.abs.toFixed(2);
+    const dir    = h.pct > 0 ? 'up' : h.pct < 0 ? 'dn' : 'flt';
+    const arrow  = h.pct > 0 ? '▲' : h.pct < 0 ? '▼' : '─';
+    const factorHTML = [
+      ...h.bears.map(f => `<span class="ftag bear">▼ ${f}</span>`),
+      ...h.bulls.map(f => `<span class="ftag bull">▲ ${f}</span>`),
+    ].join('');
+
+    return `<div class="hcard ${dir}">
+      <div class="hcard-top">
+        <div>
+          <div class="hcard-date">${h.date.replace(/-/g,'.')}  ${h.cont}</div>
+          <div class="hcard-sub">NYMEX WTI Crude · ${arrow} ${dir === 'up' ? '상승' : dir === 'dn' ? '하락' : '보합'} 마감</div>
+        </div>
+        <div class="price-badge ${dir}">
+          <span class="pv">$${h.wti.toFixed(2)}</span>
+          <span class="pc">${pctStr}</span>
+        </div>
+      </div>
+      ${h.brent ? `<div class="row-item"><div class="rl">Brent</div><div class="rv">$${h.brent.toFixed(2)} (${(h.brentPct>=0?'+':'')+h.brentPct.toFixed(2)}%)</div></div>` : ''}
+      <div class="row-item"><div class="rl">전일比</div><div class="rv hi">${absStr} USD (${pctStr})</div></div>
+      ${factorHTML ? `<div class="row-item" style="flex-direction:column">
+        <div class="rl" style="margin-bottom:6px">요인</div>
+        <div class="factor-tags">${factorHTML}</div>
+      </div>` : ''}
+      ${h.memo ? `<div class="row-item"><div class="rl">관련시장</div><div class="rv" style="font-size:.78rem;color:#666">${h.memo}</div></div>` : ''}
+      <div class="row-item" style="flex-direction:column;border-bottom:none">
+        <div class="rl" style="margin-bottom:5px">코멘터리 (KR)</div>
+        <div class="cmt-box">${h.kr.replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// TOAST
+function toast(msg, type='inf', ms=3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `show ${type}`;
+  clearTimeout(t._t); t._t = setTimeout(() => t.className='', ms);
+}
+
+// INIT
+renderHistory();
+</script>
+</body>
+</html>
