@@ -3,543 +3,781 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WTI MORNING CHECK | JS KIM</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>WTI MORNING BRIEF</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #0A2647;
-  --accent:  #1597BB;
-  --green:   #27ae60;
-  --red:     #E74C3C;
-  --orange:  #D35400;
-  --gold:    #FFD700;
+  --bg:       #08090c;
+  --surface:  #0d1117;
+  --card:     #111620;
+  --border:   #1c2535;
+  --border2:  #2a3a50;
+  --acc:      #c8a84b;       /* gold */
+  --acc2:     #3b82f6;       /* blue */
+  --green:    #22c55e;
+  --red:      #ef4444;
+  --text:     #d4dce8;
+  --dim:      #4a5a70;
+  --bright:   #f0f6ff;
+  --mono:     'DM Mono', monospace;
+  --sans:     'Noto Sans KR', sans-serif;
+  --display:  'Bebas Neue', sans-serif;
 }
-body { background:#f0f2f5; font-family:'Pretendard','Segoe UI',sans-serif; min-height:100vh; margin:0; }
 
-/* ── TOP BAR ── */
-.top-bar { background:var(--primary); padding:16px 28px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 3px 15px rgba(0,0,0,.25); }
-.top-bar .brand { font-size:.95rem; font-weight:900; color:var(--gold); letter-spacing:.05em; }
-.top-bar .sub   { font-size:.65rem; color:rgba(255,255,255,.5); margin-top:2px; }
-.btn-input-top  { background:var(--accent); color:white; border:none; padding:9px 18px; border-radius:20px; font-weight:900; font-size:.78rem; cursor:pointer; transition:background .2s; display:flex; align-items:center; gap:7px; }
-.btn-input-top:hover { background:#0d86a8; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); }
 
-/* ── PAGE ── */
-.page-wrap { max-width:860px; margin:32px auto; padding:0 20px 80px; }
+/* ─── SCANLINE TEXTURE ─── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.04) 2px, rgba(0,0,0,.04) 4px);
+}
 
-/* ── HISTORY CARDS ── */
-.hcard { background:white; border-radius:14px; padding:22px 26px; box-shadow:0 6px 22px rgba(0,0,0,.07); margin-bottom:14px; border-left:5px solid #dee2e6; }
-.hcard.up  { border-left-color:var(--green); }
-.hcard.dn  { border-left-color:var(--red); }
-.hcard.flt { border-left-color:#aaa; }
+/* ─── HEADER ─── */
+.hdr {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8,9,12,.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 52px;
+}
+.hdr-left { display: flex; align-items: baseline; gap: 14px; }
+.hdr-logo { font-family: var(--display); font-size: 22px; letter-spacing: .12em; color: var(--acc); }
+.hdr-sub  { font-family: var(--mono); font-size: 9px; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; }
+.hdr-right { display: flex; align-items: center; gap: 12px; }
+.hdr-clock { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .06em; }
 
-.hcard-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; }
-.hcard-date { font-size:1rem; font-weight:900; color:var(--primary); }
-.hcard-sub  { font-size:.65rem; color:#bbb; margin-top:2px; }
+.btn-new {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--acc); color: #08090c;
+  border: none; border-radius: 3px;
+  padding: 7px 16px; font-family: var(--mono); font-size: 10px;
+  font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  cursor: pointer; transition: background .15s;
+}
+.btn-new:hover { background: #dbb85a; }
 
-.price-badge { display:inline-flex; align-items:baseline; gap:6px; padding:6px 14px; border-radius:20px; font-weight:900; flex-shrink:0; }
-.price-badge.up  { background:#e8f8f0; color:#1e8449; }
-.price-badge.dn  { background:#fce8e8; color:#c0392b; }
-.price-badge.flt { background:#f0f0f0; color:#666; }
-.price-badge .pv { font-size:1.15rem; }
-.price-badge .pc { font-size:.78rem; }
+/* ─── LAYOUT ─── */
+.wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 1; }
 
-.row-item { display:flex; border-bottom:1px solid #f5f5f5; padding:8px 0; align-items:flex-start; }
-.row-item:last-child { border-bottom:none; }
-.rl { width:110px; flex-shrink:0; font-size:.72rem; color:#aaa; font-weight:700; padding-top:2px; }
-.rv { font-size:.86rem; color:#2d3436; font-weight:500; word-break:break-word; }
-.rv.hi { color:var(--accent); font-weight:900; }
-.cmt-box { background:#f8fafc; border-radius:8px; padding:10px 12px; border-left:4px solid #dee2e6; font-size:.78rem; color:#555; line-height:1.65; width:100%; margin-top:4px; }
+/* ─── EMPTY STATE ─── */
+.empty {
+  text-align: center; padding: 80px 0;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--dim);
+}
+.empty .e-icon { font-size: 36px; margin-bottom: 16px; opacity: .3; }
 
-.factor-tags { display:flex; flex-wrap:wrap; gap:5px; }
-.ftag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:.7rem; font-weight:700; }
-.ftag.bear { background:#fce8e8; color:#c0392b; }
-.ftag.bull { background:#e8f8f0; color:#1e8449; }
+/* ─── BRIEF CARD ─── */
+.brief {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  animation: fadeUp .3s ease both;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
 
-#empty-msg { text-align:center; padding:55px; color:#ccc; font-size:.9rem; }
+/* CARD HEADER STRIP */
+.brief-strip {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+.strip-date {
+  padding: 14px 20px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  min-width: 130px;
+}
+.strip-date .sd-date { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .1em; }
+.strip-date .sd-cont { font-family: var(--mono); font-size: 9px; color: var(--dim); opacity: .5; margin-top: 2px; }
 
-/* ── MODAL ── */
-#overlay { position:fixed; inset:0; background:rgba(5,20,50,.88); z-index:9000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
-#overlay.open { display:flex; }
-#modal { width:680px; max-height:94vh; background:white; border-radius:18px; box-shadow:0 24px 70px rgba(0,0,0,.5); display:flex; flex-direction:column; overflow:hidden; animation:mIn .22s ease; }
-@keyframes mIn { from{opacity:0;transform:translateY(18px) scale(.97)} to{opacity:1;transform:none} }
+/* PRICE BLOCK */
+.strip-price {
+  flex: 1; display: flex; align-items: center; padding: 14px 24px; gap: 20px;
+}
+.sp-val { font-family: var(--display); font-size: 52px; letter-spacing: .02em; line-height: 1; }
+.sp-val.up  { color: var(--green); }
+.sp-val.dn  { color: var(--red); }
+.sp-val.flt { color: var(--text); }
+.sp-unit { font-family: var(--mono); font-size: 10px; color: var(--dim); align-self: flex-end; padding-bottom: 6px; }
 
-.mhead { background:var(--primary); color:white; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
-.mhead h3 { margin:0; font-size:.95rem; font-weight:900; }
-.mhead .ver { background:var(--accent); font-size:.6rem; padding:3px 9px; border-radius:9px; font-weight:900; }
+.sp-delta {
+  display: flex; flex-direction: column; gap: 4px; padding-left: 20px;
+  border-left: 1px solid var(--border);
+}
+.sp-d-row { display: flex; align-items: center; gap: 8px; }
+.sp-d-label { font-family: var(--mono); font-size: 8px; letter-spacing: .12em; color: var(--dim); width: 28px; }
+.sp-d-val { font-family: var(--mono); font-size: 13px; font-weight: 500; }
+.sp-d-val.up { color: var(--green); }
+.sp-d-val.dn { color: var(--red); }
 
-.mbody { padding:18px 22px; overflow-y:auto; flex:1; }
-.mlabel { font-size:.65rem; font-weight:900; color:#aaa; text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:7px; }
+/* BRENT ROW */
+.strip-brent {
+  padding: 14px 20px; border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  min-width: 130px;
+}
+.sb-label { font-family: var(--mono); font-size: 8px; letter-spacing: .14em; color: var(--dim); text-transform: uppercase; }
+.sb-val   { font-family: var(--mono); font-size: 16px; font-weight: 500; color: var(--text); }
+.sb-chg   { font-family: var(--mono); font-size: 10px; }
+.sb-chg.up { color: var(--green); } .sb-chg.dn { color: var(--red); }
 
-#news-input { width:100%; height:180px; border:2px solid #e2e8f0; border-radius:10px; padding:12px; font-size:.78rem; font-family:'Segoe UI',sans-serif; resize:vertical; line-height:1.72; color:#333; transition:border-color .2s; box-sizing:border-box; }
-#news-input:focus { outline:none; border-color:var(--accent); }
-#news-input::placeholder { color:#c5c9d0; line-height:1.9; }
+/* CARD ACTIONS */
+.strip-actions {
+  display: flex; flex-direction: column; border-left: 1px solid var(--border);
+}
+.act-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none; cursor: pointer;
+  font-family: var(--mono); font-size: 9px; letter-spacing: .1em; color: var(--dim);
+  padding: 0 14px; transition: all .15s; text-transform: uppercase; gap: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.act-btn:last-child { border-bottom: none; }
+.act-btn:hover.edit { background: rgba(59,130,246,.08); color: var(--acc2); }
+.act-btn:hover.del  { background: rgba(239,68,68,.06); color: var(--red); }
 
-/* 파싱 결과 그리드 */
-#pv-wrap { display:none; margin-top:16px; border:1.5px solid #e2e8f0; border-radius:12px; overflow:hidden; }
-.pv-head { background:#f0f5f9; padding:10px 14px; font-size:.67rem; font-weight:900; color:var(--primary); border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; }
-.pbadge { font-size:.63rem; padding:3px 9px; border-radius:7px; font-weight:900; }
-.pb-ok   { background:#d4efdf; color:#1e8449; }
-.pb-warn { background:#fdebd0; color:#d35400; }
+/* FACTORS SECTION */
+.brief-body { padding: 16px 20px; }
 
-.pg { display:grid; grid-template-columns:1fr 1fr; }
-.pf { padding:10px 14px; border-bottom:1px solid #f2f2f2; border-right:1px solid #f2f2f2; }
-.pf:nth-child(2n) { border-right:none; }
-.pf.full { grid-column:1/-1; border-right:none; }
-.pf.price-ok   { background:linear-gradient(135deg,#eaf5fb,#d4edf5); border:1.5px solid var(--accent); }
-.pl { font-size:.56rem; color:#bbb; text-transform:uppercase; font-weight:800; letter-spacing:.08em; }
-.pv-input { width:100%; border:1.5px solid #e2e8f0; border-radius:7px; padding:6px 9px; font-size:.83rem; font-weight:700; color:#1a1a2e; background:white; box-sizing:border-box; transition:border-color .2s; }
-.pv-input:focus { outline:none; border-color:var(--accent); }
-.pv-input.hi { color:var(--accent); }
-.pv-input.up { color:var(--green); }
-.pv-input.dn { color:var(--red); }
-select.pv-input { cursor:pointer; }
+.factors-row { display: flex; gap: 12px; margin-bottom: 14px; }
+.factor-col { flex: 1; }
+.fc-title {
+  font-family: var(--mono); font-size: 8px; letter-spacing: .18em; text-transform: uppercase;
+  padding-bottom: 6px; margin-bottom: 8px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 5px;
+}
+.fc-title.bear { color: var(--red); }
+.fc-title.bull { color: var(--green); }
+.fc-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.fc-dot.bear { background: var(--red); }
+.fc-dot.bull { background: var(--green); }
 
-/* 요인 체크리스트 */
-.factor-section { padding:10px 14px; border-bottom:1px solid #f2f2f2; grid-column:1/-1; }
-.factor-section-title { font-size:.58rem; font-weight:900; color:#aaa; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
-.factor-section-title .dot { width:8px; height:8px; border-radius:50%; }
-.chip-grid { display:flex; flex-wrap:wrap; gap:5px; }
-.fchip { padding:4px 11px; border-radius:14px; font-size:.72rem; font-weight:700; border:1.5px solid #e2e8f0; color:#999; cursor:pointer; transition:all .12s; user-select:none; }
-.fchip:hover { border-color:#ccc; color:#666; }
-.fchip.sel-bear { background:#fce8e8; border-color:#e74c3c; color:#c0392b; }
-.fchip.sel-bull { background:#e8f8f0; border-color:#27ae60; color:#1e8449; }
+.factor-item {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,.03);
+  font-size: 12px; line-height: 1.5; color: var(--text);
+}
+.factor-item:last-child { border-bottom: none; }
+.fi-bullet { font-family: var(--mono); font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+.fi-bullet.bear { color: var(--red); }
+.fi-bullet.bull { color: var(--green); }
+.fi-kr { flex: 1; }
+.fi-en { font-family: var(--mono); font-size: 9px; color: var(--dim); margin-top: 1px; }
 
-/* 코멘터리 출력 */
-.commentary-out { display:none; margin-top:14px; border:1.5px solid #e2e8f0; border-radius:12px; overflow:hidden; }
-.co-head { background:#f0f5f9; padding:10px 14px; font-size:.67rem; font-weight:900; color:var(--primary); border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; }
-.co-grid { display:grid; grid-template-columns:1fr 1fr; }
-.co-pane { display:flex; flex-direction:column; border-right:1px solid #f2f2f2; }
-.co-pane:last-child { border-right:none; }
-.co-pane-label { font-size:.58rem; font-weight:900; color:#aaa; text-transform:uppercase; letter-spacing:.1em; padding:8px 12px; background:#fafafa; border-bottom:1px solid #f2f2f2; }
-.co-ta { border:none; outline:none; resize:none; width:100%; min-height:130px; padding:10px 12px; font-size:.78rem; line-height:1.75; color:#333; background:white; font-family:'Segoe UI',sans-serif; }
-.co-ta.kr { font-family:'Pretendard','Segoe UI',sans-serif; }
+/* MEMO */
+.brief-memo {
+  margin-top: 10px; padding: 10px 14px;
+  background: rgba(255,255,255,.02); border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: var(--mono); font-size: 10px; color: var(--dim); line-height: 1.7;
+}
+.memo-label { font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); opacity: .5; margin-bottom: 4px; }
 
-.mfoot { padding:12px 22px; border-top:1px solid #eee; display:flex; gap:8px; flex-shrink:0; background:#fafafa; }
-.btn-m { padding:11px 16px; border:none; border-radius:9px; cursor:pointer; font-weight:900; font-size:.8rem; transition:all .2s; }
-.btn-parse    { flex:1; background:var(--accent); color:white; }
-.btn-parse:hover { background:#0d86a8; }
-.btn-generate { flex:1; background:var(--green); color:white; display:none; }
-.btn-generate:hover { background:#1e8449; }
-.btn-copy     { flex:1; background:var(--primary); color:white; display:none; }
-.btn-copy:hover { background:#0a1e38; }
-.btn-close    { padding:11px 14px; background:#ecf0f1; color:#666; border:none; border-radius:9px; cursor:pointer; font-weight:700; font-size:.8rem; }
+/* COMMENTARY SECTION */
+.brief-commentary {
+  border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.co-pane { padding: 14px 20px; }
+.co-pane:first-child { border-right: 1px solid var(--border); }
+.co-label {
+  font-family: var(--mono); font-size: 8px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.co-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.co-text { font-size: 12px; line-height: 1.85; color: var(--text); white-space: pre-wrap; font-family: var(--sans); }
+.co-text.en { font-family: var(--mono); font-size: 11px; }
 
-/* TOAST */
-#toast { position:fixed; bottom:26px; right:26px; padding:12px 18px; border-radius:10px; font-size:.79rem; font-weight:700; z-index:19999; opacity:0; transform:translateY(14px); transition:all .26s; pointer-events:none; max-width:280px; color:white; }
-#toast.show { opacity:1; transform:translateY(0); }
-#toast.ok  { background:#1e8449; }
-#toast.er  { background:#c0392b; }
-#toast.inf { background:var(--primary); }
+/* COPY ROW */
+.brief-copy {
+  border-top: 1px solid var(--border);
+  padding: 10px 20px; display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+}
+.cp-btn {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+  background: transparent; border: 1px solid var(--border2); color: var(--dim);
+  padding: 5px 12px; border-radius: 2px; cursor: pointer; transition: all .15s;
+}
+.cp-btn:hover { border-color: var(--acc); color: var(--acc); }
+.cp-btn.pri { background: var(--acc2); color: #fff; border-color: var(--acc2); }
+.cp-btn.pri:hover { background: #2563eb; }
+.cp-btn.ok  { border-color: var(--green); color: var(--green); }
+
+/* ─── MODAL ─── */
+#overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(4,6,10,.92); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center;
+}
+#overlay.open { display: flex; }
+
+#modal {
+  width: 700px; max-height: 92vh;
+  background: var(--card); border: 1px solid var(--border2);
+  border-radius: 6px; display: flex; flex-direction: column;
+  overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,.7);
+  animation: mIn .2s ease;
+}
+@keyframes mIn { from{opacity:0;transform:translateY(16px) scale(.98)} to{opacity:1;transform:none} }
+
+.mhdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  background: var(--surface); flex-shrink: 0;
+}
+.mhdr-title { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--acc); }
+.mhdr-close {
+  background: transparent; border: 1px solid var(--border2); color: var(--dim);
+  width: 26px; height: 26px; border-radius: 2px; cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center; transition: all .15s;
+}
+.mhdr-close:hover { border-color: var(--red); color: var(--red); }
+
+.mbody { flex: 1; overflow-y: auto; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+
+/* PARSE AREA */
+.m-section-label {
+  font-family: var(--mono); font-size: 8px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 6px;
+}
+#news-ta {
+  width: 100%; height: 140px; resize: vertical;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
+  color: var(--text); font-family: var(--sans); font-size: 12px; line-height: 1.7;
+  padding: 10px 12px; outline: none; transition: border-color .15s;
+}
+#news-ta:focus { border-color: var(--acc2); }
+#news-ta::placeholder { color: var(--dim); font-size: 11px; }
+
+/* PARSED FIELDS GRID */
+#parsed-wrap { display: none; }
+.pf-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.pf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pfield { display: flex; flex-direction: column; gap: 3px; }
+.pfield label { font-family: var(--mono); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.pfield input, .pfield select, .pfield textarea {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
+  color: var(--text); font-family: var(--mono); font-size: 13px;
+  padding: 7px 9px; outline: none; width: 100%; transition: border-color .15s;
+}
+.pfield input:focus, .pfield select:focus, .pfield textarea:focus { border-color: var(--acc2); }
+.pfield input.hi { color: var(--acc); font-weight: 500; border-color: rgba(200,168,75,.3); }
+.pfield input.up { color: var(--green); }
+.pfield input.dn { color: var(--red); }
+.pfield textarea { resize: vertical; min-height: 50px; font-family: var(--sans); font-size: 12px; line-height: 1.6; }
+
+/* PARSE STATUS */
+.parse-status {
+  font-family: var(--mono); font-size: 10px; padding: 7px 10px;
+  border-radius: 3px; margin-top: 6px; display: none;
+}
+.parse-status.ok  { background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2); color: var(--green); }
+.parse-status.warn{ background: rgba(200,168,75,.08); border: 1px solid rgba(200,168,75,.2); color: var(--acc); }
+.parse-status.err { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2); color: var(--red); }
+
+/* FACTOR CHIPS */
+.chip-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .06em;
+  padding: 4px 10px; border-radius: 2px; border: 1px solid var(--border2);
+  color: var(--dim); cursor: pointer; transition: all .12s; user-select: none;
+}
+.chip:hover { color: var(--text); border-color: var(--dim); }
+.chip.sel-bear { background: rgba(239,68,68,.08); border-color: rgba(239,68,68,.4); color: var(--red); }
+.chip.sel-bull { background: rgba(34,197,94,.08); border-color: rgba(34,197,94,.4); color: var(--green); }
+.chip-group { margin-bottom: 4px; font-family: var(--mono); font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); opacity: .5; }
+
+/* MFOOTER */
+.mftr {
+  flex-shrink: 0; padding: 12px 20px; border-top: 1px solid var(--border);
+  display: flex; gap: 8px; background: var(--surface);
+}
+.mf-btn {
+  padding: 9px 16px; border: none; border-radius: 3px; cursor: pointer;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  font-weight: 500; transition: all .15s;
+}
+.mf-parse  { flex: 1; background: var(--border2); color: var(--text); }
+.mf-parse:hover { background: var(--acc2); color: #fff; }
+.mf-save   { flex: 2; background: var(--acc); color: #08090c; display: none; }
+.mf-save:hover { background: #dbb85a; }
+.mf-close  { background: transparent; border: 1px solid var(--border2); color: var(--dim); padding: 9px 14px; }
+.mf-close:hover { border-color: var(--red); color: var(--red); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div>
-    <div class="brand">WTI MORNING CHECK | JS KIM</div>
-    <div class="sub" id="topClock">원유 시황 모니터링</div>
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-logo">WTI BRIEF</div>
+    <div class="hdr-sub">Crude Oil · Morning Monitor</div>
   </div>
-  <button class="btn-input-top" onclick="openModal()">
-    <span>📋</span> 뉴스 입력·파싱
-  </button>
+  <div class="hdr-right">
+    <div class="hdr-clock" id="clock"></div>
+    <button class="btn-new" onclick="openModal()">+ NEW ENTRY</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="wrap">
+  <div class="empty" id="empty">
+    <div class="e-icon">◈</div>
+    <div>NO ENTRIES YET</div>
+    <div style="margin-top:6px;font-size:9px">Click <strong style="color:var(--acc)">+ NEW ENTRY</strong> to add today's WTI brief</div>
+  </div>
+  <div id="cards"></div>
 </div>
 
-<!-- 모달 -->
+<!-- MODAL -->
 <div id="overlay">
   <div id="modal">
-    <div class="mhead">
-      <h3>📋 WTI 뉴스 파싱 & 코멘터리 생성</h3>
-      <span class="ver">No API</span>
+    <div class="mhdr">
+      <div class="mhdr-title" id="modal-title">◈ NEW WTI ENTRY</div>
+      <button class="mhdr-close" onclick="closeModal()">✕</button>
     </div>
 
     <div class="mbody">
-      <span class="mlabel">한국 뉴스 기사 텍스트 붙여넣기 (연합·KBS·초이스경제 등)</span>
-      <textarea id="news-input" placeholder="아침 WTI 뉴스 기사 전문을 여기에 붙여넣으세요.
 
-예시:
-뉴욕상업거래소에서 3월물 미국 서부 텍사스산 원유(WTI)는
-전 거래일 대비 0.62달러(0.99%) 하락한 배럴당 62.27달러에 거래됐다.
-런던 ICE선물거래소에서 4월물 브렌트유는 1.24달러(1.81%) 내린
-배럴당 67.41달러로 집계됐다.
+      <!-- STEP 1: 뉴스 붙여넣기 -->
+      <div id="step-parse">
+        <div class="m-section-label">01 · 뉴스 텍스트 붙여넣기 (선택)</div>
+        <textarea id="news-ta" placeholder="연합·KBS·초이스경제 등 WTI 뉴스 기사 전문을 붙여넣으면 수치를 자동 인식합니다.
 
-미국과 이란이 핵 협상에서 기본 원칙에 합의..."></textarea>
-
-      <!-- 파싱 결과 -->
-      <div id="pv-wrap">
-        <div class="pv-head">
-          <span>📊 파싱 결과 — 수정 가능</span>
-          <span id="pbadge" class="pbadge pb-ok">✅ 파싱 완료</span>
-        </div>
-        <div class="pg" id="pg"></div>
+직접 수치 입력도 가능합니다 — 파싱 없이 바로 아래 필드를 채워주세요."></textarea>
+        <div class="parse-status" id="parse-st"></div>
       </div>
 
-      <!-- 코멘터리 출력 -->
-      <div class="commentary-out" id="co-wrap">
-        <div class="co-head">
-          <span>📝 생성된 코멘터리 — 직접 편집 가능</span>
-          <span style="font-size:.63rem;color:#888">Copy Both 버튼으로 한번에 복사</span>
-        </div>
-        <div class="co-grid">
-          <div class="co-pane">
-            <div class="co-pane-label">🇺🇸 English</div>
-            <textarea class="co-ta" id="co-en"></textarea>
+      <!-- STEP 2: 수치 필드 -->
+      <div id="parsed-wrap">
+        <div class="m-section-label">02 · 수치 확인 및 수정</div>
+        <div class="pf-grid" style="margin-bottom:8px">
+          <div class="pfield">
+            <label>WTI 종가 ($/bbl) *</label>
+            <input type="number" id="f-wti" step="0.01" placeholder="62.33" class="hi">
           </div>
-          <div class="co-pane">
-            <div class="co-pane-label">🇰🇷 한국어</div>
-            <textarea class="co-ta kr" id="co-kr"></textarea>
+          <div class="pfield">
+            <label>전일比 $</label>
+            <input type="number" id="f-abs" step="0.01" placeholder="-0.56" oninput="autoPct()">
+          </div>
+          <div class="pfield">
+            <label>변동률 %</label>
+            <input type="number" id="f-pct" step="0.01" placeholder="-0.89">
+          </div>
+        </div>
+        <div class="pf-grid" style="margin-bottom:8px">
+          <div class="pfield">
+            <label>브렌트 종가 ($/bbl)</label>
+            <input type="number" id="f-brent" step="0.01" placeholder="67.29">
+          </div>
+          <div class="pfield">
+            <label>브렌트 변동률 %</label>
+            <input type="number" id="f-brentpct" step="0.01" placeholder="-1.98">
+          </div>
+          <div class="pfield">
+            <label>월물</label>
+            <select id="f-cont">
+              <option value="Mar">3월물 (Mar)</option>
+              <option value="Apr">4월물 (Apr)</option>
+              <option value="May">5월물 (May)</option>
+            </select>
+          </div>
+        </div>
+        <div class="pf-grid-2">
+          <div class="pfield">
+            <label>기준일</label>
+            <input type="date" id="f-date">
+          </div>
+          <div class="pfield">
+            <label>추가 시장 메모</label>
+            <input type="text" id="f-memo" placeholder="Nat.Gas -6.26% / DXY +0.24%">
           </div>
         </div>
       </div>
+
+      <!-- STEP 3: 요인 -->
+      <div id="step-factors" style="display:none">
+        <div class="m-section-label">03 · 가격 변동 요인 선택</div>
+        <div class="chip-group">▼ BEARISH — 하락</div>
+        <div class="chip-wrap" id="bear-chips"></div>
+        <div class="chip-group" style="margin-top:10px">▲ BULLISH — 상승</div>
+        <div class="chip-wrap" id="bull-chips"></div>
+      </div>
+
     </div>
 
-    <div class="mfoot">
-      <button class="btn-m btn-parse"    id="btn-parse"    onclick="doParse()">🔍 파싱</button>
-      <button class="btn-m btn-generate" id="btn-gen"      onclick="doGenerate()">✍️ 코멘터리 생성</button>
-      <button class="btn-m btn-copy"     id="btn-copy"     onclick="doCopyBoth()">⧉ Copy Both</button>
-      <button class="btn-close"                            onclick="closeModal()">닫기</button>
+    <div class="mftr">
+      <button class="mf-btn mf-parse" id="btn-parse" onclick="doParse()">🔍 파싱</button>
+      <button class="mf-btn mf-save"  id="btn-save"  onclick="doSave()">▶ 저장</button>
+      <button class="mf-btn mf-close"                onclick="closeModal()">닫기</button>
     </div>
   </div>
 </div>
-
-<!-- 이력 카드 영역 -->
-<div class="page-wrap">
-  <div id="empty-msg">
-    📋 우측 상단 <strong>뉴스 입력·파싱</strong> 버튼으로 오늘 WTI 시황을 입력하세요.<br>
-    <span style="font-size:.8rem;color:#bbb;margin-top:6px;display:block">입력된 시황은 아래에 카드로 누적됩니다.</span>
-  </div>
-  <div id="historyArea"></div>
-</div>
-
-<div id="toast"></div>
 
 <script>
-// ── CLOCK ──
+// ─── CLOCK ───
 function tick() {
   const k = new Date(Date.now() + 9*3600000);
-  const s = k.toISOString();
-  document.getElementById('topClock').textContent =
-    s.slice(0,10).replace(/-/g,'.') + '  ' + s.slice(11,19) + ' KST · WTI 원유 시황';
+  document.getElementById('clock').textContent =
+    k.toISOString().slice(0,10) + '  ' + k.toISOString().slice(11,19) + ' KST';
 }
 tick(); setInterval(tick, 1000);
 
-// ── FACTOR DATA ──
+// ─── FACTORS ───
 const FACTORS = [
-  { t:'bear', kr:'미·이란 핵 협상 진전', en:'US-Iran nuclear deal progress' },
-  { t:'bear', kr:'중동 지정학 리스크 완화', en:'Easing Middle East risk premium' },
-  { t:'bear', kr:'IEA 수요 전망 하향', en:'IEA demand forecast downgraded' },
-  { t:'bear', kr:'OPEC+ 증산 논의', en:'OPEC+ output increase discussed' },
-  { t:'bear', kr:'카자흐 텡기즈 유전 생산 재개', en:'Tengiz oilfield ramping up (Kazakhstan)' },
-  { t:'bear', kr:'미 원유 재고 증가(EIA)', en:'US crude inventory build (EIA)' },
-  { t:'bear', kr:'달러 강세', en:'USD strengthened' },
-  { t:'bear', kr:'경기침체 우려', en:'Recession/slowdown concerns' },
-  { t:'bull', kr:'중동 긴장 고조', en:'Middle East tensions escalating' },
-  { t:'bull', kr:'호르무즈 해협 리스크', en:'Hormuz Strait disruption risk' },
-  { t:'bull', kr:'OPEC+ 감산 유지·강화', en:'OPEC+ maintained/deepened cuts' },
-  { t:'bull', kr:'미 원유 재고 감소(EIA)', en:'US crude inventory draw (EIA)' },
-  { t:'bull', kr:'IEA/EIA 수요 전망 상향', en:'IEA/EIA demand upgrade' },
-  { t:'bull', kr:'달러 약세', en:'USD weakened' },
+  { t:'bear', kr:'미·이란 핵 협상 진전',      en:'US-Iran nuclear deal progress',       kw:['이란',['합의','진전']] },
+  { t:'bear', kr:'중동 지정학 리스크 완화',    en:'Easing Middle East risk premium',     kw:['중동','완화'] },
+  { t:'bear', kr:'IEA 수요 전망 하향',         en:'IEA demand forecast downgraded',      kw:['iea','하향'] },
+  { t:'bear', kr:'OPEC+ 증산 논의',            en:'OPEC+ output increase discussed',     kw:['opec','증산'] },
+  { t:'bear', kr:'카자흐 텡기즈 유전 재개',    en:'Tengiz oilfield ramping up',          kw:[['텡기즈','카자흐']] },
+  { t:'bear', kr:'미 원유 재고 증가 (EIA)',     en:'US crude inventory build (EIA)',      kw:['재고','증가'] },
+  { t:'bear', kr:'달러 강세',                  en:'USD strengthened (DXY up)',           kw:['달러','강세'] },
+  { t:'bear', kr:'경기침체 우려',              en:'Recession/slowdown concerns',         kw:['경기침체'] },
+  { t:'bull', kr:'중동 긴장 고조',             en:'Middle East tensions escalating',     kw:['중동','긴장'] },
+  { t:'bull', kr:'호르무즈 해협 리스크',       en:'Hormuz Strait disruption risk',       kw:['호르무즈'] },
+  { t:'bull', kr:'OPEC+ 감산 유지·강화',       en:'OPEC+ maintained/deepened cuts',      kw:['opec','감산'] },
+  { t:'bull', kr:'미 원유 재고 감소 (EIA)',     en:'US crude inventory draw (EIA)',       kw:['재고','감소'] },
+  { t:'bull', kr:'IEA/EIA 수요 전망 상향',     en:'IEA/EIA demand upgrade',              kw:['iea','상향'] },
+  { t:'bull', kr:'달러 약세',                  en:'USD weakened',                        kw:['달러','약세'] },
 ];
 
-const selFactors = new Set();
-let history = JSON.parse(localStorage.getItem('wti_history') || '[]');
+const selF = new Set();
+let editId = null;
 
-// ── MODAL ──
-function openModal() {
-  document.getElementById('news-input').value = '';
-  document.getElementById('pv-wrap').style.display = 'none';
-  document.getElementById('co-wrap').style.display = 'none';
-  document.getElementById('btn-gen').style.display = 'none';
-  document.getElementById('btn-copy').style.display = 'none';
-  selFactors.clear();
-  document.getElementById('overlay').classList.add('open');
-  setTimeout(() => document.getElementById('news-input').focus(), 120);
+// Build chips
+function buildChips() {
+  ['bear','bull'].forEach(t => {
+    const c = document.getElementById(`${t}-chips`);
+    c.innerHTML = '';
+    FACTORS.forEach((f, i) => {
+      if (f.t !== t) return;
+      const ch = document.createElement('div');
+      ch.className = 'chip' + (selF.has(i) ? ` sel-${t}` : '');
+      ch.textContent = f.kr;
+      ch.addEventListener('click', () => {
+        if (selF.has(i)) { selF.delete(i); ch.className = 'chip'; }
+        else { selF.add(i); ch.className = `chip sel-${t}`; }
+      });
+      c.appendChild(ch);
+    });
+  });
 }
+
+// Auto-detect factors from text
+function autoDetect(txt) {
+  const lo = txt.toLowerCase();
+  selF.clear();
+  FACTORS.forEach((f, i) => {
+    const hit = f.kw.every(k => {
+      if (Array.isArray(k)) return k.some(kk => lo.includes(kk));
+      return lo.includes(k);
+    });
+    if (hit) selF.add(i);
+  });
+}
+
+// ─── MODAL ───
+function openModal(id = null) {
+  editId = id;
+  selF.clear();
+  document.getElementById('modal-title').textContent = id !== null ? '◈ EDIT ENTRY' : '◈ NEW WTI ENTRY';
+  document.getElementById('news-ta').value = '';
+  document.getElementById('parse-st').style.display = 'none';
+  document.getElementById('parsed-wrap').style.display = 'none';
+  document.getElementById('step-factors').style.display = 'none';
+  document.getElementById('btn-save').style.display = 'none';
+
+  // Init date
+  const today = new Date(Date.now() + 9*3600000).toISOString().slice(0,10);
+  document.getElementById('f-date').value = today;
+  ['f-wti','f-abs','f-pct','f-brent','f-brentpct','f-memo'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-cont').value = 'Mar';
+
+  if (id !== null) {
+    // Load existing entry for edit
+    const entries = getEntries();
+    const e = entries.find(x => x.id === id);
+    if (e) {
+      document.getElementById('f-wti').value     = e.wti;
+      document.getElementById('f-abs').value     = e.abs ?? '';
+      document.getElementById('f-pct').value     = e.pct;
+      document.getElementById('f-brent').value   = e.brent ?? '';
+      document.getElementById('f-brentpct').value= e.brentPct ?? '';
+      document.getElementById('f-cont').value    = e.cont;
+      document.getElementById('f-date').value    = e.date;
+      document.getElementById('f-memo').value    = e.memo ?? '';
+      e.bears.concat(e.bulls).forEach(kr => {
+        const idx = FACTORS.findIndex(f => f.kr === kr);
+        if (idx >= 0) selF.add(idx);
+      });
+      showParsed(); showFactors();
+    }
+  }
+
+  buildChips();
+  document.getElementById('overlay').classList.add('open');
+}
+
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 document.getElementById('overlay').addEventListener('click', e => {
   if (e.target === document.getElementById('overlay')) closeModal();
 });
 
-// ── PARSE ──
+function showParsed() {
+  document.getElementById('parsed-wrap').style.display = 'block';
+  document.getElementById('step-factors').style.display = 'block';
+  document.getElementById('btn-save').style.display = 'block';
+}
+function showFactors() { document.getElementById('step-factors').style.display = 'block'; }
+
+// ─── PARSE ───
 function doParse() {
-  const txt = document.getElementById('news-input').value.trim();
-  if (!txt) { toast('기사 텍스트를 붙여넣어 주세요.', 'er'); return; }
+  const txt = document.getElementById('news-ta').value.trim();
 
-  const f = {};
-  let m;
+  // Even if no text, show fields for manual entry
+  if (!txt) { showParsed(); buildChips(); showStatus('warn','텍스트 없음 — 아래 필드에 직접 입력하세요.'); return; }
 
-  // WTI 종가
+  const f = {}; let m;
+
+  // WTI
   m = txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);
   if (m) f.wti = parseFloat(m[1]);
-  if (!f.wti) {
-    m = txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/);
-    if (m) f.wti = parseFloat(m[1]);
-  }
+  if (!f.wti) { m = txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/); if (m) f.wti = parseFloat(m[1]); }
 
-  // 전일比 $ & %
-  const wtiSeg = (txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,200}/) || [''])[0];
-  m = wtiSeg.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
+  // 전일比
+  const ws = (txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,200}/) || [''])[0];
+  m = ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
   if (m) { f.abs = -parseFloat(m[1]); f.pct = -parseFloat(m[2]); }
-  if (!f.abs) { m = wtiSeg.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/); if (m) { f.abs = parseFloat(m[1]); f.pct = parseFloat(m[2]); } }
   if (!f.abs) { m = txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/); if (m) { f.abs = -parseFloat(m[1]); f.pct = -parseFloat(m[2]); } }
-  if (!f.pct) { m = txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/); if (m) f.pct = m[2]==='하락' ? -parseFloat(m[1]) : parseFloat(m[1]); }
+  if (!f.abs) { m = ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/); if (m) { f.abs = parseFloat(m[1]); f.pct = parseFloat(m[2]); } }
+  if (!f.pct) { m = txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/); if (m) f.pct = m[2]==='하락'?-parseFloat(m[1]):parseFloat(m[1]); }
+  // 역산 abs
+  if (!f.abs && f.wti && f.pct) { const prev = f.wti / (1 + f.pct/100); f.abs = parseFloat((f.wti - prev).toFixed(2)); }
 
-  // 브렌트 종가
-  const brSegs = txt.match(/브렌트유[^\n。]{0,150}/g) || [];
-  for (const seg of brSegs) {
-    const pm = seg.match(/(?:배럴당|가격은)\s*([\d.]+)달러/);
-    if (pm && parseFloat(pm[1]) > 10) { f.brent = parseFloat(pm[1]); break; }
-  }
-  // 브렌트 변동률
-  for (const seg of brSegs) {
-    let bm = seg.match(/[\d.]+달러\(([\d.]+)%\)\s*(?:내린|하락한|떨어진)/);
-    if (bm) { f.brentPct = -parseFloat(bm[1]); break; }
-    bm = seg.match(/달러로\s*([\d.]+)%\s*(하락|상승)/);
-    if (bm) { f.brentPct = bm[2]==='하락' ? -parseFloat(bm[1]) : parseFloat(bm[1]); break; }
-    bm = seg.match(/\(([\d.]+)%\)\s*(?:내린|하락)/);
-    if (bm) { f.brentPct = -parseFloat(bm[1]); break; }
+  // 브렌트
+  const brs = txt.match(/브렌트유[^\n。]{0,150}/g) || [];
+  for (const s of brs) { const pm = s.match(/(?:배럴당|가격은)\s*([\d.]+)달러/); if (pm && parseFloat(pm[1])>10) { f.brent=parseFloat(pm[1]); break; } }
+  for (const s of brs) {
+    let bm = s.match(/[\d.]+달러\(([\d.]+)%\)\s*(?:내린|하락한|떨어진)/); if (bm) { f.brentPct=-parseFloat(bm[1]); break; }
+    bm = s.match(/달러로\s*([\d.]+)%\s*(하락|상승)/); if (bm) { f.brentPct=bm[2]==='하락'?-parseFloat(bm[1]):parseFloat(bm[1]); break; }
+    bm = s.match(/\(([\d.]+)%\)\s*(?:내린|하락)/); if (bm) { f.brentPct=-parseFloat(bm[1]); break; }
   }
 
-  // 기사 날짜 추출 (YYYY-MM-DD)
-  const dateM = txt.match(/20(\d{2})[.\-\/](\d{1,2})[.\-\/](\d{1,2})/);
-  const today = new Date(Date.now() + 9*3600000).toISOString().slice(0,10);
-  f.date = dateM ? `20${dateM[1]}-${String(dateM[2]).padStart(2,'0')}-${String(dateM[3]).padStart(2,'0')}` : today;
+  // Fill fields
+  if (f.wti)     { document.getElementById('f-wti').value     = f.wti.toFixed(2); }
+  if (f.abs)     { document.getElementById('f-abs').value     = f.abs.toFixed(2); }
+  if (f.pct)     { document.getElementById('f-pct').value     = f.pct.toFixed(2); }
+  if (f.brent)   { document.getElementById('f-brent').value   = f.brent.toFixed(2); }
+  if (f.brentPct){ document.getElementById('f-brentpct').value= f.brentPct.toFixed(2); }
 
-  const priceOk = f.wti !== undefined;
-  const allOk   = priceOk && f.abs !== undefined && f.pct !== undefined;
+  autoDetect(txt);
+  showParsed();
+  buildChips();
 
-  // 요인 키워드 자동 감지 (선택 도움)
-  const autoSel = new Set();
-  const lo = txt.toLowerCase();
-  if (lo.includes('이란') && (lo.includes('합의')||lo.includes('진전'))) autoSel.add(0);
-  if (lo.includes('중동') && lo.includes('완화')) autoSel.add(1);
-  if (lo.includes('iea') && lo.includes('하향')) autoSel.add(2);
-  if (lo.includes('opec') && (lo.includes('증산')||lo.includes('증가'))) autoSel.add(3);
-  if (lo.includes('텡기즈') || lo.includes('카자흐')) autoSel.add(4);
-  if (lo.includes('재고') && lo.includes('증가')) autoSel.add(5);
-  if (lo.includes('달러') && (lo.includes('강세')||lo.includes('상승'))) autoSel.add(6);
-  if (lo.includes('이란') && (lo.includes('긴장')||lo.includes('갈등'))) autoSel.add(8);
-  if (lo.includes('호르무즈')) autoSel.add(9);
-  if (lo.includes('opec') && lo.includes('감산')) autoSel.add(10);
-  if (lo.includes('재고') && lo.includes('감소')) autoSel.add(11);
-  autoSel.forEach(i => selFactors.add(i));
-
-  // 그리드 렌더
-  const pctStr = f.pct !== undefined ? `${f.pct >= 0 ? '+' : ''}${f.pct.toFixed(2)}%` : '-';
-  const absStr = f.abs !== undefined ? `${f.abs >= 0 ? '+' : ''}${f.abs.toFixed(2)}` : '-';
-  const pctCls = f.pct > 0 ? 'up' : f.pct < 0 ? 'dn' : '';
-
-  document.getElementById('pg').innerHTML = `
-    <div class="pf price-ok">
-      <div class="pl">WTI 종가 ($/bbl) *</div>
-      <input class="pv-input hi" id="ed-wti" value="${f.wti !== undefined ? f.wti.toFixed(2) : ''}" placeholder="직접 입력">
-    </div>
-    <div class="pf">
-      <div class="pl">전일比 $</div>
-      <input class="pv-input ${pctCls}" id="ed-abs" value="${f.abs !== undefined ? f.abs.toFixed(2) : ''}" placeholder="예: -0.56">
-    </div>
-    <div class="pf">
-      <div class="pl">변동률 %</div>
-      <input class="pv-input ${pctCls}" id="ed-pct" value="${f.pct !== undefined ? f.pct.toFixed(2) : ''}" placeholder="예: -0.89">
-    </div>
-    <div class="pf">
-      <div class="pl">브렌트 종가 ($/bbl)</div>
-      <input class="pv-input" id="ed-brent" value="${f.brent !== undefined ? f.brent.toFixed(2) : ''}" placeholder="예: 67.29">
-    </div>
-    <div class="pf">
-      <div class="pl">브렌트 변동률 %</div>
-      <input class="pv-input" id="ed-brentpct" value="${f.brentPct !== undefined ? f.brentPct.toFixed(2) : ''}" placeholder="예: -1.98">
-    </div>
-    <div class="pf">
-      <div class="pl">월물</div>
-      <select class="pv-input" id="ed-cont">
-        <option value="3월물(Mar)">3월물 (Mar)</option>
-        <option value="4월물(Apr)">4월물 (Apr)</option>
-        <option value="5월물(May)">5월물 (May)</option>
-      </select>
-    </div>
-    <div class="pf">
-      <div class="pl">기사 기준일</div>
-      <input class="pv-input" id="ed-date" value="${f.date}" type="date">
-    </div>
-    <div class="pf">
-      <div class="pl">추가 시장 메모</div>
-      <input class="pv-input" id="ed-memo" placeholder="Nat.Gas -6.26% / DXY +0.24%">
-    </div>
-
-    <!-- 하락 요인 -->
-    <div class="factor-section">
-      <div class="factor-section-title">
-        <span class="dot" style="background:#e74c3c"></span>▼ 하락 요인 (클릭 선택 · 자동 감지 표시됨)
-      </div>
-      <div class="chip-grid" id="bear-chips"></div>
-    </div>
-    <!-- 상승 요인 -->
-    <div class="factor-section" style="border-bottom:none">
-      <div class="factor-section-title">
-        <span class="dot" style="background:#27ae60"></span>▲ 상승 요인
-      </div>
-      <div class="chip-grid" id="bull-chips"></div>
-    </div>`;
-
-  // 칩 렌더
-  ['bear','bull'].forEach(t => {
-    const container = document.getElementById(`${t}-chips`);
-    FACTORS.forEach((f, i) => {
-      if (f.t !== t) return;
-      const ch = document.createElement('div');
-      ch.className = 'fchip' + (selFactors.has(i) ? ` sel-${t}` : '');
-      ch.textContent = f.kr;
-      ch.addEventListener('click', () => {
-        if (selFactors.has(i)) { selFactors.delete(i); ch.className = 'fchip'; }
-        else { selFactors.add(i); ch.className = `fchip sel-${t}`; }
-      });
-      container.appendChild(ch);
-    });
-  });
-
-  const badge = document.getElementById('pbadge');
-  badge.textContent = allOk ? '✅ 파싱 완료' : priceOk ? '⚠️ 일부 미인식 — 확인 필요' : '❌ 수동 입력 필요';
-  badge.className   = `pbadge ${allOk ? 'pb-ok' : 'pb-warn'}`;
-
-  document.getElementById('pv-wrap').style.display = 'block';
-  document.getElementById('btn-gen').style.display = 'block';
-  document.getElementById('co-wrap').style.display = 'none';
-  document.getElementById('btn-copy').style.display = 'none';
-
-  toast(allOk ? `✅ WTI $${f.wti?.toFixed(2)} (${pctStr}) 파싱 완료` : '⚠️ 수치 확인 후 수정하세요.', allOk ? 'ok' : 'inf');
+  const ok = f.wti && f.pct !== undefined;
+  showStatus(ok ? 'ok' : 'warn',
+    ok ? `✓ WTI $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%) · ${selF.size}개 요인 자동 감지` : '⚠ 일부 수치 미인식 — 아래에서 직접 수정하세요.');
 }
 
-// ── GENERATE COMMENTARY ──
-function doGenerate() {
-  const wti     = parseFloat(document.getElementById('ed-wti').value);
-  const abs     = parseFloat(document.getElementById('ed-abs').value);
-  const pct     = parseFloat(document.getElementById('ed-pct').value);
-  const brent   = parseFloat(document.getElementById('ed-brent').value);
-  const brentPct= parseFloat(document.getElementById('ed-brentpct').value);
-  const cont    = document.getElementById('ed-cont').value;
-  const dateV   = document.getElementById('ed-date').value;
-  const memo    = document.getElementById('ed-memo').value.trim();
+function showStatus(type, msg) {
+  const el = document.getElementById('parse-st');
+  el.style.display = 'block';
+  el.className = `parse-status ${type}`;
+  el.textContent = msg;
+}
 
-  if (isNaN(wti) || isNaN(pct)) { toast('WTI 종가와 변동률을 입력하세요.', 'er'); return; }
+function autoPct() {
+  const wti = parseFloat(document.getElementById('f-wti').value);
+  const abs = parseFloat(document.getElementById('f-abs').value);
+  if (wti && !isNaN(abs)) {
+    const prev = wti - abs;
+    if (prev > 0) document.getElementById('f-pct').value = (abs/prev*100).toFixed(2);
+  }
+}
 
-  const pctStr  = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
-  const absStr  = (abs >= 0 ? '+' : '') + abs.toFixed(2);
-  const dir     = pct > 0 ? 'higher' : pct < 0 ? 'lower' : 'unchanged';
-  const dirKR   = pct > 0 ? '상승' : pct < 0 ? '하락' : '보합';
+// ─── SAVE ───
+function getEntries() { return JSON.parse(localStorage.getItem('wti_entries') || '[]'); }
+function setEntries(arr) { localStorage.setItem('wti_entries', JSON.stringify(arr)); }
 
-  const d       = new Date(dateV + 'T00:00:00Z');
-  const enDate  = d.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});
-  const krDate  = dateV.replace(/-/g,'.');
-  const contEN  = cont.match(/\((\w+)\)/)?.[1] || 'Mar';
+function doSave() {
+  const wti  = parseFloat(document.getElementById('f-wti').value);
+  const pct  = parseFloat(document.getElementById('f-pct').value);
+  if (isNaN(wti) || isNaN(pct)) { showStatus('err','WTI 종가와 변동률은 필수입니다.'); return; }
+
+  const abs      = parseFloat(document.getElementById('f-abs').value) || null;
+  const brent    = parseFloat(document.getElementById('f-brent').value) || null;
+  const brentPct = parseFloat(document.getElementById('f-brentpct').value) || null;
+  const cont     = document.getElementById('f-cont').value;
+  const date     = document.getElementById('f-date').value;
+  const memo     = document.getElementById('f-memo').value.trim() || null;
 
   const bears = [], bulls = [];
-  selFactors.forEach(i => { FACTORS[i].t === 'bear' ? bears.push(FACTORS[i]) : bulls.push(FACTORS[i]); });
+  selF.forEach(i => { FACTORS[i].t==='bear' ? bears.push(FACTORS[i].kr) : bulls.push(FACTORS[i].kr); });
 
-  // EN
-  let en = `[WTI] ${d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})} · $${wti.toFixed(2)}/bbl (${pctStr})\n${'─'.repeat(50)}\n\n`;
-  en += `WTI crude (${contEN} contract, NYMEX) settled ${dir} on ${enDate}, closing at $${wti.toFixed(2)}/bbl (${absStr} USD, ${pctStr}).`;
-  if (!isNaN(brent) && !isNaN(brentPct)) en += ` Brent (ICE): $${brent.toFixed(2)}/bbl (${(brentPct>=0?'+':'')+brentPct.toFixed(2)}%).`;
-  en += '\n\n';
-  if (bears.length) { en += 'Downside drivers:\n'; bears.forEach(f => { en += `  • ${f.en}\n`; }); en += '\n'; }
-  if (bulls.length) { en += 'Upside drivers:\n';   bulls.forEach(f => { en += `  • ${f.en}\n`; }); en += '\n'; }
-  if (memo) en += `Market: ${memo}\n\n`;
-  if (pct < 0 && bears.length) en += `Bearish pressure from ${bears[0].en.toLowerCase()} dominated sentiment.`;
-  else if (pct > 0 && bulls.length) en += `Prices supported by ${bulls[0].en.toLowerCase()}.`;
-  else if (bears.length || bulls.length) en += `Mixed signals kept prices range-bound.`;
+  // Build commentary
+  const pctStr = (pct>=0?'+':'')+pct.toFixed(2)+'%';
+  const absStr = abs !== null ? (abs>=0?'+':'')+abs.toFixed(2) : null;
+  const dir    = pct>0?'higher':pct<0?'lower':'unchanged';
+  const dirKR  = pct>0?'상승':pct<0?'하락':'보합';
+  const d      = new Date(date+'T00:00:00Z');
+  const enDate = d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});
+  const krDate = date.replace(/-/g,'.');
+  const contLabel = FACTORS; // just use cont directly
 
-  // KR
-  let kr = `[WTI 시황] ${krDate} · $${wti.toFixed(2)} (${pctStr})\n${'─'.repeat(36)}\n\n`;
-  kr += `WTI 원유(${cont}, NYMEX)는 ${krDate} 전 거래일 대비 ${absStr} USD(${pctStr}) ${dirKR}한 배럴당 $${wti.toFixed(2)}에 마감했다.`;
-  if (!isNaN(brent) && !isNaN(brentPct)) kr += ` 브렌트유(ICE)는 $${brent.toFixed(2)}/배럴(${(brentPct>=0?'+':'')+brentPct.toFixed(2)}%).`;
-  kr += '\n\n';
-  if (bears.length) { kr += '▼ 하락 요인\n'; bears.forEach(f => { kr += `  • ${f.kr}\n`; }); kr += '\n'; }
-  if (bulls.length) { kr += '▲ 상승 요인\n'; bulls.forEach(f => { kr += `  • ${f.kr}\n`; }); kr += '\n'; }
-  if (memo) kr += `[관련 시장] ${memo}\n\n`;
-  if (pct < 0 && bears.length) kr += `${bears[0].kr} 등 하방 재료 압박으로 약세 마감.`;
-  else if (pct > 0 && bulls.length) kr += `${bulls[0].kr} 등이 유가를 지지하며 강세 마감.`;
-  else if (bears.length || bulls.length) kr += `상·하방 재료 혼재 속 방향성 탐색.`;
+  const bearF = bears.map(kr => FACTORS.find(f=>f.kr===kr)).filter(Boolean);
+  const bullF = bulls.map(kr => FACTORS.find(f=>f.kr===kr)).filter(Boolean);
 
-  document.getElementById('co-en').value = en;
-  document.getElementById('co-kr').value = kr;
-  document.getElementById('co-wrap').style.display = 'block';
-  document.getElementById('btn-copy').style.display = 'block';
+  let en = `WTI (${cont}, NYMEX) settled ${dir} on ${enDate} at $${wti.toFixed(2)}/bbl`;
+  if (absStr) en += ` (${absStr} USD, ${pctStr})`;
+  if (brent && brentPct) en += `. Brent (ICE): $${brent.toFixed(2)}/bbl (${(brentPct>=0?'+':'')+brentPct.toFixed(2)}%)`;
+  en += '.';
+  if (bearF.length) en += '\n\nDownside: ' + bearF.map(f=>'• '+f.en).join('  ');
+  if (bullF.length) en += '\nUpside: ' + bullF.map(f=>'• '+f.en).join('  ');
+  if (memo) en += '\n\nMarket: ' + memo;
 
-  // 이력에 저장
-  const entry = { wti, abs, pct, brent, brentPct, cont, date: dateV, memo, bears: bears.map(f=>f.kr), bulls: bulls.map(f=>f.kr), en, kr };
-  history.unshift(entry);
-  if (history.length > 30) history = history.slice(0, 30);
-  localStorage.setItem('wti_history', JSON.stringify(history));
-  renderHistory();
+  let kr = `WTI 원유(${cont}월물, NYMEX)는 ${krDate} 전 거래일 대비`;
+  if (absStr) kr += ` ${absStr} USD(${pctStr})`;
+  kr += ` ${dirKR}한 배럴당 $${wti.toFixed(2)}에 마감했다.`;
+  if (brent && brentPct) kr += ` 브렌트유(ICE) $${brent.toFixed(2)} (${(brentPct>=0?'+':'')+brentPct.toFixed(2)}%).`;
+  if (bearF.length) kr += '\n\n▼ 하락 요인\n' + bearF.map(f=>'• '+f.kr).join('\n');
+  if (bullF.length) kr += '\n\n▲ 상승 요인\n' + bullF.map(f=>'• '+f.kr).join('\n');
+  if (pct<0 && bearF.length) kr += `\n\n${bearF[0].kr} 등 하방 재료 압박으로 약세 마감.`;
+  else if (pct>0 && bullF.length) kr += `\n\n${bullF[0].kr} 등이 유가를 지지하며 강세 마감.`;
+  if (memo) kr += '\n\n[관련 시장] ' + memo;
 
-  toast('✍️ 코멘터리 생성 완료!', 'ok');
+  const entry = {
+    id: editId !== null ? editId : Date.now(),
+    wti, abs, pct, brent, brentPct, cont, date, memo, bears, bulls, en, kr,
+    savedAt: new Date().toISOString()
+  };
+
+  let entries = getEntries();
+  if (editId !== null) {
+    entries = entries.map(e => e.id === editId ? entry : e);
+  } else {
+    entries.unshift(entry);
+  }
+  setEntries(entries);
+  renderAll();
+  closeModal();
 }
 
-// ── COPY ──
-function doCopyBoth() {
-  const en = document.getElementById('co-en').value;
-  const kr = document.getElementById('co-kr').value;
-  navigator.clipboard.writeText(en + '\n\n' + '━'.repeat(50) + '\n\n' + kr).then(() => {
-    toast('✅ EN + KR 복사 완료!', 'ok');
-    const btn = document.getElementById('btn-copy');
-    btn.textContent = '✓ Copied!';
-    setTimeout(() => { btn.textContent = '⧉ Copy Both'; }, 2000);
-  });
+// ─── DELETE ───
+function deleteEntry(id) {
+  if (!confirm('이 항목을 삭제하시겠습니까?')) return;
+  setEntries(getEntries().filter(e => e.id !== id));
+  renderAll();
 }
 
-// ── HISTORY CARDS ──
-function renderHistory() {
-  const area = document.getElementById('historyArea');
-  const empty = document.getElementById('empty-msg');
-  if (!history.length) { empty.style.display='block'; area.innerHTML=''; return; }
-  empty.style.display = 'none';
+// ─── RENDER ───
+function renderAll() {
+  const entries = getEntries();
+  const empty = document.getElementById('empty');
+  const cards = document.getElementById('cards');
+  empty.style.display = entries.length ? 'none' : 'block';
+  cards.innerHTML = entries.map(e => renderCard(e)).join('');
+}
 
-  area.innerHTML = history.map((h, i) => {
-    const pctStr = (h.pct >= 0 ? '+' : '') + h.pct.toFixed(2) + '%';
-    const absStr = (h.abs >= 0 ? '+' : '') + h.abs.toFixed(2);
-    const dir    = h.pct > 0 ? 'up' : h.pct < 0 ? 'dn' : 'flt';
-    const arrow  = h.pct > 0 ? '▲' : h.pct < 0 ? '▼' : '─';
-    const factorHTML = [
-      ...h.bears.map(f => `<span class="ftag bear">▼ ${f}</span>`),
-      ...h.bulls.map(f => `<span class="ftag bull">▲ ${f}</span>`),
-    ].join('');
+function renderCard(e) {
+  const pct    = e.pct;
+  const dir    = pct>0?'up':pct<0?'dn':'flt';
+  const arrow  = pct>0?'▲':pct<0?'▼':'─';
+  const pctStr = (pct>=0?'+':'')+pct.toFixed(2)+'%';
+  const absStr = e.abs!==null ? (e.abs>=0?'+':'')+e.abs.toFixed(2)+' USD' : '';
+  const krDate = e.date.replace(/-/g,'.');
 
-    return `<div class="hcard ${dir}">
-      <div class="hcard-top">
-        <div>
-          <div class="hcard-date">${h.date.replace(/-/g,'.')}  ${h.cont}</div>
-          <div class="hcard-sub">NYMEX WTI Crude · ${arrow} ${dir === 'up' ? '상승' : dir === 'dn' ? '하락' : '보합'} 마감</div>
-        </div>
-        <div class="price-badge ${dir}">
-          <span class="pv">$${h.wti.toFixed(2)}</span>
-          <span class="pc">${pctStr}</span>
-        </div>
-      </div>
-      ${h.brent ? `<div class="row-item"><div class="rl">Brent</div><div class="rv">$${h.brent.toFixed(2)} (${(h.brentPct>=0?'+':'')+h.brentPct.toFixed(2)}%)</div></div>` : ''}
-      <div class="row-item"><div class="rl">전일比</div><div class="rv hi">${absStr} USD (${pctStr})</div></div>
-      ${factorHTML ? `<div class="row-item" style="flex-direction:column">
-        <div class="rl" style="margin-bottom:6px">요인</div>
-        <div class="factor-tags">${factorHTML}</div>
-      </div>` : ''}
-      ${h.memo ? `<div class="row-item"><div class="rl">관련시장</div><div class="rv" style="font-size:.78rem;color:#666">${h.memo}</div></div>` : ''}
-      <div class="row-item" style="flex-direction:column;border-bottom:none">
-        <div class="rl" style="margin-bottom:5px">코멘터리 (KR)</div>
-        <div class="cmt-box">${h.kr.replace(/\n/g,'<br>')}</div>
-      </div>
-    </div>`;
+  const bearItems = e.bears.map(kr => {
+    const f = FACTORS.find(x => x.kr === kr);
+    return f ? `<div class="factor-item"><span class="fi-bullet bear">▼</span><div><div class="fi-kr">${f.kr}</div><div class="fi-en">${f.en}</div></div></div>` : '';
   }).join('');
+
+  const bullItems = e.bulls.map(kr => {
+    const f = FACTORS.find(x => x.kr === kr);
+    return f ? `<div class="factor-item"><span class="fi-bullet bull">▲</span><div><div class="fi-kr">${f.kr}</div><div class="fi-en">${f.en}</div></div></div>` : '';
+  }).join('');
+
+  const hasFactors = bearItems || bullItems;
+
+  return `<div class="brief" id="card-${e.id}">
+    <div class="brief-strip">
+      <div class="strip-date">
+        <div class="sd-date">${krDate}</div>
+        <div class="sd-cont">NYMEX · ${e.cont}월물</div>
+      </div>
+      <div class="strip-price">
+        <div class="sp-val ${dir}">${arrow} ${e.wti.toFixed(2)}</div>
+        <div class="sp-unit">USD / bbl</div>
+        <div class="sp-delta">
+          ${absStr ? `<div class="sp-d-row"><span class="sp-d-label">Δ$</span><span class="sp-d-val ${dir}">${absStr}</span></div>` : ''}
+          <div class="sp-d-row"><span class="sp-d-label">Δ%</span><span class="sp-d-val ${dir}">${pctStr}</span></div>
+        </div>
+      </div>
+      ${e.brent ? `<div class="strip-brent">
+        <div class="sb-label">Brent ICE</div>
+        <div class="sb-val">$${e.brent.toFixed(2)}</div>
+        ${e.brentPct!==null ? `<div class="sb-chg ${e.brentPct>=0?'up':'dn'}">${(e.brentPct>=0?'+':'')+e.brentPct.toFixed(2)}%</div>` : ''}
+      </div>` : ''}
+      <div class="strip-actions">
+        <button class="act-btn edit" onclick="openModal(${e.id})">✎ EDIT</button>
+        <button class="act-btn del"  onclick="deleteEntry(${e.id})">✕ DEL</button>
+      </div>
+    </div>
+
+    ${hasFactors ? `<div class="brief-body">
+      <div class="factors-row">
+        ${bearItems ? `<div class="factor-col">
+          <div class="fc-title bear"><span class="fc-dot bear"></span>Bearish · 하락 요인</div>
+          ${bearItems}
+        </div>` : ''}
+        ${bullItems ? `<div class="factor-col">
+          <div class="fc-title bull"><span class="fc-dot bull"></span>Bullish · 상승 요인</div>
+          ${bullItems}
+        </div>` : ''}
+      </div>
+      ${e.memo ? `<div class="brief-memo"><div class="memo-label">Related Markets</div>${e.memo}</div>` : ''}
+    </div>` : ''}
+
+    <div class="brief-commentary">
+      <div class="co-pane">
+        <div class="co-label">EN</div>
+        <div class="co-text en">${e.en}</div>
+      </div>
+      <div class="co-pane">
+        <div class="co-label">KR</div>
+        <div class="co-text">${e.kr}</div>
+      </div>
+    </div>
+
+    <div class="brief-copy">
+      <button class="cp-btn" onclick="copyText('${e.id}','en')">Copy EN</button>
+      <button class="cp-btn" onclick="copyText('${e.id}','kr')">Copy KR</button>
+      <button class="cp-btn pri" onclick="copyText('${e.id}','both')">⧉ Copy Both</button>
+    </div>
+  </div>`;
 }
 
-// TOAST
-function toast(msg, type='inf', ms=3000) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = `show ${type}`;
-  clearTimeout(t._t); t._t = setTimeout(() => t.className='', ms);
+function copyText(id, type) {
+  const e = getEntries().find(x => x.id == id);
+  if (!e) return;
+  let txt = type==='en' ? e.en : type==='kr' ? e.kr : e.en + '\n\n' + '━'.repeat(48) + '\n\n' + e.kr;
+  navigator.clipboard.writeText(txt).then(() => {
+    // flash the button
+    const btns = document.querySelectorAll(`#card-${id} .cp-btn`);
+    btns.forEach(b => { if (b.textContent.toLowerCase().includes(type==='both'?'both':type)) { b.classList.add('ok'); setTimeout(()=>b.classList.remove('ok'),1800); } });
+  });
 }
 
 // INIT
-renderHistory();
+renderAll();
 </script>
 </body>
 </html>
