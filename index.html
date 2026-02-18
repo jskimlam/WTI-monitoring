@@ -17,20 +17,17 @@
   --border2: #343a50;
   --green:   #34d875;
   --red:     #f87171;
-  --text:    #e8ecf4;       /* 기본 텍스트 — 밝게 */
-  --text2:   #c4cce0;       /* 보조 텍스트 — 충분히 밝게 */
+  --text:    #e8ecf4;
+  --text2:   #c4cce0;
   --dim:     #6a7490;
   --ylw:     #fbbf24;
   --ylw2:    #fde68a;
   --ylw3:    #fef3c7;
   --gold:    #f59e0b;
   --ylw-dim: #7a560e;
-  --quote-txt: #ffffff;     /* 원문 인용 — 흰색으로 강화 */
-  --ctr-txt:   #d4dae8;     /* 반대요인 원문 */
-  --tag-bear-bg:#2a1818; --tag-bear-txt:#f87171; --tag-bear-bd:#7a2c2c;
-  --tag-bull-bg:#182a1c; --tag-bull-txt:#34d875; --tag-bull-bd:#2a6636;
-  --tag-dim-bg: #1c2030; --tag-dim-txt: #8898b8; --tag-dim-bd: #2c3550;
-  --mono:'DM Mono',monospace; --sans:'Noto Sans KR',sans-serif; --disp:'Bebas Neue',sans-serif;
+  --mono:'DM Mono',monospace;
+  --sans:'Noto Sans KR',sans-serif;
+  --disp:'Bebas Neue',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);}
@@ -98,7 +95,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   animation:fadeUp .3s ease both;
 }
 .brief.dir-dn{border-left:6px solid var(--red);}
-.brief.dir-up{border-left:6px solid var(--green);}
+.brief.dir-up{border-left:6px solid var(--ylw);}
 .brief.dir-flt{border-left:6px solid var(--dim);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .brief.sub-source{margin-top:8px;border-radius:8px;border-left:6px solid var(--ylw-dim);}
@@ -109,8 +106,6 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   background:var(--card);border-bottom:1px solid var(--border);
   min-height:180px;
 }
-
-/* 날짜 */
 .bh-date{
   padding:30px 36px;border-right:1px solid var(--border);
   display:flex;flex-direction:column;justify-content:center;gap:10px;
@@ -118,25 +113,21 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 }
 .bh-date-val{font-family:var(--mono);font-size:28px;color:var(--ylw2);font-weight:700;letter-spacing:.04em;}
 .bh-date-cont{font-family:var(--mono);font-size:14px;color:var(--dim);}
-
-/* 가격 — 종가를 크고 임팩트있게 */
 .bh-price{
   display:flex;align-items:center;gap:12px;
   padding:24px 40px;flex-shrink:0;
 }
 .bh-arrow{font-family:var(--disp);font-size:56px;line-height:1;flex-shrink:0;}
-.bh-arrow.up{color:var(--green);}
+.bh-arrow.up{color:var(--ylw);}
 .bh-arrow.dn{color:var(--red);}
 .bh-arrow.flt{color:var(--dim);}
 .bh-price-block{display:flex;flex-direction:column;gap:4px;}
 .bh-price-label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ylw);opacity:.8;}
 .bh-val{font-family:var(--disp);font-size:160px;line-height:.88;letter-spacing:.01em;}
-.bh-val.up{color:var(--green);}
+.bh-val.up{color:var(--ylw);}
 .bh-val.dn{color:var(--red);}
 .bh-val.flt{color:var(--text);}
 .bh-unit{font-family:var(--mono);font-size:16px;color:var(--dim);align-self:flex-end;padding-bottom:16px;line-height:1.6;}
-
-/* 델타 */
 .bh-delta{
   display:flex;flex-direction:column;justify-content:center;gap:16px;
   padding:24px 36px;border-left:1px solid var(--border);flex-shrink:0;
@@ -144,10 +135,8 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .bh-d-row{display:flex;align-items:center;gap:14px;}
 .bh-d-label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--dim);width:36px;text-transform:uppercase;}
 .bh-d-val{font-family:var(--mono);font-size:44px;font-weight:700;line-height:1;}
-.bh-d-val.up{color:var(--green);}
+.bh-d-val.up{color:var(--ylw);}
 .bh-d-val.dn{color:var(--red);}
-
-/* 방향 뱃지 */
 .bh-dir{
   padding:24px 32px;border-left:1px solid var(--border);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;flex-shrink:0;
@@ -156,12 +145,10 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   font-family:var(--sans);font-size:26px;font-weight:800;
   padding:12px 32px;border-radius:36px;white-space:nowrap;
 }
-.bh-dir-badge.up{background:rgba(52,216,117,.18);color:var(--green);border:1px solid rgba(52,216,117,.4);}
+.bh-dir-badge.up{background:rgba(251,191,36,.15);color:var(--ylw);border:1px solid rgba(251,191,36,.4);}
 .bh-dir-badge.dn{background:rgba(248,113,113,.18);color:var(--red);border:1px solid rgba(248,113,113,.4);}
-.bh-dir-badge.flt{background:rgba(106,116,144,.18);color:var(--dim);border:1px solid var(--border2);}
+.bh-dir-badge.flt{background:rgba(232,236,244,.1);color:var(--text);border:1px solid rgba(232,236,244,.3);}
 .bh-dir-label{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;}
-
-/* EDIT/DEL */
 .bh-actions{margin-left:auto;display:flex;flex-direction:column;border-left:1px solid var(--border);min-width:90px;align-self:stretch;}
 .act-btn{
   flex:1;display:flex;align-items:center;justify-content:center;
@@ -174,118 +161,66 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .act-btn.edit:hover{background:rgba(251,191,36,.08);color:var(--ylw);}
 .act-btn.del:hover{background:rgba(248,113,113,.08);color:var(--red);}
 
-/* ══ 소스 헤더 (추가파싱) ══ */
-.source-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 32px;background:var(--card);border-bottom:1px solid var(--border);
-}
-.src-badge{
-  font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ylw);background:rgba(245,158,11,.1);border:1px solid var(--ylw-dim);
-  padding:6px 16px;border-radius:4px;
-}
-.src-actions{display:flex;gap:8px;}
-.src-act-btn{
-  background:transparent;border:1px solid var(--border2);color:var(--dim);
-  padding:6px 14px;border-radius:4px;font-family:var(--mono);font-size:12px;
-  text-transform:uppercase;cursor:pointer;transition:all .15s;letter-spacing:.08em;
-}
-.src-act-btn.edit:hover{border-color:var(--ylw);color:var(--ylw);}
-.src-act-btn.del:hover{border-color:var(--red);color:var(--red);}
-
-/* ══ 아코디언 ══ */
-.accordion-toggle{
-  width:100%;padding:16px 32px;
-  background:var(--inset);border:none;border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  cursor:pointer;transition:background .15s;
-}
-.accordion-toggle:hover{background:rgba(245,158,11,.05);}
-.at-label{font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ylw);display:flex;align-items:center;gap:10px;}
-.at-arrow{font-size:14px;color:var(--ylw);transition:transform .22s;}
-.at-arrow.open{transform:rotate(180deg);}
-.accordion-body{display:none;}
-.accordion-body.open{display:block;}
-
-/* ══ 2컬럼 팩트 패널 ══ */
-.brief-facts{
-  display:grid;grid-template-columns:1fr 1fr;
-  border-bottom:1px solid var(--border);
-}
-.fact-col{
-  padding:30px 34px;
-  display:flex;flex-direction:column;gap:16px;
-}
-.fact-col:first-child{border-right:1px solid var(--border);}
-
-.fact-col-title{
-  display:flex;align-items:center;gap:10px;
-  font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ylw);padding-bottom:14px;border-bottom:1px solid var(--border);
-}
-.fact-col-title.counter{color:var(--ylw-dim);}
-.fc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.fc-dot.bear{background:var(--red);}
-.fc-dot.bull{background:var(--green);}
-.fc-dot.dim{background:var(--dim);}
-
-.factor-tags{display:flex;flex-wrap:wrap;gap:10px;}
-.factor-tag{
-  display:inline-block;padding:8px 18px;border-radius:24px;
-  font-size:16px;font-weight:600;letter-spacing:.02em;
-}
-.factor-tag.bear{background:var(--tag-bear-bg);color:var(--tag-bear-txt);border:1px solid var(--tag-bear-bd);}
-.factor-tag.bull{background:var(--tag-bull-bg);color:var(--tag-bull-txt);border:1px solid var(--tag-bull-bd);}
-.factor-tag.dim{background:var(--tag-dim-bg);color:var(--tag-dim-txt);border:1px solid var(--tag-dim-bd);}
-.fact-empty{font-family:var(--mono);font-size:13px;color:var(--dim);opacity:.6;}
-
-/* 원문 인용 */
-.source-quote{
-  background:var(--inset);
-  border:1px solid var(--ylw-dim);
-  border-left:4px solid var(--gold);
-  border-radius:8px;padding:16px 20px;
-}
-.sq-label{
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ylw);margin-bottom:10px;display:flex;align-items:center;gap:7px;
-}
-.sq-text{
-  font-size:16px;line-height:1.82;
-  color:var(--quote-txt);  /* 흰색 */
-  font-style:italic;font-weight:400;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
-}
-.sq-text::before{content:'"';font-size:22px;line-height:0;vertical-align:-4px;margin-right:3px;color:var(--gold);}
-.sq-text::after{content:'"';font-size:22px;line-height:0;vertical-align:-4px;margin-left:3px;color:var(--gold);}
-
-/* 반대요인 원문 — 별도 색상 */
-.source-quote.counter{border-color:var(--border2);border-left-color:var(--dim);background:rgba(22,25,32,.7);}
-.source-quote.counter .sq-label{color:var(--ylw-dim);}
-.source-quote.counter .sq-text{color:var(--ctr-txt);} /* 밝은 그레이 */
-.source-quote.counter .sq-text::before,
-.source-quote.counter .sq-text::after{color:var(--dim);}
-
-/* ══ 코멘터리 ══ */
-.brief-commentary{
-  padding:28px 34px;border-bottom:1px solid var(--border);
-  background:var(--inset);
-  border-left:6px solid var(--gold);
-}
-.co-label{
+/* ══ 섹션 공통 라벨 ══ */
+.sec-label{
   font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ylw);margin-bottom:14px;display:flex;align-items:center;gap:10px;
+  color:var(--ylw);margin-bottom:12px;
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,158,11,.1);border:1px solid var(--ylw-dim);
+  border-radius:5px;padding:5px 14px;font-weight:700;
 }
-.co-label::after{content:'';flex:1;height:1px;background:var(--ylw-dim);opacity:.4;}
+.sec-label.dim{color:var(--dim);background:rgba(106,116,144,.1);border-color:var(--border2);}
+.sec-label.blue{color:#60a5fa;background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.25);}
+
+/* ══ 코멘터리 (가격 바로 아래) ══ */
+.brief-commentary{
+  padding:26px 32px;border-bottom:1px solid var(--border);
+  background:var(--inset);border-left:6px solid var(--gold);
+}
 .co-text{
   font-size:22px;line-height:1.88;
-  color:var(--ylw3);           /* 아이보리 */
-  white-space:pre-wrap;font-weight:500;  /* 500으로 두껍게 */
+  color:var(--ylw3);white-space:pre-wrap;font-weight:500;
+}
+
+/* ══ 변동요인 리스트 (원문) ══ */
+.brief-factors{
+  padding:26px 32px;border-bottom:1px solid var(--border);
+}
+.factor-list{
+  list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:4px;
+}
+.factor-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:17px;line-height:1.7;color:#ffffff;font-weight:400;
+}
+.factor-list li::before{
+  content:'▸';color:var(--gold);font-size:14px;flex-shrink:0;margin-top:3px;
+}
+
+/* ══ 반대요인 ══ */
+.brief-counter{
+  padding:22px 32px;border-bottom:1px solid var(--border);
+  background:rgba(22,25,32,.6);
+}
+.counter-text{
+  font-size:16px;line-height:1.82;color:#d4dae8;
+  font-style:italic;font-weight:400;
+}
+.counter-text::before{content:'"';font-size:20px;line-height:0;vertical-align:-4px;margin-right:3px;color:var(--dim);}
+.counter-text::after{content:'"';font-size:20px;line-height:0;vertical-align:-4px;margin-left:3px;color:var(--dim);}
+
+/* ══ 전망 ══ */
+.brief-outlook{
+  padding:22px 32px;border-bottom:1px solid var(--border);
+  background:rgba(96,165,250,.04);border-left:6px solid #3b82f6;
+}
+.outlook-text{
+  font-size:18px;line-height:1.78;color:#93c5fd;font-weight:500;
 }
 
 /* ══ COPY ROW ══ */
 .brief-copy{
-  padding:16px 30px;display:flex;align-items:center;justify-content:flex-end;gap:10px;
+  padding:14px 28px;display:flex;align-items:center;justify-content:flex-end;gap:10px;
   background:var(--card);
 }
 .cp-btn{
@@ -297,15 +232,46 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .cp-btn.img:hover{border-color:var(--green);color:var(--green);}
 .cp-btn.ok{border-color:var(--green);color:var(--green);}
 
+/* ══ 아코디언 ══ */
+.source-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;background:var(--card);border-bottom:1px solid var(--border);
+}
+.src-badge{
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ylw);background:rgba(245,158,11,.1);border:1px solid var(--ylw-dim);
+  padding:5px 14px;border-radius:4px;
+}
+.src-actions{display:flex;gap:8px;}
+.src-act-btn{
+  background:transparent;border:1px solid var(--border2);color:var(--dim);
+  padding:5px 12px;border-radius:4px;font-family:var(--mono);font-size:11px;
+  text-transform:uppercase;cursor:pointer;transition:all .15s;
+}
+.src-act-btn.edit:hover{border-color:var(--ylw);color:var(--ylw);}
+.src-act-btn.del:hover{border-color:var(--red);color:var(--red);}
+.accordion-toggle{
+  width:100%;padding:14px 28px;
+  background:var(--inset);border:none;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:background .15s;
+}
+.accordion-toggle:hover{background:rgba(245,158,11,.05);}
+.at-label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ylw);}
+.at-arrow{font-size:13px;color:var(--ylw);transition:transform .22s;}
+.at-arrow.open{transform:rotate(180deg);}
+.accordion-body{display:none;}
+.accordion-body.open{display:block;}
+
 /* ══ MODAL ══ */
 #overlay{
   position:fixed;inset:0;z-index:200;
-  background:rgba(0,0,0,.8);backdrop-filter:blur(10px);
+  background:rgba(0,0,0,.82);backdrop-filter:blur(10px);
   display:none;align-items:center;justify-content:center;
 }
 #overlay.open{display:flex;}
 #modal{
-  width:820px;max-height:92vh;
+  width:860px;max-height:92vh;
   background:var(--surface);border:1px solid var(--border2);border-radius:14px;
   display:flex;flex-direction:column;overflow:hidden;
   box-shadow:0 32px 90px rgba(0,0,0,.75);animation:mIn .22s ease;
@@ -325,26 +291,30 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .mhdr-close:hover{border-color:var(--red);color:var(--red);}
 .mbody{
   flex:1;overflow-y:auto;padding:26px 30px;
-  display:flex;flex-direction:column;gap:20px;background:var(--bg);
+  display:flex;flex-direction:column;gap:18px;background:var(--bg);
 }
 .m-sec{
   background:var(--surface);border:1px solid var(--border);border-radius:9px;
-  padding:18px 22px;display:flex;flex-direction:column;gap:13px;
+  padding:18px 22px;display:flex;flex-direction:column;gap:12px;
 }
 .m-sec-label{
   font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--ylw);display:flex;align-items:center;gap:8px;
 }
 .m-sec-label::after{content:'';flex:1;height:1px;background:var(--ylw-dim);opacity:.35;}
+.m-sec-label.blue{color:#60a5fa;}
+.m-sec-label.blue::after{background:#3b82f6;opacity:.3;}
+.m-sec-label.dim2{color:var(--dim);}
+.m-sec-label.dim2::after{background:var(--border2);opacity:.6;}
 #news-ta{
-  width:100%;height:150px;resize:vertical;
+  width:100%;height:180px;resize:vertical;
   background:var(--card);border:1px solid var(--border2);border-radius:6px;
   color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.72;
   padding:13px 15px;outline:none;transition:border-color .15s;
 }
 #news-ta:focus{border-color:var(--gold);}
 #news-ta::placeholder{color:var(--dim);font-size:13px;}
-#parsed-wrap,#step-factors{display:none;}
+#parsed-wrap{display:none;}
 .pf-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
 .pf-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .pfield{display:flex;flex-direction:column;gap:6px;}
@@ -356,7 +326,9 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 }
 .pfield input:focus,.pfield select:focus,.pfield textarea:focus{border-color:var(--gold);}
 .pfield input.hi{color:var(--ylw2);font-weight:700;border-color:var(--ylw-dim);background:rgba(245,158,11,.05);}
-.pfield textarea{resize:vertical;min-height:58px;font-family:var(--sans);font-size:13px;line-height:1.65;}
+.pfield textarea{resize:vertical;min-height:70px;font-family:var(--sans);font-size:13px;line-height:1.65;}
+.pfield textarea.blue-ta{border-color:rgba(96,165,250,.3);}
+.pfield textarea.blue-ta:focus{border-color:#60a5fa;}
 .parse-status{
   font-family:var(--mono);font-size:12px;padding:10px 14px;
   border-radius:6px;margin-top:4px;display:none;
@@ -364,21 +336,6 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .parse-status.ok{background:rgba(52,216,117,.08);border:1px solid rgba(52,216,117,.3);color:var(--green);}
 .parse-status.warn{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);color:var(--ylw);}
 .parse-status.err{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.3);color:var(--red);}
-.chip-sec-label{
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ylw-dim);margin-bottom:6px;margin-top:8px;
-}
-.chip-sec-label:first-child{margin-top:0;}
-.chip-wrap{display:flex;flex-wrap:wrap;gap:7px;}
-.chip{
-  font-family:var(--sans);font-size:13px;font-weight:500;
-  padding:6px 14px;border-radius:20px;border:1px solid var(--border2);
-  color:var(--dim);background:var(--card);cursor:pointer;transition:all .12s;user-select:none;
-}
-.chip:hover{border-color:var(--ylw);color:var(--ylw);}
-.chip.sel-bear{background:var(--tag-bear-bg);border-color:var(--tag-bear-bd);color:var(--tag-bear-txt);}
-.chip.sel-bull{background:var(--tag-bull-bg);border-color:var(--tag-bull-bd);color:var(--tag-bull-txt);}
-.divider{height:1px;background:var(--border);margin:4px 0;}
 .mftr{
   flex-shrink:0;padding:16px 30px;border-top:1px solid var(--border);
   display:flex;gap:10px;background:var(--surface);
@@ -413,6 +370,46 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+
+/* ══ MOBILE ══ */
+@media (max-width:480px){
+  .hdr{padding:10px 16px;height:auto;flex-wrap:wrap;gap:6px;}
+  .hdr-sub{display:none;}
+  .hdr-logo{font-size:26px;}
+  .hdr-right{gap:8px;}
+  .hdr-clock{font-size:12px;}
+  .btn-new{padding:8px 14px;font-size:11px;}
+  .btn-refresh{padding:7px 12px;font-size:11px;}
+  .search-bar{padding:10px 16px;flex-wrap:wrap;gap:8px;}
+  .sb-result{margin-left:0;width:100%;font-size:11px;}
+  .sb-input{width:140px;font-size:13px;}
+  .wrap{padding:16px 10px 60px;}
+  .date-group{margin-bottom:28px;}
+  .brief-header{flex-direction:column;min-height:unset;}
+  .bh-date{padding:12px 16px;border-right:none;border-bottom:1px solid var(--border);min-width:unset;flex-direction:row;align-items:center;justify-content:space-between;}
+  .bh-date-val{font-size:17px;}
+  .bh-price{padding:14px 16px;gap:8px;}
+  .bh-val{font-size:78px;}
+  .bh-arrow{font-size:34px;}
+  .bh-delta{flex-direction:row;padding:10px 16px;border-left:none;border-top:1px solid var(--border);gap:20px;}
+  .bh-d-val{font-size:26px;}
+  .bh-dir{padding:10px 16px;border-left:none;border-top:1px solid var(--border);flex-direction:row;justify-content:space-between;}
+  .bh-dir-badge{font-size:18px;padding:8px 20px;}
+  .bh-actions{flex-direction:row;border-left:none;border-top:1px solid var(--border);min-width:unset;}
+  .act-btn{border-bottom:none;border-right:1px solid var(--border);}
+  .act-btn:last-child{border-right:none;}
+  .brief-commentary,.brief-factors,.brief-counter,.brief-outlook{padding:16px;}
+  .co-text{font-size:15px;}
+  .factor-list li{font-size:14px;}
+  .outlook-text{font-size:15px;}
+  #modal{width:95vw;max-height:96vh;}
+  .mbody{padding:14px 12px;}
+  .pf-grid{grid-template-columns:1fr 1fr;}
+  .pf-grid-2{grid-template-columns:1fr;}
+  .mftr{padding:12px 14px;gap:8px;}
+  .mf-btn{padding:11px 14px;font-size:12px;}
+  #toast{bottom:16px;right:12px;left:12px;max-width:unset;}
+}
 </style>
 </head>
 <body>
@@ -438,7 +435,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 </div>
 
 <div class="wrap">
-  <div id="loading" style="display:none"><div class="spinner"></div>데이터 불러오는 중...</div>
+  <div class="loading" id="loading" style="display:none"><div class="spinner"></div>데이터 불러오는 중...</div>
   <div class="empty" id="empty" style="display:none">
     <div class="e-icon">◈</div>
     <div style="color:var(--ylw2)">NO ENTRIES YET</div>
@@ -457,24 +454,34 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
       <button class="mhdr-close" onclick="closeModal()">✕</button>
     </div>
     <div class="mbody">
+
+      <!-- 01 뉴스 입력 -->
       <div class="m-sec">
-        <div class="m-sec-label">01 · 뉴스 텍스트</div>
-        <textarea id="news-ta" placeholder="WTI 기사 전문 붙여넣기 → 파싱 버튼 클릭
-수치 / 월물 / 날짜 / 주요인 / 반대요인 / 원문 / 코멘터리 자동 생성
-같은 날짜 추가 파싱 → 아코디언으로 카드에 추가됩니다"></textarea>
+        <div class="m-sec-label">01 · 브리핑 텍스트</div>
+        <textarea id="news-ta" placeholder="1) 가격
+* WTI M-1: $65.19/b (▲ $2.86/b, +4.59%) → 상승(급등)
+2) 가격 변동 요인 한줄
+* 미국-이란 핵협상 교착발...
+3) 변동요인 구체 리스트
+* 요인1
+* 요인2
+4) 결론 및 전망
+* 협상 진전 전까지 변동성 확대..."></textarea>
         <div class="parse-status" id="parse-st"></div>
       </div>
+
+      <!-- 02 수치 -->
       <div class="m-sec" id="parsed-wrap">
         <div class="m-sec-label">02 · 수치 확인 · 수정</div>
         <div class="pf-grid" style="margin-bottom:12px">
           <div class="pfield"><label>WTI 종가 ($/bbl) *</label>
-            <input type="number" id="f-wti" step="0.01" placeholder="62.33" class="hi"></div>
+            <input type="number" id="f-wti" step="0.01" placeholder="65.19" class="hi"></div>
           <div class="pfield"><label>전일比 $</label>
-            <input type="number" id="f-abs" step="0.01" placeholder="-0.56" oninput="autoPct()"></div>
+            <input type="number" id="f-abs" step="0.01" placeholder="2.86" oninput="autoPct()"></div>
           <div class="pfield"><label>변동률 %</label>
-            <input type="number" id="f-pct" step="0.01" placeholder="-0.89"></div>
+            <input type="number" id="f-pct" step="0.01" placeholder="4.59"></div>
         </div>
-        <div class="pf-grid-2" style="margin-bottom:12px">
+        <div class="pf-grid-2">
           <div class="pfield"><label>기준일 *</label>
             <input type="date" id="f-date"></div>
           <div class="pfield"><label>월물 *</label>
@@ -483,32 +490,35 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
               <option value="Apr">4월물 (Apr)</option>
               <option value="May">5월물 (May)</option>
               <option value="Jun">6월물 (Jun)</option>
+              <option value="Jul">7월물 (Jul)</option>
             </select></div>
         </div>
-        <div class="pf-grid-2">
-          <div class="pfield"><label>코멘터리</label>
-            <textarea id="f-commentary" placeholder="자동 생성 또는 직접 입력"></textarea></div>
-          <div class="pfield"><label>주요인 원문 (한 문장)</label>
-            <textarea id="f-main-quote" placeholder="자동 추출 또는 직접 입력"></textarea></div>
+
+        <!-- 코멘터리 -->
+        <div class="m-sec-label" style="margin-top:8px">코멘터리 · 변동요인 한줄</div>
+        <div class="pfield">
+          <textarea id="f-commentary" placeholder="2) 가격 변동 요인 한줄 자동 추출"></textarea>
+        </div>
+
+        <!-- 변동요인 리스트 -->
+        <div class="m-sec-label">변동요인 구체 리스트</div>
+        <div class="pfield">
+          <textarea id="f-factors" rows="6" placeholder="3) 변동요인 구체 리스트 자동 추출 (줄바꿈 구분)"></textarea>
+        </div>
+
+        <!-- 반대요인 -->
+        <div class="m-sec-label dim2">반대요인 (선택)</div>
+        <div class="pfield">
+          <textarea id="f-counter" placeholder="반대요인 직접 입력 (선택사항)"></textarea>
+        </div>
+
+        <!-- 전망 -->
+        <div class="m-sec-label blue">결론 및 전망</div>
+        <div class="pfield">
+          <textarea id="f-outlook" class="blue-ta" placeholder="4) 결론 및 전망 자동 추출"></textarea>
         </div>
       </div>
-      <div class="m-sec" id="step-factors">
-        <div class="m-sec-label">03 · 주요인 선택</div>
-        <div class="chip-sec-label">▼ BEARISH · 하락 요인</div>
-        <div class="chip-wrap" id="main-chips-bear"></div>
-        <div class="chip-sec-label">▲ BULLISH · 상승 요인</div>
-        <div class="chip-wrap" id="main-chips-bull"></div>
-        <div class="divider"></div>
-        <div class="m-sec-label">04 · 반대요인 (선택사항)</div>
-        <div class="chip-sec-label">▼ BEARISH</div>
-        <div class="chip-wrap" id="counter-chips-bear"></div>
-        <div class="chip-sec-label">▲ BULLISH</div>
-        <div class="chip-wrap" id="counter-chips-bull"></div>
-        <div style="margin-top:12px">
-          <div class="pfield"><label>반대요인 원문 (한 문장)</label>
-            <textarea id="f-counter-quote" placeholder="자동 추출 또는 직접 입력"></textarea></div>
-        </div>
-      </div>
+
     </div>
     <div class="mftr">
       <button class="mf-btn mf-parse" onclick="doParse()">🔍 파싱</button>
@@ -544,135 +554,29 @@ function fmtDate(raw){
   return s.slice(0,10).replace(/-/g,'.');
 }
 
-// ── FACTORS ──
-const FACTORS=[
-  // ── BEARISH ──
-  {t:'bear',kr:'미·이란 핵 협상 진전',      kw:['이란',['합의','진전']]},
-  {t:'bear',kr:'중동 지정학 리스크 완화',    kw:['중동','완화']},
-  {t:'bear',kr:'IEA 수요 전망 하향',         kw:['iea','하향']},
-  {t:'bear',kr:'OPEC+ 증산 논의',            kw:['opec','증산']},
-  {t:'bear',kr:'카자흐 텡기즈 유전 재개',    kw:[['텡기즈','카자흐']]},
-  {t:'bear',kr:'미 원유 재고 증가 (EIA)',     kw:['재고','증가']},
-  {t:'bear',kr:'달러 강세',                  kw:['달러','강세']},
-  {t:'bear',kr:'경기침체 우려',              kw:['경기침체']},
-  // ── BULLISH ──
-  {t:'bull',kr:'미·이란 핵 협상 결렬·교착', kw:['이란',['교착','결렬','레드라인','밴스']]},
-  {t:'bull',kr:'이란 군사충돌 우려',         kw:['이란',['무력','공습','군사 작전','전쟁']]},
-  {t:'bull',kr:'중동 긴장 고조',             kw:[['중동','긴장'],['지정학','리스크']]},
-  {t:'bull',kr:'호르무즈 해협 리스크',       kw:['호르무즈']},
-  {t:'bull',kr:'항모 전단 배치',             kw:['항모','전단']},
-  {t:'bull',kr:'OPEC+ 감산 유지·강화',      kw:['opec','감산']},
-  {t:'bull',kr:'미 원유 재고 감소 (EIA)',     kw:['재고','감소']},
-  {t:'bull',kr:'IEA/EIA 수요 전망 상향',     kw:['iea','상향']},
-  {t:'bull',kr:'달러 약세',                  kw:['달러','약세']},
-];
-
-const mainSel=new Set(),counterSel=new Set();
-let editKey=null,allEntries=[];
-
-// ── 텍스트 처리 ──
-function trimSent(s,max=100){
-  if(!s)return'';
-  s=s.replace(/^[^가-힣a-zA-Z$\d"]+/,'').trim();
-  if(s.length<=max)return s;
-  const cut=s.lastIndexOf(' ',max);
-  return(cut>60?s.slice(0,cut):s.slice(0,max))+'…';
-}
-function splitSents(txt){
-  return txt.split(/(?<=[다습니다까요었다]\.)\s+|(?<=다\.\s)|(?<=\n)/)
-    .map(s=>s.trim()).filter(s=>s.length>15&&s.length<300);
-}
-function extractMainQuote(txt){
-  const ss=splitSents(txt);
-  const pp=[
-    /가운데.{4,80}(?:하락|상승|약세|강세|마감|낮아|높아)/,
-    /소식[이에].{2,60}(?:하락|상승|압박|지지|영향)/,
-    /때문으로\s*분석/,
-    /영향으로.{4,60}(?:하락|상승|마감)/,
-    /위험\s*프리미엄.{0,40}(?:약해|강해|낮아|높아)/,
-    /(?:하락|상승)세를\s*보였/,
-  ];
-  for(const p of pp){const f=ss.find(s=>p.test(s));if(f)return trimSent(f);}
-  return null;
-}
-function extractCounterQuote(txt,idxSet){
-  if(!idxSet.size)return null;
-  const ss=splitSents(txt);
-  const kws=[...idxSet].flatMap(i=>FACTORS[i].kw.flat().filter(k=>typeof k==='string'));
-  for(const kw of kws){const f=ss.find(s=>s.includes(kw));if(f)return trimSent(f);}
-  return null;
-}
-function autoDetect(txt,direction){
-  const lo=txt.toLowerCase();mainSel.clear();counterSel.clear();
-  FACTORS.forEach((f,i)=>{
-    // kw 각 항목: 문자열이면 AND, 배열이면 OR
-    // kw 전체는 AND 조건
-    const hit=f.kw.every(k=>{
-      if(Array.isArray(k)) return k.some(kk=>lo.includes(kk));
-      return lo.includes(k);
-    });
-    if(!hit)return;
-    if(direction==='하락'&&f.t==='bear')mainSel.add(i);
-    else if(direction==='상승'&&f.t==='bull')mainSel.add(i);
-    else counterSel.add(i);
-  });
-}
-function buildCommentary(wti,pct,abs,direction){
-  const ps=(pct>=0?'+':'')+pct.toFixed(2)+'%';
-  const as=abs!==null?`${abs>=0?'+':''}${abs.toFixed(2)} USD, `:'';
-  const mArr=[...mainSel].map(i=>FACTORS[i].kr);
-  const cArr=[...counterSel].map(i=>FACTORS[i].kr);
-  let t=`WTI 원유는 배럴당 $${wti.toFixed(2)} (${as}${ps})로 ${direction} 마감.`;
-  if(mArr.length)t+=` ${mArr.slice(0,2).join(', ')} 등이 주요 ${direction} 요인으로 작용.`;
-  if(cArr.length)t+=` 다만 ${cArr[0]} 등은 ${direction==='하락'?'낙폭':'상승폭'}을 제한.`;
-  return t;
-}
-
 // ══════════════════════════════════════════════
-//  rowToEntry — 컬럼 인덱스 자동 감지
-//  시트에 순번(C열) 있으면 12컬럼, 없으면 11컬럼
-//  r[2]가 숫자(순번)이면 새 구조, 문자열이면 구버전
+//  rowToEntry — 새 구조 13컬럼
+//  A:기준일 B:월물 C:순번 D:WTI E:전일비 F:변동률
+//  G:방향 H:코멘터리 I:변동요인리스트 J:반대요인 K:전망
 // ══════════════════════════════════════════════
 function rowToEntry(r){
-  // r[2]가 순번(숫자)인지 WTI가격(숫자)인지 판별
-  // 순번은 보통 1~10, WTI가격은 50~120 사이
-  const r2=parseFloat(r[2]);
-  const hasSeqCol = !isNaN(r2) && r2 < 30; // 30 미만이면 순번으로 판단
-
-  if(hasSeqCol){
-    // 새 구조: A기준일 B월물 C순번 D가격 E전일비 F변동률 G방향 H주요인 I주요인원문 J코멘터리 K반대요인 L반대요인원문
-    return{
-      date:           fmtDate(r[0]),
-      contract:       String(r[1]||'').trim(),
-      seq:            parseInt(r[2])||1,
-      wti:            parseFloat(r[3])||0,
-      abs:            (r[4]!==''&&r[4]!=null)?parseFloat(r[4]):null,
-      pct:            parseFloat(r[5])||0,
-      direction:      String(r[6]||'').trim(),
-      mainFactors:    String(r[7]||'').trim(),
-      mainQuote:      String(r[8]||'').trim(),
-      commentary:     String(r[9]||'').trim(),
-      counterFactors: String(r[10]||'').trim(),
-      counterQuote:   String(r[11]||'').trim(),
-    };
-  } else {
-    // 구버전: A기준일 B월물 C가격 D전일비 E변동률 F방향 G주요인 H주요인원문 I코멘터리 J반대요인 K반대요인원문
-    return{
-      date:           fmtDate(r[0]),
-      contract:       String(r[1]||'').trim(),
-      seq:            1,
-      wti:            parseFloat(r[2])||0,
-      abs:            (r[3]!==''&&r[3]!=null)?parseFloat(r[3]):null,
-      pct:            parseFloat(r[4])||0,
-      direction:      String(r[5]||'').trim(),
-      mainFactors:    String(r[6]||'').trim(),
-      mainQuote:      String(r[7]||'').trim(),
-      commentary:     String(r[8]||'').trim(),
-      counterFactors: String(r[9]||'').trim(),
-      counterQuote:   String(r[10]||'').trim(),
-    };
-  }
+  return{
+    date:        fmtDate(r[0]),
+    contract:    String(r[1]||'').trim(),
+    seq:         parseInt(r[2])||1,
+    wti:         parseFloat(r[3])||0,
+    abs:         (r[4]!==''&&r[4]!=null)?parseFloat(r[4]):null,
+    pct:         parseFloat(r[5])||0,
+    direction:   String(r[6]||'').trim(),
+    commentary:  String(r[7]||'').trim(),
+    factors:     String(r[8]||'').trim(),   // 줄바꿈 구분 리스트
+    counter:     String(r[9]||'').trim(),
+    outlook:     String(r[10]||'').trim(),
+  };
 }
+
+// ── STATE ──
+let editKey=null, allEntries=[];
 
 // ── LOAD ──
 async function loadData(){
@@ -713,7 +617,7 @@ function clearSearch(){
 }
 function renderAll(){renderEntries(allEntries);}
 
-// ── 그룹 렌더 ──
+// ── 렌더 ──
 function renderEntries(entries){
   if(!entries.length){
     document.getElementById('empty').style.display='block';
@@ -728,41 +632,46 @@ function renderEntries(entries){
     groups[key].push(e);
   });
   Object.values(groups).forEach(g=>g.sort((a,b)=>a.seq-b.seq));
-  const sortedKeys=Object.keys(groups).sort((a,b)=>{
-    return b.split('__')[0].localeCompare(a.split('__')[0]);
-  });
-  document.getElementById('cards').innerHTML=sortedKeys.map(k=>renderGroup(groups[k])).join('');
+  const sortedKeys=Object.keys(groups).sort((a,b)=>
+    b.split('__')[0].localeCompare(a.split('__')[0]));
+  document.getElementById('cards').innerHTML=
+    sortedKeys.map(k=>renderGroup(groups[k])).join('');
 }
 
-function buildTags(factors){
-  if(!factors||!factors.trim())return'';
-  return factors.split(',').filter(s=>s.trim()).map(kr=>{
-    const f=FACTORS.find(x=>x.kr===kr.trim());
-    return`<span class="factor-tag ${f?f.t:'dim'}">${kr.trim()}</span>`;
-  }).join('');
-}
-
-function renderFactPanel(e,dir,dirTxt){
-  const mainTags=buildTags(e.mainFactors);
-  const counterTags=buildTags(e.counterFactors);
-  const hasBody=mainTags||e.mainQuote||counterTags||e.counterQuote;
-  if(!hasBody)return'';
-  return`<div class="brief-facts">
-    <div class="fact-col">
-      <div class="fact-col-title">
-        <span class="fc-dot ${dir==='up'?'bull':'bear'}"></span>주요인 · ${dirTxt}
-      </div>
-      ${mainTags?`<div class="factor-tags">${mainTags}</div>`:'<div class="fact-empty">감지된 주요인 없음</div>'}
-      ${e.mainQuote?`<div class="source-quote"><div class="sq-label">📰 원문 참고</div><div class="sq-text">${e.mainQuote}</div></div>`:''}
-    </div>
-    <div class="fact-col">
-      <div class="fact-col-title counter">
-        <span class="fc-dot dim"></span>반대요인 · 제한적 영향
-      </div>
-      ${counterTags?`<div class="factor-tags">${counterTags}</div>`:'<div class="fact-empty">반대요인 없음</div>'}
-      ${e.counterQuote?`<div class="source-quote counter"><div class="sq-label">📰 반대요인 원문</div><div class="sq-text">${e.counterQuote}</div></div>`:''}
-    </div>
-  </div>`;
+function renderCardBody(e, seqLabel){
+  let html='';
+  // 코멘터리
+  if(e.commentary){
+    html+=`<div class="brief-commentary">
+      <div class="sec-label">📋 코멘터리${seqLabel}</div>
+      <div class="co-text">${e.commentary}</div>
+    </div>`;
+  }
+  // 변동요인 리스트
+  if(e.factors){
+    const lines=e.factors.split('\n').map(s=>s.replace(/^[\*\-▸·\s]+/,'').trim()).filter(Boolean);
+    if(lines.length){
+      html+=`<div class="brief-factors">
+        <div class="sec-label">📌 변동요인 리스트${seqLabel}</div>
+        <ul class="factor-list">${lines.map(l=>`<li>${l}</li>`).join('')}</ul>
+      </div>`;
+    }
+  }
+  // 반대요인
+  if(e.counter){
+    html+=`<div class="brief-counter">
+      <div class="sec-label dim">↔ 반대요인${seqLabel}</div>
+      <div class="counter-text">${e.counter}</div>
+    </div>`;
+  }
+  // 전망
+  if(e.outlook){
+    html+=`<div class="brief-outlook">
+      <div class="sec-label blue">🔭 결론 및 전망${seqLabel}</div>
+      <div class="outlook-text">${e.outlook}</div>
+    </div>`;
+  }
+  return html;
 }
 
 function renderGroup(group){
@@ -777,7 +686,6 @@ function renderGroup(group){
   const eJson=encodeURIComponent(JSON.stringify(p));
 
   let html=`<div class="brief dir-${dir}" id="${cardId}">
-
     <div class="brief-header">
       <div class="bh-date">
         <div class="bh-date-val">${p.date}</div>
@@ -804,14 +712,7 @@ function renderGroup(group){
         <button class="act-btn del" onclick="deleteEntry('${p.date}','${p.contract}',1)">✕ DEL</button>
       </div>
     </div>
-
-    ${p.commentary?`<div class="brief-commentary">
-      <div class="co-label">코멘터리 · 소스 1</div>
-      <div class="co-text">${p.commentary}</div>
-    </div>`:''}
-
-    ${renderFactPanel(p,dir,dirTxt)}
-
+    ${renderCardBody(p,'')}
     <div class="brief-copy">
       <button class="cp-btn img" onclick="downloadImage('${cardId}','${p.date}')">⬇ 이미지</button>
       <button class="cp-btn" onclick="copyText('${cardId}')">Copy</button>
@@ -824,7 +725,6 @@ function renderGroup(group){
       <span class="at-arrow" id="arr-${accId}">▼</span>
     </button>
     <div class="accordion-body" id="${accId}">`;
-
     extras.forEach(ex=>{
       const exJson=encodeURIComponent(JSON.stringify(ex));
       const exCardId=cardId+'-s'+ex.seq;
@@ -836,11 +736,7 @@ function renderGroup(group){
             <button class="src-act-btn del" onclick="deleteEntry('${ex.date}','${ex.contract}',${ex.seq})">✕ DEL</button>
           </div>
         </div>
-        ${ex.commentary?`<div class="brief-commentary">
-          <div class="co-label">코멘터리 · 소스 ${ex.seq}</div>
-          <div class="co-text">${ex.commentary}</div>
-        </div>`:''}
-        ${renderFactPanel(ex,dir,dirTxt)}
+        ${renderCardBody(ex,' · 소스'+ex.seq)}
         <div class="brief-copy">
           <button class="cp-btn" onclick="copyText('${exCardId}')">Copy</button>
         </div>
@@ -848,7 +744,6 @@ function renderGroup(group){
     });
     html+=`</div>`;
   }
-
   html+=`</div>`;
   return`<div class="date-group">${html}</div>`;
 }
@@ -860,40 +755,32 @@ function toggleAcc(id){
 }
 
 // ── MODAL ──
-function openModal(entryForEdit=null){
-  editKey=null;mainSel.clear();counterSel.clear();
-  document.getElementById('modal-title').textContent=entryForEdit?'◈ EDIT ENTRY':'◈ NEW WTI ENTRY';
+function openModal(entry=null){
+  editKey=null;
+  document.getElementById('modal-title').textContent=entry?'◈ EDIT ENTRY':'◈ NEW WTI ENTRY';
   document.getElementById('news-ta').value='';
   document.getElementById('parse-st').style.display='none';
   document.getElementById('parsed-wrap').style.display='none';
-  document.getElementById('step-factors').style.display='none';
   document.getElementById('btn-save').style.display='none';
   const today=new Date(Date.now()+9*3600000).toISOString().slice(0,10);
   document.getElementById('f-date').value=today;
   document.getElementById('f-cont').value='Mar';
-  ['f-wti','f-abs','f-pct','f-commentary','f-main-quote','f-counter-quote']
+  ['f-wti','f-abs','f-pct','f-commentary','f-factors','f-counter','f-outlook']
     .forEach(id=>document.getElementById(id).value='');
-  if(entryForEdit){
-    editKey={date:entryForEdit.date,contract:entryForEdit.contract,seq:entryForEdit.seq||1};
-    document.getElementById('f-wti').value          =entryForEdit.wti;
-    document.getElementById('f-abs').value          =entryForEdit.abs??'';
-    document.getElementById('f-pct').value          =entryForEdit.pct;
-    document.getElementById('f-date').value         =entryForEdit.date.replace(/\./g,'-');
-    document.getElementById('f-cont').value         =entryForEdit.contract;
-    document.getElementById('f-commentary').value   =entryForEdit.commentary;
-    document.getElementById('f-main-quote').value   =entryForEdit.mainQuote;
-    document.getElementById('f-counter-quote').value=entryForEdit.counterQuote;
-    entryForEdit.mainFactors.split(',').map(s=>s.trim()).forEach(kr=>{
-      const idx=FACTORS.findIndex(f=>f.kr===kr);if(idx>=0)mainSel.add(idx);
-    });
-    entryForEdit.counterFactors.split(',').map(s=>s.trim()).forEach(kr=>{
-      const idx=FACTORS.findIndex(f=>f.kr===kr);if(idx>=0)counterSel.add(idx);
-    });
+  if(entry){
+    editKey={date:entry.date,contract:entry.contract,seq:entry.seq||1};
+    document.getElementById('f-wti').value      =entry.wti;
+    document.getElementById('f-abs').value      =entry.abs??'';
+    document.getElementById('f-pct').value      =entry.pct;
+    document.getElementById('f-date').value     =entry.date.replace(/\./g,'-');
+    document.getElementById('f-cont').value     =entry.contract;
+    document.getElementById('f-commentary').value=entry.commentary;
+    document.getElementById('f-factors').value  =entry.factors;
+    document.getElementById('f-counter').value  =entry.counter;
+    document.getElementById('f-outlook').value  =entry.outlook;
     document.getElementById('parsed-wrap').style.display='block';
-    document.getElementById('step-factors').style.display='block';
     document.getElementById('btn-save').style.display='block';
   }
-  buildChips();
   document.getElementById('overlay').classList.add('open');
 }
 function closeModal(){document.getElementById('overlay').classList.remove('open');}
@@ -901,194 +788,160 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 document.getElementById('overlay').addEventListener('click',e=>{
   if(e.target===document.getElementById('overlay'))closeModal();
 });
-function buildChips(){
-  buildChipGroup('main-chips-bear',mainSel,'bear');
-  buildChipGroup('main-chips-bull',mainSel,'bull');
-  buildChipGroup('counter-chips-bear',counterSel,'bear');
-  buildChipGroup('counter-chips-bull',counterSel,'bull');
-}
-function buildChipGroup(cid,selSet,tf){
-  const c=document.getElementById(cid);c.innerHTML='';
-  FACTORS.forEach((f,i)=>{
-    if(f.t!==tf)return;
-    const ch=document.createElement('div');
-    ch.className='chip'+(selSet.has(i)?` sel-${f.t}`:'');
-    ch.textContent=f.kr;
-    ch.addEventListener('click',()=>{
-      if(selSet.has(i)){selSet.delete(i);ch.className='chip';}
-      else{selSet.add(i);ch.className=`chip sel-${f.t}`;}
-    });
-    c.appendChild(ch);
-  });
-}
 
-// ── PARSE ──
+// ══════════════════════════════════════════════════
+//  PARSE — 섹션 번호 기반 구조적 파싱
+//  1) 가격  2) 변동요인 한줄  3) 리스트  4) 전망
+// ══════════════════════════════════════════════════
 function doParse(){
-  const txt=document.getElementById('news-ta').value.trim();
-  if(!txt){
+  const raw=document.getElementById('news-ta').value.trim();
+  if(!raw){
     document.getElementById('parsed-wrap').style.display='block';
-    document.getElementById('step-factors').style.display='block';
     document.getElementById('btn-save').style.display='block';
-    buildChips();showStatus('warn','텍스트 없음 — 수동 입력 모드');return;
+    showStatus('warn','텍스트 없음 — 수동 입력 모드');return;
   }
+
+  // 섹션 분리: 1) ~ 4)
+  function getSection(num){
+    const re=new RegExp(`${num}\\)[^\\n]*\\n([\\s\\S]*?)(?=\\n\\s*\\d+\\)|$)`);
+    const m=raw.match(re);
+    return m?m[1].trim():'';
+  }
+  const sec1=getSection(1);
+  const sec2=getSection(2);
+  const sec3=getSection(3);
+  const sec4=getSection(4);
+
   const f={};let m;
 
-  // ══ 보고서 형식 파싱 ($N/b, ▲▼ $N/b, +N%) ══
-  // "WTI M-1: $65.19/b (▲ $2.86/b, +4.59%)"
-  const reportLine=(txt.match(/WTI[^\n]{0,20}\$[\d.]+\/b[^\n]*/)||[''])[0];
+  // ══ 가격 (섹션1 우선, 전체 텍스트 fallback) ══
+  const priceSource=sec1||raw;
+
+  // 보고서 형식: "$65.19/b (▲ $2.86/b, +4.59%)"
+  const reportLine=(priceSource.match(/\$[\d.]+\/b[^\n]*/)||[''])[0];
   const rWti=reportLine.match(/\$\s*([\d.]+)\s*\/b/);
   const rDelta=reportLine.match(/([▲▼])\s*\$\s*([\d.]+)\s*\/b/);
   const rPct=reportLine.match(/([+\-])\s*([\d.]+)%/);
-  if(rWti){f.wti=parseFloat(rWti[1]);}
-  if(rDelta){f.abs=rDelta[1]==='▲'?parseFloat(rDelta[2]):-parseFloat(rDelta[2]);}
-  if(rPct&&f.wti){f.pct=rPct[1]==='+'?parseFloat(rPct[2]):-parseFloat(rPct[2]);}
-  // "$65.19/b" 단독 (WTI 줄 없어도)
-  if(!f.wti){const m2=txt.match(/\$\s*([\d.]+)\s*\/b/);if(m2)f.wti=parseFloat(m2[1]);}
-  // "▲ $2.86/b" 또는 "▼ $2.86/b" 단독
+  if(rWti) f.wti=parseFloat(rWti[1]);
+  if(rDelta) f.abs=rDelta[1]==='▲'?parseFloat(rDelta[2]):-parseFloat(rDelta[2]);
+  if(rPct&&f.wti) f.pct=rPct[1]==='+'?parseFloat(rPct[2]):-parseFloat(rPct[2]);
+
+  // 뉴스 기사 형식 fallback
+  if(!f.wti){
+    m=raw.match(/(?:급등한|급락한|상승한|하락한|오른|내린|밀린)\s*배럴당\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);
+  }
+  if(!f.wti){
+    m=raw.match(/(?:급등한|급락한|상승한|하락한|오른|내린|밀린)\s*([\d.]+)달러에\s*(?:거래|마감|체결|마쳤)/);if(m)f.wti=parseFloat(m[1]);
+  }
+  if(!f.wti){
+    m=raw.match(/배럴당\s*([\d.]+)달러에\s*(?:거래|마감|체결|장을\s*마쳤)/);if(m)f.wti=parseFloat(m[1]);
+  }
+  if(!f.wti){
+    m=raw.match(/배럴당\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);
+  }
   if(f.wti&&f.abs==null){
-    const m2=txt.match(/▲\s*\$\s*([\d.]+)\s*\/b/);if(m2)f.abs=parseFloat(m2[1]);
-    else{const m3=txt.match(/▼\s*\$\s*([\d.]+)\s*\/b/);if(m3)f.abs=-parseFloat(m3[1]);}
-  }
-  // "(+N%)" 또는 "(-N%)" 단독
-  if(f.wti&&f.pct==null){
-    const m2=txt.match(/\(([+\-])\s*([\d.]+)%\)/);
-    if(m2)f.pct=m2[1]==='+'?parseFloat(m2[2]):-parseFloat(m2[2]);
-  }
-
-  // ══ WTI 종가 추출 (뉴스 기사 형식) ══
-  // A: "급등한/급락한/상승한/하락한 배럴당 N달러" (배럴당이 가격 앞)
-  m=txt.match(/(?:급등한|급락한|상승한|하락한|오른|내린|밀린)\s*배럴당\s*([\d.]+)달러/);
-  if(m)f.wti=parseFloat(m[1]);
-  // B: "급등한/급락한 N달러에 거래됐/마감/체결/마쳤"
-  if(!f.wti){m=txt.match(/(?:급등한|급락한|상승한|하락한|오른|내린|밀린)\s*([\d.]+)달러에\s*(?:거래|마감|체결|마쳤)/);if(m)f.wti=parseFloat(m[1]);}
-  // C: "배럴당 N달러에 거래됐/마감/마쳤"
-  if(!f.wti){m=txt.match(/배럴당\s*([\d.]+)달러에\s*(?:거래|마감|체결|장을\s*마쳤)/);if(m)f.wti=parseFloat(m[1]);}
-  // D: "배럴당 N달러" 단독 (뒤에 거래 문구 없어도)
-  if(!f.wti){m=txt.match(/배럴당\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
-  // E: "하락한|오른 배럴당 N달러" 구버전
-  if(!f.wti){m=txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
-
-  // ══ 전일비 / 변동률 추출 ══
-  const ws=(txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,350}/)||[''])[0];
-  const searchIn=ws||txt;
-
-  // "N달러(N%) 급등/상승/급락/하락" — 전일비+변동률 동시 추출
-  m=searchIn.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급등|상승|올라|오른)/);
-  if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}
-  if(!f.abs){
-    m=searchIn.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급락|하락|내린|밀린|떨어진)/);
-    if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
-  }
-  // 전체 텍스트 재시도
-  if(!f.abs){
-    m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급등|상승|올라|오른)/);
+    const ws=(raw.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,350}/)||[''])[0];
+    m=(ws||raw).match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급등|상승|올라|오른)/);
     if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}
+    if(f.abs==null){
+      m=(ws||raw).match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급락|하락|내린|밀린|떨어진)/);
+      if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
+    }
   }
-  if(!f.abs){
-    m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급락|하락|내린|밀린|떨어진)/);
-    if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
+  if(f.wti&&f.pct==null){
+    m=raw.match(/([\d.]+)%\s*(?:넘게|가량)?\s*(?:폭등|급등|상승)/);if(m)f.pct=parseFloat(m[1]);
+    if(f.pct==null){m=raw.match(/([\d.]+)%\s*(?:넘게|가량)?\s*(?:폭락|급락|하락)/);if(m)f.pct=-parseFloat(m[1]);}
   }
-  // 변동률만 있는 경우
-  if(!f.pct){
-    m=txt.match(/([\d.]+)%\s*(?:넘게|가량|이상)?\s*(?:폭등|급등|상승|올라)/);
-    if(m)f.pct=parseFloat(m[1]);
-  }
-  if(!f.pct){
-    m=txt.match(/([\d.]+)%\s*(?:넘게|가량|이상)?\s*(?:폭락|급락|하락|내려)/);
-    if(m)f.pct=-parseFloat(m[1]);
-  }
-  // 전일비 역산
   if(!f.abs&&f.wti&&f.pct){const p=f.wti/(1+f.pct/100);f.abs=parseFloat((f.wti-p).toFixed(2));}
 
-  // ══ 월물 ══
-  const contM=txt.match(/(3|4|5|6)월\s*(?:인도분|물)/);
-  if(contM){const map={'3':'Mar','4':'Apr','5':'May','6':'Jun'};document.getElementById('f-cont').value=map[contM[1]]||'Mar';}
+  // 방향 텍스트 추출
+  const dirText=priceSource.match(/→\s*(상승|하락|보합)/);
+
+  // 월물
+  const contM=raw.match(/(3|4|5|6|7)월\s*(?:인도분|물)/)||raw.match(/M-([1-9])/);
+  if(contM){const map={'3':'Mar','4':'Apr','5':'May','6':'Jun','7':'Jul'};document.getElementById('f-cont').value=map[contM[1]]||'Mar';}
 
   // ══ 날짜 파싱 ══
-  // 기사 내 연월 추출
+  let dateSet=false;
   let articleYear=null,articleMonth=null;
-  const ymM=txt.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]/);
+  const ymM=raw.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]/);
   if(ymM){articleYear=parseInt(ymM[1]);articleMonth=parseInt(ymM[2]);}
 
-  let dateSet=false;
-
-  // 우선순위1: "N일 소폭/폭등/급등/하락/마감/거래/마쳤" — 거래일 직접 언급
-  const tradeDayM=txt.match(/(\d{1,2})일\s+(?:소폭\s*)?(?:하락|상승|마감|거래|체결|돌아|폭등|급등|급락|폭락)/);
+  const tradeDayM=raw.match(/(\d{1,2})일\s+(?:소폭\s*)?(?:하락|상승|마감|거래|체결|폭등|급등|급락)/);
   if(tradeDayM&&articleYear&&articleMonth){
-    const day=parseInt(tradeDayM[1]);
     document.getElementById('f-date').value=
-      `${articleYear}-${String(articleMonth).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      `${articleYear}-${String(articleMonth).padStart(2,'0')}-${String(parseInt(tradeDayM[1])).padStart(2,'0')}`;
     dateSet=true;
   }
-
-  // 우선순위2: "현지시각/현지시간 N일" — +1 KST
   if(!dateSet){
-    const localM=txt.match(/현지시각?\s*(\d{1,2})일/)||txt.match(/(\d{1,2})일\s*\(현지시간\)/);
+    const localM=raw.match(/현지시각?\s*(\d{1,2})일/)||raw.match(/(\d{1,2})일\s*\(현지시간\)/);
     if(localM){
-      // 연월은 기사 내 연월 우선, 없으면 현재 KST 연월
       const kst=new Date(Date.now()+9*3600000);
-      const yr=articleYear||kst.getFullYear();
-      const mo=articleMonth||kst.getMonth()+1;
+      const yr=articleYear||kst.getFullYear(), mo=articleMonth||kst.getMonth()+1;
       let day=parseInt(localM[1])+1;
       const maxDay=new Date(yr,mo,0).getDate();
       let fmo=mo,fyr=yr;
       if(day>maxDay){day=1;fmo=mo%12+1;if(fmo===1)fyr++;}
-      document.getElementById('f-date').value=
-        `${fyr}-${String(fmo).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      document.getElementById('f-date').value=`${fyr}-${String(fmo).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
       dateSet=true;
     }
   }
-
-  // 우선순위3: 연월일 직접 명시
   if(!dateSet){
-    const fullDM=txt.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]\s*(\d{1,2})[일]?/);
-    if(fullDM){
-      document.getElementById('f-date').value=
-        `${fullDM[1]}-${fullDM[2].padStart(2,'0')}-${fullDM[3].padStart(2,'0')}`;
-      dateSet=true;
-    }
+    const fullDM=raw.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]\s*(\d{1,2})[일]?/);
+    if(fullDM){document.getElementById('f-date').value=`${fullDM[1]}-${fullDM[2].padStart(2,'0')}-${fullDM[3].padStart(2,'0')}`;dateSet=true;}
   }
-
-  // 우선순위4: 날짜 정보 없음 → KST 전일(어제) 기본값
   if(!dateSet){
     const yesterday=new Date(Date.now()+9*3600000-86400000);
     document.getElementById('f-date').value=yesterday.toISOString().slice(0,10);
   }
 
-  if(f.wti)document.getElementById('f-wti').value=f.wti.toFixed(2);
-  if(f.abs!=null)document.getElementById('f-abs').value=f.abs.toFixed(2);
-  if(f.pct!=null)document.getElementById('f-pct').value=f.pct.toFixed(2);
+  // ══ 섹션 2: 코멘터리 ══
+  const commentary=extractBullet(sec2);
 
-  const direction=(f.pct??0)>0?'상승':(f.pct??0)<0?'하락':'보합';
-  autoDetect(txt,direction);
-  const mainQuote=extractMainQuote(txt);
-  const counterQuote=extractCounterQuote(txt,counterSel);
-  if(mainQuote)document.getElementById('f-main-quote').value=mainQuote;
-  if(counterQuote)document.getElementById('f-counter-quote').value=counterQuote;
-  if(f.wti&&f.pct!=null)
-    document.getElementById('f-commentary').value=buildCommentary(f.wti,f.pct,f.abs??null,direction);
+  // ══ 섹션 3: 변동요인 리스트 ══
+  const factorLines=sec3.split('\n')
+    .map(s=>s.replace(/^[\*\-▸·\s]+/,'').trim())
+    .filter(Boolean);
+  const factors=factorLines.join('\n');
+
+  // ══ 섹션 4: 전망 ══
+  const outlook=extractBullet(sec4);
+
+  // 필드 세팅
+  if(f.wti) document.getElementById('f-wti').value=f.wti.toFixed(2);
+  if(f.abs!=null) document.getElementById('f-abs').value=f.abs.toFixed(2);
+  if(f.pct!=null) document.getElementById('f-pct').value=f.pct.toFixed(2);
+  if(commentary) document.getElementById('f-commentary').value=commentary;
+  if(factors)    document.getElementById('f-factors').value=factors;
+  if(outlook)    document.getElementById('f-outlook').value=outlook;
 
   document.getElementById('parsed-wrap').style.display='block';
-  document.getElementById('step-factors').style.display='block';
   document.getElementById('btn-save').style.display='block';
-  buildChips();
 
   const ok=f.wti&&f.pct!=null;
   const bits=[];
-  if(ok)bits.push(`✓ WTI $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%)`);
-  bits.push(`주요인 ${mainSel.size}개`);
-  if(counterSel.size)bits.push(`반대요인 ${counterSel.size}개`);
-  if(mainQuote)bits.push('주요인 원문');
-  if(counterQuote)bits.push('반대요인 원문');
-  bits.push('코멘터리 생성');
-  showStatus(ok?'ok':'warn',bits.join(' · '));
+  if(ok) bits.push(`✓ WTI $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%)`);
+  if(commentary) bits.push('코멘터리');
+  if(factorLines.length) bits.push(`변동요인 ${factorLines.length}개`);
+  if(outlook) bits.push('전망');
+  showStatus(ok?'ok':'warn', bits.length?bits.join(' · '):'수동 입력 필요');
 }
 
-function showStatus(t,m){const el=document.getElementById('parse-st');el.style.display='block';el.className=`parse-status ${t}`;el.textContent=m;}
+// 섹션에서 첫 번째 * 불릿 추출
+function extractBullet(sec){
+  if(!sec)return'';
+  const m=sec.match(/[\*\-▸·]\s*(.+)/);
+  return m?m[1].trim():'';
+}
+
+function showStatus(t,msg){
+  const el=document.getElementById('parse-st');
+  el.style.display='block';el.className=`parse-status ${t}`;el.textContent=msg;
+}
 function autoPct(){
   const wti=parseFloat(document.getElementById('f-wti').value);
   const abs=parseFloat(document.getElementById('f-abs').value);
-  if(wti&&!isNaN(abs)&&wti-abs>0)document.getElementById('f-pct').value=(abs/(wti-abs)*100).toFixed(2);
+  if(wti&&!isNaN(abs)&&wti-abs>0) document.getElementById('f-pct').value=(abs/(wti-abs)*100).toFixed(2);
 }
 
 // ── SAVE ──
@@ -1101,15 +954,12 @@ async function doSave(){
   const abs=parseFloat(document.getElementById('f-abs').value)||null;
   const cont=document.getElementById('f-cont').value;
   const direction=pct>0?'상승':pct<0?'하락':'보합';
-  const mainArr=[];mainSel.forEach(i=>mainArr.push(FACTORS[i].kr));
-  const counterArr=[];counterSel.forEach(i=>counterArr.push(FACTORS[i].kr));
   const data={
-    date,contract:cont,wti,abs:abs!==null?abs:'',pct,direction,
-    mainFactors:mainArr.join(', '),
-    mainQuote:document.getElementById('f-main-quote').value.trim(),
-    commentary:document.getElementById('f-commentary').value.trim(),
-    counterFactors:counterArr.join(', '),
-    counterQuote:document.getElementById('f-counter-quote').value.trim(),
+    date, contract:cont, wti, abs:abs!==null?abs:'', pct, direction,
+    commentary: document.getElementById('f-commentary').value.trim(),
+    factors:    document.getElementById('f-factors').value.trim(),
+    counter:    document.getElementById('f-counter').value.trim(),
+    outlook:    document.getElementById('f-outlook').value.trim(),
   };
   const btn=document.getElementById('btn-save');
   btn.textContent='저장 중...';btn.disabled=true;
