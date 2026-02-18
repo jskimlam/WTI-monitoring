@@ -8,33 +8,38 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root {
-  /* ── 다크 그레이 팔레트 ── */
-  --bg:        #16181f;
-  --surface:   #1e2128;
-  --card:      #252930;
-  --inset:     #1a1d24;
-  --hdr:       #13151b;
-  --border:    #2e3240;
-  --border2:   #3d4255;
-  --acc:       #60a5fa;
-  --acc2:      #38bdf8;
-  --green:     #34d875;
-  --red:       #f87171;
-  --text:      #e4e8f0;
-  --text2:     #9aa3b8;
-  --dim:       #5a6378;
-  --quote-bg:  #1a2035;
-  --quote-txt: #93c5fd;
-  --quote-bd:  #2d4a7a;
-  --tag-bear-bg:  #2d1a1a;
-  --tag-bear-txt: #f87171;
-  --tag-bear-bd:  #7f2e2e;
-  --tag-bull-bg:  #1a2d1e;
-  --tag-bull-txt: #34d875;
-  --tag-bull-bd:  #2e6e3a;
-  --tag-dim-bg:   #1e2230;
-  --tag-dim-txt:  #7a8aaa;
-  --tag-dim-bd:   #2e3650;
+  /* ── 다크 그레이 베이스 ── */
+  --bg:       #16181f;
+  --surface:  #1e2128;
+  --card:     #252930;
+  --inset:    #1a1d24;
+  --hdr:      #13151b;
+  --border:   #2e3240;
+  --border2:  #3d4255;
+
+  /* ── 포인트 컬러 ── */
+  --acc:      #60a5fa;   /* 블루 — 버튼/링크 */
+  --acc2:     #38bdf8;   /* 스카이 — 헤더 강조 */
+  --green:    #34d875;
+  --red:      #f87171;
+
+  /* ── 텍스트 ── */
+  --text:     #e4e8f0;   /* 기본 흰색 계열 */
+  --text2:    #9aa3b8;   /* 보조 */
+  --dim:      #5a6378;   /* 흐린 */
+
+  /* ── 옐로우 계통 (텍스트/레이블 가시성) ── */
+  --ylw:      #fbbf24;   /* 앰버 옐로우 — 레이블 */
+  --ylw2:     #fde68a;   /* 연한 노랑 — 원문/날짜 */
+  --ylw3:     #fef3c7;   /* 아이보리 — 코멘터리 */
+  --ylw-dim:  #92701a;   /* 골드 딤 — 보더 */
+  --gold:     #f59e0b;   /* 골드 — 따옴표/보더 포인트 */
+
+  /* ── 태그 ── */
+  --tag-bear-bg:  #2d1a1a; --tag-bear-txt: #f87171; --tag-bear-bd: #7f2e2e;
+  --tag-bull-bg:  #1a2d1e; --tag-bull-txt: #34d875; --tag-bull-bd: #2e6e3a;
+  --tag-dim-bg:   #1e2230; --tag-dim-txt:  #7a8aaa; --tag-dim-bd:  #2e3650;
+
   --mono: 'DM Mono', monospace;
   --sans: 'Noto Sans KR', sans-serif;
   --disp: 'Bebas Neue', sans-serif;
@@ -45,124 +50,145 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 /* ══ HEADER ══ */
 .hdr {
   position: sticky; top: 0; z-index: 100;
-  background: var(--hdr);
-  border-bottom: 2px solid var(--acc2);
+  background: var(--hdr); border-bottom: 2px solid var(--gold);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 36px; height: 64px;
   box-shadow: 0 2px 20px rgba(0,0,0,.5);
 }
 .hdr-left { display: flex; align-items: baseline; gap: 18px; }
-.hdr-logo { font-family: var(--disp); font-size: 32px; letter-spacing: .14em; color: var(--acc2); }
+.hdr-logo { font-family: var(--disp); font-size: 32px; letter-spacing: .14em; color: var(--ylw); }
 .hdr-sub  { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; }
 .hdr-right { display: flex; align-items: center; gap: 12px; }
-.hdr-clock { font-family: var(--mono); font-size: 13px; color: var(--text2); }
-
+.hdr-clock { font-family: var(--mono); font-size: 13px; color: var(--ylw2); }
 .btn-new {
-  background: var(--acc2); color: #0f172a; border: none; border-radius: 5px;
+  background: var(--gold); color: #1a1200; border: none; border-radius: 5px;
   padding: 9px 22px; font-family: var(--mono); font-size: 12px;
-  font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
   cursor: pointer; transition: background .15s;
 }
-.btn-new:hover { background: #7dd3fc; }
+.btn-new:hover { background: var(--ylw); }
 .btn-refresh {
   background: transparent; border: 1px solid var(--border2); color: var(--dim);
   padding: 8px 16px; border-radius: 5px; font-family: var(--mono); font-size: 11px;
   letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: all .15s;
 }
-.btn-refresh:hover { border-color: var(--acc2); color: var(--acc2); }
+.btn-refresh:hover { border-color: var(--ylw); color: var(--ylw); }
 
 /* ══ LAYOUT ══ */
-.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 28px 80px; }
+.wrap { max-width: 1020px; margin: 0 auto; padding: 36px 28px 80px; }
 .empty { text-align: center; padding: 90px 0; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--dim); }
 .empty .e-icon { font-size: 42px; margin-bottom: 16px; opacity: .2; }
 .loading { text-align: center; padding: 60px 0; font-family: var(--mono); font-size: 12px; color: var(--dim); }
-.spinner { width: 28px; height: 28px; border: 2px solid var(--border2); border-top-color: var(--acc2); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 14px; }
+.spinner { width: 28px; height: 28px; border: 2px solid var(--border2); border-top-color: var(--gold); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 14px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ══ CARD ══ */
 .brief {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 10px; margin-bottom: 28px; overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0,0,0,.35);
+  box-shadow: 0 4px 28px rgba(0,0,0,.4);
   animation: fadeUp .28s ease both;
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 
-/* ── 가격 스트립 ── */
-.brief-strip {
-  display: flex; align-items: stretch;
+/* ══ 상단: 가격 헤더 (압축형 1줄) ══ */
+.brief-header {
+  display: flex; align-items: center;
   background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 0;
 }
 
-/* 날짜 */
-.strip-date {
-  padding: 22px 28px; border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; justify-content: center; gap: 6px; min-width: 180px;
+/* 날짜/월물 */
+.bh-date {
+  padding: 18px 24px; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  min-width: 172px; flex-shrink: 0;
 }
-.sd-date { font-family: var(--mono); font-size: 20px; color: var(--text); font-weight: 600; letter-spacing: .04em; }
-.sd-cont { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+.bh-date-val  { font-family: var(--mono); font-size: 19px; color: var(--ylw2); font-weight: 600; letter-spacing: .04em; }
+.bh-date-cont { font-family: var(--mono); font-size: 11px; color: var(--dim); }
 
-/* 가격 영역 */
-.strip-price { flex: 1; display: flex; align-items: center; padding: 20px 30px; gap: 24px; }
-.sp-main { display: flex; align-items: baseline; gap: 10px; }
-.sp-val  { font-family: var(--disp); font-size: 88px; line-height: 1; letter-spacing: .02em; }
-.sp-val.up  { color: var(--green); }
-.sp-val.dn  { color: var(--red); }
-.sp-val.flt { color: var(--text); }
-.sp-unit { font-family: var(--mono); font-size: 13px; color: var(--dim); align-self: flex-end; padding-bottom: 10px; }
+/* 가격 메인 */
+.bh-price {
+  display: flex; align-items: center; gap: 6px;
+  padding: 18px 28px; flex-shrink: 0;
+}
+.bh-price-arrow { font-family: var(--disp); font-size: 36px; line-height: 1; }
+.bh-price-arrow.up  { color: var(--green); }
+.bh-price-arrow.dn  { color: var(--red); }
+.bh-price-arrow.flt { color: var(--text); }
+.bh-price-val  { font-family: var(--disp); font-size: 78px; line-height: 1; letter-spacing: .02em; }
+.bh-price-val.up  { color: var(--green); }
+.bh-price-val.dn  { color: var(--red); }
+.bh-price-val.flt { color: var(--text); }
+.bh-price-unit { font-family: var(--mono); font-size: 12px; color: var(--dim); align-self: flex-end; padding-bottom: 8px; line-height: 1.5; }
 
 /* 델타 */
-.sp-delta { display: flex; flex-direction: column; gap: 10px; padding-left: 28px; border-left: 1px solid var(--border); }
-.sp-d-row   { display: flex; align-items: center; gap: 10px; }
-.sp-d-label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--dim); width: 32px; text-transform: uppercase; }
-.sp-d-val   { font-family: var(--mono); font-size: 24px; font-weight: 600; }
-.sp-d-val.up  { color: var(--green); }
-.sp-d-val.dn  { color: var(--red); }
-
-/* 방향 뱃지 — 가로 한 줄 */
-.sp-dir { padding-left: 28px; border-left: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; gap: 6px; }
-.sp-dir-badge {
-  font-family: var(--sans); font-size: 16px; font-weight: 700;
-  padding: 7px 20px; border-radius: 24px; white-space: nowrap; text-align: center;
+.bh-delta {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 18px 24px; border-left: 1px solid var(--border); flex-shrink: 0;
 }
-.sp-dir-badge.up  { background: rgba(52,216,117,.15); color: var(--green); border: 1px solid rgba(52,216,117,.3); }
-.sp-dir-badge.dn  { background: rgba(248,113,113,.15); color: var(--red);   border: 1px solid rgba(248,113,113,.3); }
-.sp-dir-badge.flt { background: rgba(90,99,120,.15);   color: var(--dim);   border: 1px solid var(--border2); }
-.sp-dir-label { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: .12em; text-transform: uppercase; text-align: center; }
+.bh-d-row   { display: flex; align-items: center; gap: 10px; }
+.bh-d-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--dim); width: 30px; text-transform: uppercase; }
+.bh-d-val   { font-family: var(--mono); font-size: 22px; font-weight: 600; }
+.bh-d-val.up  { color: var(--green); }
+.bh-d-val.dn  { color: var(--red); }
 
-/* EDIT / DEL */
-.strip-actions { display: flex; flex-direction: column; border-left: 1px solid var(--border); min-width: 78px; }
+/* 방향 뱃지 */
+.bh-dir {
+  padding: 18px 20px; border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  flex-shrink: 0;
+}
+.bh-dir-badge {
+  font-family: var(--sans); font-size: 15px; font-weight: 700;
+  padding: 6px 18px; border-radius: 24px; white-space: nowrap;
+}
+.bh-dir-badge.up  { background: rgba(52,216,117,.15); color: var(--green); border: 1px solid rgba(52,216,117,.3); }
+.bh-dir-badge.dn  { background: rgba(248,113,113,.15); color: var(--red);   border: 1px solid rgba(248,113,113,.3); }
+.bh-dir-badge.flt { background: rgba(90,99,120,.15);   color: var(--dim);   border: 1px solid var(--border2); }
+.bh-dir-label { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: .12em; text-transform: uppercase; }
+
+/* EDIT/DEL — 우측 끝 */
+.bh-actions { margin-left: auto; display: flex; flex-direction: column; border-left: 1px solid var(--border); min-width: 76px; align-self: stretch; }
 .act-btn {
   flex: 1; display: flex; align-items: center; justify-content: center;
   background: transparent; border: none; cursor: pointer;
   font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--dim);
-  padding: 0 16px; transition: all .15s; text-transform: uppercase; gap: 5px;
+  padding: 0 14px; transition: all .15s; text-transform: uppercase;
   border-bottom: 1px solid var(--border);
 }
 .act-btn:last-child { border-bottom: none; }
-.act-btn.edit:hover { background: rgba(96,165,250,.08); color: var(--acc); }
+.act-btn.edit:hover { background: rgba(251,191,36,.08); color: var(--ylw); }
 .act-btn.del:hover  { background: rgba(248,113,113,.08); color: var(--red); }
 
-/* ══ BODY ══ */
-.brief-body { padding: 22px 28px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 18px; }
-
-.factor-section { display: flex; flex-direction: column; gap: 10px; }
-.fc-hdr {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
-  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+/* ══ 중단: 2컬럼 팩트 패널 ══ */
+.brief-facts {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
 }
-.fc-hdr.main    { color: var(--acc2); }
-.fc-hdr.counter { color: var(--dim); }
+.fact-col {
+  padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.fact-col:first-child { border-right: 1px solid var(--border); }
+
+/* 컬럼 타이틀 */
+.fact-col-title {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ylw); padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.fact-col-title.counter { color: var(--ylw-dim); opacity: .8; }
 .fc-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .fc-dot.bear { background: var(--red); }
 .fc-dot.bull { background: var(--green); }
 .fc-dot.dim  { background: var(--dim); }
 
-.factor-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+/* 요인 태그들 */
+.factor-tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .factor-tag {
-  display: inline-block; padding: 5px 14px; border-radius: 20px;
-  font-size: 14px; font-weight: 500;
+  display: inline-block; padding: 5px 13px; border-radius: 20px;
+  font-size: 13px; font-weight: 500;
 }
 .factor-tag.bear { background: var(--tag-bear-bg); color: var(--tag-bear-txt); border: 1px solid var(--tag-bear-bd); }
 .factor-tag.bull { background: var(--tag-bull-bg); color: var(--tag-bull-txt); border: 1px solid var(--tag-bull-bd); }
@@ -170,42 +196,51 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 
 /* 원문 인용 */
 .source-quote {
-  background: var(--quote-bg); border: 1px solid var(--quote-bd);
-  border-left: 3px solid var(--acc); border-radius: 6px;
-  padding: 12px 16px;
+  background: var(--inset);
+  border: 1px solid var(--ylw-dim);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px; padding: 11px 15px;
 }
 .sq-label {
   font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--acc); margin-bottom: 7px; display: flex; align-items: center; gap: 6px;
+  color: var(--ylw); margin-bottom: 7px; display: flex; align-items: center; gap: 6px;
 }
 .sq-text {
-  font-size: 14px; line-height: 1.78; color: var(--quote-txt); font-style: italic;
+  font-size: 13px; line-height: 1.78; color: var(--ylw2); font-style: italic;
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-.sq-text::before { content: '"'; font-size: 18px; line-height: 0; vertical-align: -3px; margin-right: 3px; color: var(--acc2); }
-.sq-text::after  { content: '"'; font-size: 18px; line-height: 0; vertical-align: -3px; margin-left:  3px; color: var(--acc2); }
+.sq-text::before { content: '"'; font-size: 18px; line-height: 0; vertical-align: -3px; margin-right: 3px; color: var(--gold); }
+.sq-text::after  { content: '"'; font-size: 18px; line-height: 0; vertical-align: -3px; margin-left:  3px; color: var(--gold); }
 
-.source-quote.counter { background: var(--inset); border-color: var(--border2); border-left-color: var(--dim); }
-.source-quote.counter .sq-label { color: var(--dim); }
+.source-quote.counter {
+  border-color: var(--border2); border-left-color: var(--dim);
+}
+.source-quote.counter .sq-label { color: var(--ylw-dim); }
 .source-quote.counter .sq-text  { color: var(--text2); }
 .source-quote.counter .sq-text::before,
 .source-quote.counter .sq-text::after { color: var(--dim); }
 
-/* ══ COMMENTARY ══ */
+/* 빈 컬럼 placeholder */
+.fact-empty {
+  font-family: var(--mono); font-size: 11px; color: var(--dim);
+  padding: 8px 0; opacity: .5;
+}
+
+/* ══ 하단: 코멘터리 ══ */
 .brief-commentary {
-  padding: 20px 28px; border-bottom: 1px solid var(--border);
+  padding: 18px 24px; border-bottom: 1px solid var(--border);
   background: var(--inset);
 }
 .co-label {
-  font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--dim); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ylw); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
 }
-.co-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.co-text { font-size: 16px; line-height: 1.9; color: var(--text2); white-space: pre-wrap; }
+.co-label::after { content: ''; flex: 1; height: 1px; background: var(--ylw-dim); opacity: .4; }
+.co-text { font-size: 15px; line-height: 1.9; color: var(--ylw3); white-space: pre-wrap; }
 
 /* ══ COPY ROW ══ */
 .brief-copy {
-  padding: 13px 28px; display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+  padding: 12px 24px; display: flex; align-items: center; justify-content: flex-end; gap: 10px;
   background: var(--card);
 }
 .cp-btn {
@@ -213,14 +248,14 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   background: transparent; border: 1px solid var(--border2); color: var(--dim);
   padding: 7px 16px; border-radius: 5px; cursor: pointer; transition: all .15s;
 }
-.cp-btn:hover     { border-color: var(--acc); color: var(--acc); background: rgba(96,165,250,.06); }
-.cp-btn.img:hover { border-color: var(--green); color: var(--green); background: rgba(52,216,117,.06); }
+.cp-btn:hover     { border-color: var(--ylw); color: var(--ylw); }
+.cp-btn.img:hover { border-color: var(--green); color: var(--green); }
 .cp-btn.ok        { border-color: var(--green); color: var(--green); }
 
 /* ══ MODAL ══ */
 #overlay {
   position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,.7); backdrop-filter: blur(8px);
+  background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
   display: none; align-items: center; justify-content: center;
 }
 #overlay.open { display: flex; }
@@ -228,16 +263,15 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   width: 760px; max-height: 92vh;
   background: var(--surface); border: 1px solid var(--border2); border-radius: 12px;
   display: flex; flex-direction: column; overflow: hidden;
-  box-shadow: 0 32px 80px rgba(0,0,0,.6);
-  animation: mIn .22s ease;
+  box-shadow: 0 32px 80px rgba(0,0,0,.6); animation: mIn .22s ease;
 }
 @keyframes mIn { from{opacity:0;transform:translateY(12px) scale(.98)} to{opacity:1;transform:none} }
 .mhdr {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 17px 26px; border-bottom: 1px solid var(--border);
+  padding: 16px 26px; border-bottom: 1px solid var(--border);
   background: var(--hdr); flex-shrink: 0;
 }
-.mhdr-title { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--acc2); }
+.mhdr-title { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--ylw); }
 .mhdr-close {
   background: transparent; border: 1px solid var(--border2); color: var(--dim);
   width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 16px;
@@ -245,86 +279,80 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 }
 .mhdr-close:hover { border-color: var(--red); color: var(--red); }
 .mbody {
-  flex: 1; overflow-y: auto; padding: 24px 26px;
-  display: flex; flex-direction: column; gap: 20px; background: var(--bg);
+  flex: 1; overflow-y: auto; padding: 22px 26px;
+  display: flex; flex-direction: column; gap: 18px; background: var(--bg);
 }
 .m-sec {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;
   display: flex; flex-direction: column; gap: 12px;
 }
 .m-sec-label {
   font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--acc2); margin-bottom: 2px; display: flex; align-items: center; gap: 8px;
+  color: var(--ylw); margin-bottom: 2px; display: flex; align-items: center; gap: 8px;
 }
-.m-sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
+.m-sec-label::after { content: ''; flex: 1; height: 1px; background: var(--ylw-dim); opacity: .35; }
 #news-ta {
-  width: 100%; height: 150px; resize: vertical;
+  width: 100%; height: 145px; resize: vertical;
   background: var(--card); border: 1px solid var(--border2); border-radius: 6px;
   color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.72;
-  padding: 13px 15px; outline: none; transition: border-color .15s;
+  padding: 12px 14px; outline: none; transition: border-color .15s;
 }
-#news-ta:focus { border-color: var(--acc); }
+#news-ta:focus { border-color: var(--gold); }
 #news-ta::placeholder { color: var(--dim); font-size: 13px; }
 #parsed-wrap, #step-factors { display: none; }
-
-.pf-grid   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.pf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.pfield { display: flex; flex-direction: column; gap: 6px; }
-.pfield label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.pf-grid   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 11px; }
+.pf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.pfield { display: flex; flex-direction: column; gap: 5px; }
+.pfield label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ylw-dim); }
 .pfield input, .pfield select, .pfield textarea {
   background: var(--card); border: 1px solid var(--border2); border-radius: 6px;
   color: var(--text); font-family: var(--mono); font-size: 14px;
-  padding: 10px 12px; outline: none; width: 100%; transition: border-color .15s;
+  padding: 9px 12px; outline: none; width: 100%; transition: border-color .15s;
 }
-.pfield input:focus, .pfield select:focus, .pfield textarea:focus { border-color: var(--acc); }
-.pfield input.hi  { color: var(--acc2); font-weight: 600; border-color: var(--border2); background: rgba(56,189,248,.06); }
+.pfield input:focus, .pfield select:focus, .pfield textarea:focus { border-color: var(--gold); }
+.pfield input.hi  { color: var(--ylw2); font-weight: 600; border-color: var(--ylw-dim); background: rgba(245,158,11,.05); }
 .pfield input.pos { color: var(--green); }
 .pfield input.neg { color: var(--red); }
-.pfield textarea  { resize: vertical; min-height: 58px; font-family: var(--sans); font-size: 13px; line-height: 1.65; }
-
+.pfield textarea  { resize: vertical; min-height: 56px; font-family: var(--sans); font-size: 13px; line-height: 1.65; }
 .parse-status {
-  font-family: var(--mono); font-size: 12px; padding: 10px 14px;
-  border-radius: 6px; margin-top: 6px; display: none;
+  font-family: var(--mono); font-size: 12px; padding: 9px 13px;
+  border-radius: 6px; margin-top: 4px; display: none;
 }
 .parse-status.ok   { background: rgba(52,216,117,.08);  border: 1px solid rgba(52,216,117,.3);  color: var(--green); }
-.parse-status.warn { background: rgba(251,191,36,.08);  border: 1px solid rgba(251,191,36,.3);  color: #fbbf24; }
+.parse-status.warn { background: rgba(251,191,36,.08);  border: 1px solid rgba(251,191,36,.3);  color: var(--ylw); }
 .parse-status.err  { background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.3); color: var(--red); }
-
-.chip-section-label {
+.chip-sec-label {
   font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--dim); margin-bottom: 6px; margin-top: 10px;
+  color: var(--ylw-dim); margin-bottom: 6px; margin-top: 8px;
 }
-.chip-section-label:first-child { margin-top: 0; }
+.chip-sec-label:first-child { margin-top: 0; }
 .chip-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
 .chip {
   font-family: var(--sans); font-size: 13px; font-weight: 500;
-  padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border2);
+  padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border2);
   color: var(--dim); background: var(--card);
   cursor: pointer; transition: all .12s; user-select: none;
 }
-.chip:hover { border-color: var(--acc2); color: var(--acc2); }
+.chip:hover { border-color: var(--ylw); color: var(--ylw); }
 .chip.sel-bear { background: var(--tag-bear-bg); border-color: var(--tag-bear-bd); color: var(--tag-bear-txt); }
 .chip.sel-bull { background: var(--tag-bull-bg); border-color: var(--tag-bull-bd); color: var(--tag-bull-txt); }
-
-.divider { height: 1px; background: var(--border); margin: 6px 0; }
-
+.divider { height: 1px; background: var(--border); margin: 4px 0; }
 .mftr {
-  flex-shrink: 0; padding: 15px 26px; border-top: 1px solid var(--border);
+  flex-shrink: 0; padding: 14px 26px; border-top: 1px solid var(--border);
   display: flex; gap: 10px; background: var(--surface);
 }
 .mf-btn {
-  padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer;
+  padding: 11px 18px; border: none; border-radius: 6px; cursor: pointer;
   font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
   text-transform: uppercase; font-weight: 600; transition: all .15s;
 }
-.mf-parse       { flex: 1; background: var(--card); color: var(--acc2); border: 1px solid var(--border2); }
-.mf-parse:hover { background: rgba(56,189,248,.1); border-color: var(--acc2); }
-.mf-save        { flex: 2; background: var(--acc2); color: #0f172a; display: none; }
-.mf-save:hover  { background: #7dd3fc; }
+.mf-parse       { flex: 1; background: var(--card); color: var(--ylw); border: 1px solid var(--ylw-dim); }
+.mf-parse:hover { background: rgba(245,158,11,.1); border-color: var(--ylw); }
+.mf-save        { flex: 2; background: var(--gold); color: #1a1200; display: none; }
+.mf-save:hover  { background: var(--ylw); }
 .mf-close {
   background: transparent; border: 1px solid var(--border2); color: var(--dim);
-  padding: 12px 18px; border-radius: 6px; cursor: pointer;
+  padding: 11px 16px; border-radius: 6px; cursor: pointer;
   font-family: var(--mono); font-size: 12px; transition: all .15s;
 }
 .mf-close:hover { border-color: var(--red); color: var(--red); }
@@ -335,7 +363,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   padding: 13px 20px; border-radius: 8px; font-family: var(--mono); font-size: 13px;
   font-weight: 500; color: #fff; opacity: 0; transform: translateY(10px);
   transition: all .24s; pointer-events: none; max-width: 320px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
 }
 #toast.show { opacity: 1; transform: translateY(0); }
 #toast.ok  { background: #166534; }
@@ -364,9 +392,9 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   <div id="loading" style="display:none"><div class="spinner"></div>데이터 불러오는 중...</div>
   <div class="empty" id="empty" style="display:none">
     <div class="e-icon">◈</div>
-    <div>NO ENTRIES YET</div>
+    <div style="color:var(--ylw2)">NO ENTRIES YET</div>
     <div style="margin-top:8px;font-size:11px;color:var(--dim)">
-      <strong style="color:var(--acc2)">+ NEW ENTRY</strong> 버튼으로 첫 번째 브리프를 추가하세요
+      <strong style="color:var(--ylw)">+ NEW ENTRY</strong> 버튼으로 첫 번째 브리프를 추가하세요
     </div>
   </div>
   <div id="cards"></div>
@@ -381,20 +409,18 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
     </div>
     <div class="mbody">
 
-      <!-- 01 뉴스 -->
       <div class="m-sec">
         <div class="m-sec-label">01 · 뉴스 텍스트</div>
         <textarea id="news-ta" placeholder="WTI 기사 전문 붙여넣기 → 파싱 버튼 클릭
-수치 / 월물 / 날짜 / 요인 / 원문 / 코멘터리 자동 생성
+수치 / 월물 / 날짜 / 주요인 / 반대요인 / 원문 / 코멘터리 자동 생성
 
 텍스트 없이 파싱 → 수동 입력 모드"></textarea>
         <div class="parse-status" id="parse-st"></div>
       </div>
 
-      <!-- 02 수치 -->
       <div class="m-sec" id="parsed-wrap">
         <div class="m-sec-label">02 · 수치 확인 · 수정</div>
-        <div class="pf-grid" style="margin-bottom:12px">
+        <div class="pf-grid" style="margin-bottom:11px">
           <div class="pfield"><label>WTI 종가 ($/bbl) *</label>
             <input type="number" id="f-wti" step="0.01" placeholder="62.33" class="hi"></div>
           <div class="pfield"><label>전일比 $</label>
@@ -402,7 +428,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
           <div class="pfield"><label>변동률 %</label>
             <input type="number" id="f-pct" step="0.01" placeholder="-0.89"></div>
         </div>
-        <div class="pf-grid-2" style="margin-bottom:12px">
+        <div class="pf-grid-2" style="margin-bottom:11px">
           <div class="pfield"><label>기준일 *</label>
             <input type="date" id="f-date"></div>
           <div class="pfield"><label>월물 *</label>
@@ -421,19 +447,17 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
         </div>
       </div>
 
-      <!-- 03 요인 -->
       <div class="m-sec" id="step-factors">
         <div class="m-sec-label">03 · 주요인 선택</div>
-        <div class="chip-section-label">▼ BEARISH · 하락 요인</div>
+        <div class="chip-sec-label">▼ BEARISH · 하락 요인</div>
         <div class="chip-wrap" id="main-chips-bear"></div>
-        <div class="chip-section-label">▲ BULLISH · 상승 요인</div>
+        <div class="chip-sec-label">▲ BULLISH · 상승 요인</div>
         <div class="chip-wrap" id="main-chips-bull"></div>
-
         <div class="divider"></div>
-        <div class="m-sec-label">04 · 반대요인 선택 (선택사항)</div>
-        <div class="chip-section-label">▼ BEARISH</div>
+        <div class="m-sec-label">04 · 반대요인 (선택사항)</div>
+        <div class="chip-sec-label">▼ BEARISH</div>
         <div class="chip-wrap" id="counter-chips-bear"></div>
-        <div class="chip-section-label">▲ BULLISH</div>
+        <div class="chip-sec-label">▲ BULLISH</div>
         <div class="chip-wrap" id="counter-chips-bull"></div>
         <div style="margin-top:12px">
           <div class="pfield"><label>반대요인 원문 (한 문장)</label>
@@ -470,7 +494,7 @@ function fmtDate(raw) {
   const m = s.match(/(\d{4})[.\-\/](\d{1,2})[.\-\/](\d{1,2})/);
   if (m) return `${m[1]}.${m[2].padStart(2,'0')}.${m[3].padStart(2,'0')}`;
   if (!isNaN(s) && s.length < 6) {
-    const d = new Date(Math.round((parseFloat(s) - 25569) * 86400000));
+    const d = new Date(Math.round((parseFloat(s)-25569)*86400000));
     return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
   }
   return s.slice(0,10).replace(/-/g,'.');
@@ -499,14 +523,19 @@ const mainSel    = new Set();
 const counterSel = new Set();
 let editKey = null;
 
-// ── 문장 트리밍 (100자 이내) ──
+// ── 문장 트리밍 ──
 function trimSent(s, max=100) {
   if (!s) return '';
   s = s.replace(/^[^가-힣a-zA-Z$\d"]+/, '').trim();
   if (s.length <= max) return s;
-  // 자연스러운 끊김 찾기
   const cut = s.lastIndexOf(' ', max);
   return (cut > 60 ? s.slice(0, cut) : s.slice(0, max)) + '…';
+}
+
+// ── 문장 분리 ──
+function splitSents(txt) {
+  return txt.split(/(?<=[다습니다까요었다]\.)\s+|(?<=다\.\s)|(?<=\n)/)
+    .map(s => s.trim()).filter(s => s.length > 15 && s.length < 300);
 }
 
 // ── 주요인 원문 추출 ──
@@ -517,9 +546,8 @@ function extractMainQuote(txt) {
     /소식[이에].{2,60}(?:하락|상승|압박|지지|영향)/,
     /때문으로\s*분석/,
     /영향으로.{4,60}(?:하락|상승|마감)/,
-    /우려[가에].{4,60}(?:하락|상승|작용|부담)/,
-    /(?:하락|상승)세를\s*보였/,
     /위험\s*프리미엄.{0,40}(?:약해|강해|낮아|높아)/,
+    /(?:하락|상승)세를\s*보였/,
   ];
   for (const p of patterns) {
     const f = sents.find(s => p.test(s));
@@ -529,55 +557,40 @@ function extractMainQuote(txt) {
 }
 
 // ── 반대요인 원문 추출 ──
-// 반대요인 키워드가 포함된 문장 중 인과구조 패턴 우선
-function extractCounterQuote(txt, counterIdxSet) {
-  if (!counterIdxSet.size) return null;
+function extractCounterQuote(txt, idxSet) {
+  if (!idxSet.size) return null;
   const sents = splitSents(txt);
-  const counterKws = [...counterIdxSet].flatMap(i =>
-    FACTORS[i].kw.flat().filter(k => typeof k === 'string')
-  );
-  // 반대요인 키워드 포함 문장 우선
-  for (const kw of counterKws) {
+  const kws = [...idxSet].flatMap(i => FACTORS[i].kw.flat().filter(k => typeof k === 'string'));
+  for (const kw of kws) {
     const found = sents.find(s => s.includes(kw));
     if (found) return trimSent(found);
   }
   return null;
 }
 
-// ── 문장 분리 헬퍼 ──
-function splitSents(txt) {
-  return txt.split(/(?<=[다습니다까요었다]\.)\s+|(?<=다\.\s)|(?<=\n)/)
-    .map(s => s.trim())
-    .filter(s => s.length > 15 && s.length < 300);
-}
-
-// ── 요인 자동 감지 (주/반대 분리) ──
+// ── 요인 자동 감지 ──
 function autoDetect(txt, direction) {
   const lo = txt.toLowerCase();
-  mainSel.clear();
-  counterSel.clear();
-
+  mainSel.clear(); counterSel.clear();
   FACTORS.forEach((f, i) => {
     const hit = f.kw.every(k => Array.isArray(k) ? k.some(kk=>lo.includes(kk)) : lo.includes(k));
     if (!hit) return;
-    // 방향과 같은 타입 → 주요인, 반대 타입 → 반대요인
-    if (direction === '하락' && f.t === 'bear') mainSel.add(i);
-    else if (direction === '상승' && f.t === 'bull') mainSel.add(i);
+    if      (direction==='하락' && f.t==='bear') mainSel.add(i);
+    else if (direction==='상승' && f.t==='bull') mainSel.add(i);
     else counterSel.add(i);
   });
 }
 
 // ── 코멘터리 생성 ──
 function buildCommentary(wti, pct, abs, direction) {
-  const pctStr = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
-  const absStr = abs !== null ? `${abs >= 0 ? '+' : ''}${abs.toFixed(2)} USD, ` : '';
-  const mainArr   = [...mainSel].map(i => FACTORS[i].kr);
-  const counterArr = [...counterSel].map(i => FACTORS[i].kr);
-
-  let text = `WTI 원유는 배럴당 $${wti.toFixed(2)} (${absStr}${pctStr})로 ${direction} 마감.`;
-  if (mainArr.length) text += ` ${mainArr.slice(0,2).join(', ')} 등이 주요 ${direction} 요인으로 작용.`;
-  if (counterArr.length) text += ` 다만 ${counterArr[0]} 등은 ${direction === '하락' ? '낙폭' : '상승폭'}을 제한.`;
-  return text;
+  const pctStr = (pct>=0?'+':'')+pct.toFixed(2)+'%';
+  const absStr = abs!==null ? `${abs>=0?'+':''}${abs.toFixed(2)} USD, ` : '';
+  const mainArr    = [...mainSel].map(i=>FACTORS[i].kr);
+  const counterArr = [...counterSel].map(i=>FACTORS[i].kr);
+  let t = `WTI 원유는 배럴당 $${wti.toFixed(2)} (${absStr}${pctStr})로 ${direction} 마감.`;
+  if (mainArr.length)    t += ` ${mainArr.slice(0,2).join(', ')} 등이 주요 ${direction} 요인으로 작용.`;
+  if (counterArr.length) t += ` 다만 ${counterArr[0]} 등은 ${direction==='하락'?'낙폭':'상승폭'}을 제한.`;
+  return t;
 }
 
 // ── LOAD ──
@@ -589,11 +602,11 @@ async function loadData() {
     const res  = await fetch(GAS_URL + '?t=' + Date.now());
     const json = await res.json();
     if (!json.success) throw new Error(json.message);
-    const rows = (json.data || []).slice(1).reverse();
+    const rows = (json.data||[]).slice(1).reverse();
     if (!rows.length) { document.getElementById('empty').style.display = 'block'; return; }
     document.getElementById('cards').innerHTML = rows.map(rowToEntry).map(renderCard).join('');
   } catch(e) {
-    toast('❌ 로드 실패: ' + e.message, 'err');
+    toast('❌ 로드 실패: '+e.message, 'err');
     document.getElementById('empty').style.display = 'block';
   } finally {
     document.getElementById('loading').style.display = 'none';
@@ -604,9 +617,9 @@ function rowToEntry(r) {
   return {
     date:           fmtDate(r[0]),
     contract:       String(r[1]||'').trim(),
-    wti:            parseFloat(r[2]) || 0,
-    abs:            (r[3]!==''&&r[3]!==null&&r[3]!==undefined) ? parseFloat(r[3]) : null,
-    pct:            parseFloat(r[4]) || 0,
+    wti:            parseFloat(r[2])||0,
+    abs:            (r[3]!==''&&r[3]!=null) ? parseFloat(r[3]) : null,
+    pct:            parseFloat(r[4])||0,
     direction:      String(r[5]||'').trim(),
     mainFactors:    String(r[6]||'').trim(),
     mainQuote:      String(r[7]||'').trim(),
@@ -618,17 +631,14 @@ function rowToEntry(r) {
 
 // ── MODAL ──
 function openModal(entryForEdit = null) {
-  editKey = null;
-  mainSel.clear(); counterSel.clear();
-
+  editKey = null; mainSel.clear(); counterSel.clear();
   document.getElementById('modal-title').textContent = entryForEdit ? '◈ EDIT ENTRY' : '◈ NEW WTI ENTRY';
   document.getElementById('news-ta').value = '';
   document.getElementById('parse-st').style.display = 'none';
   document.getElementById('parsed-wrap').style.display = 'none';
   document.getElementById('step-factors').style.display = 'none';
   document.getElementById('btn-save').style.display = 'none';
-
-  const today = new Date(Date.now() + 9*3600000).toISOString().slice(0,10);
+  const today = new Date(Date.now()+9*3600000).toISOString().slice(0,10);
   document.getElementById('f-date').value = today;
   document.getElementById('f-cont').value = 'Mar';
   ['f-wti','f-abs','f-pct','f-commentary','f-main-quote','f-counter-quote']
@@ -644,11 +654,11 @@ function openModal(entryForEdit = null) {
     document.getElementById('f-commentary').value    = entryForEdit.commentary;
     document.getElementById('f-main-quote').value    = entryForEdit.mainQuote;
     document.getElementById('f-counter-quote').value = entryForEdit.counterQuote;
-    entryForEdit.mainFactors.split(',').map(s=>s.trim()).forEach(kr => {
-      const idx = FACTORS.findIndex(f=>f.kr===kr); if(idx>=0) mainSel.add(idx);
+    entryForEdit.mainFactors.split(',').map(s=>s.trim()).forEach(kr=>{
+      const idx=FACTORS.findIndex(f=>f.kr===kr); if(idx>=0) mainSel.add(idx);
     });
-    entryForEdit.counterFactors.split(',').map(s=>s.trim()).forEach(kr => {
-      const idx = FACTORS.findIndex(f=>f.kr===kr); if(idx>=0) counterSel.add(idx);
+    entryForEdit.counterFactors.split(',').map(s=>s.trim()).forEach(kr=>{
+      const idx=FACTORS.findIndex(f=>f.kr===kr); if(idx>=0) counterSel.add(idx);
     });
     document.getElementById('parsed-wrap').style.display = 'block';
     document.getElementById('step-factors').style.display = 'block';
@@ -657,30 +667,28 @@ function openModal(entryForEdit = null) {
   buildChips();
   document.getElementById('overlay').classList.add('open');
 }
-
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 document.getElementById('overlay').addEventListener('click', e => {
   if(e.target===document.getElementById('overlay')) closeModal();
 });
 
-// ── CHIPS ──
 function buildChips() {
   buildChipGroup('main-chips-bear',    mainSel,    'bear');
   buildChipGroup('main-chips-bull',    mainSel,    'bull');
   buildChipGroup('counter-chips-bear', counterSel, 'bear');
   buildChipGroup('counter-chips-bull', counterSel, 'bull');
 }
-function buildChipGroup(cid, selSet, typeFilter) {
+function buildChipGroup(cid, selSet, tf) {
   const c = document.getElementById(cid); c.innerHTML = '';
-  FACTORS.forEach((f, i) => {
-    if (f.t !== typeFilter) return;
+  FACTORS.forEach((f,i) => {
+    if (f.t!==tf) return;
     const ch = document.createElement('div');
-    ch.className = 'chip' + (selSet.has(i) ? ` sel-${f.t}` : '');
+    ch.className = 'chip'+(selSet.has(i)?` sel-${f.t}`:'');
     ch.textContent = f.kr;
-    ch.addEventListener('click', () => {
-      if (selSet.has(i)) { selSet.delete(i); ch.className='chip'; }
-      else               { selSet.add(i);    ch.className=`chip sel-${f.t}`; }
+    ch.addEventListener('click', ()=>{
+      if(selSet.has(i)){selSet.delete(i);ch.className='chip';}
+      else{selSet.add(i);ch.className=`chip sel-${f.t}`;}
     });
     c.appendChild(ch);
   });
@@ -690,92 +698,73 @@ function buildChipGroup(cid, selSet, typeFilter) {
 function doParse() {
   const txt = document.getElementById('news-ta').value.trim();
   if (!txt) {
-    document.getElementById('parsed-wrap').style.display = 'block';
-    document.getElementById('step-factors').style.display = 'block';
-    document.getElementById('btn-save').style.display = 'block';
-    buildChips();
-    showStatus('warn','텍스트 없음 — 수동 입력 모드');
-    return;
+    document.getElementById('parsed-wrap').style.display='block';
+    document.getElementById('step-factors').style.display='block';
+    document.getElementById('btn-save').style.display='block';
+    buildChips(); showStatus('warn','텍스트 없음 — 수동 입력 모드'); return;
   }
-
-  const f = {}; let m;
-
-  // WTI 종가
-  m = txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);
-  if (m) f.wti = parseFloat(m[1]);
-  if (!f.wti) { m = txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/); if(m) f.wti=parseFloat(m[1]); }
-  if (!f.wti) { m = txt.match(/배럴당\s*([\d.]+)달러에\s*(?:거래|마감|체결)/); if(m) f.wti=parseFloat(m[1]); }
-
-  // 전일比
-  const ws = (txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,250}/) || [''])[0];
-  m = ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
-  if (m) { f.abs=-parseFloat(m[1]); f.pct=-parseFloat(m[2]); }
-  if (!f.abs) { m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/); if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);} }
-  if (!f.abs) { m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/); if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);} }
-  if (!f.pct) { m=txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/); if(m) f.pct=m[2]==='하락'?-parseFloat(m[1]):parseFloat(m[1]); }
-  if (!f.abs && f.wti && f.pct) { const p=f.wti/(1+f.pct/100); f.abs=parseFloat((f.wti-p).toFixed(2)); }
+  const f={}; let m;
+  m=txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/); if(m) f.wti=parseFloat(m[1]);
+  if(!f.wti){m=txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
+  if(!f.wti){m=txt.match(/배럴당\s*([\d.]+)달러에\s*(?:거래|마감|체결)/);if(m)f.wti=parseFloat(m[1]);}
+  const ws=(txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,250}/)||[''])[0];
+  m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
+  if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
+  if(!f.abs){m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}}
+  if(!f.abs){m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/);if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}}
+  if(!f.pct){m=txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/);if(m)f.pct=m[2]==='하락'?-parseFloat(m[1]):parseFloat(m[1]);}
+  if(!f.abs&&f.wti&&f.pct){const p=f.wti/(1+f.pct/100);f.abs=parseFloat((f.wti-p).toFixed(2));}
 
   // 월물
-  const contM = txt.match(/(3|4|5|6)월\s*(?:인도분|물)/);
-  if (contM) { const map={'3':'Mar','4':'Apr','5':'May','6':'Jun'}; document.getElementById('f-cont').value=map[contM[1]]||'Mar'; }
+  const contM=txt.match(/(3|4|5|6)월\s*(?:인도분|물)/);
+  if(contM){const map={'3':'Mar','4':'Apr','5':'May','6':'Jun'};document.getElementById('f-cont').value=map[contM[1]]||'Mar';}
 
-  // 날짜 — "17일" 형태 우선, 연월일 형태 차선
-  const todayKST = new Date(Date.now()+9*3600000);
-  const dayM = txt.match(/(\d{1,2})일\s*\(현지시간\)/);
-  if (dayM) {
-    const day = parseInt(dayM[1]);
-    // 기사의 "현지시간" 날짜는 KST 기준 다음날인 경우 많음
-    const d = new Date(Date.UTC(todayKST.getFullYear(), todayKST.getMonth(), day));
-    document.getElementById('f-date').value = d.toISOString().slice(0,10);
+  // 날짜
+  const todayKST=new Date(Date.now()+9*3600000);
+  const dayM=txt.match(/(\d{1,2})일\s*\(현지시간\)/);
+  if(dayM){
+    const day=parseInt(dayM[1]);
+    // 현지시간 날짜 + 1 = KST 기준일
+    const yr=todayKST.getFullYear(), mo=todayKST.getMonth();
+    const d=new Date(Date.UTC(yr,mo,day+1));
+    document.getElementById('f-date').value=d.toISOString().slice(0,10);
   } else {
-    const dm = txt.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]\s*(\d{1,2})/);
-    if (dm) document.getElementById('f-date').value = `${dm[1]}-${dm[2].padStart(2,'0')}-${dm[3].padStart(2,'0')}`;
+    const dm=txt.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]\s*(\d{1,2})/);
+    if(dm) document.getElementById('f-date').value=`${dm[1]}-${dm[2].padStart(2,'0')}-${dm[3].padStart(2,'0')}`;
   }
 
-  if (f.wti) document.getElementById('f-wti').value = f.wti.toFixed(2);
-  if (f.abs != null) document.getElementById('f-abs').value = f.abs.toFixed(2);
-  if (f.pct != null) document.getElementById('f-pct').value = f.pct.toFixed(2);
+  if(f.wti)     document.getElementById('f-wti').value=f.wti.toFixed(2);
+  if(f.abs!=null) document.getElementById('f-abs').value=f.abs.toFixed(2);
+  if(f.pct!=null) document.getElementById('f-pct').value=f.pct.toFixed(2);
 
-  // 방향 결정
-  const direction = (f.pct ?? 0) > 0 ? '상승' : (f.pct ?? 0) < 0 ? '하락' : '보합';
-
-  // 요인 자동 감지 (주/반대 분리)
+  const direction=(f.pct??0)>0?'상승':(f.pct??0)<0?'하락':'보합';
   autoDetect(txt, direction);
 
-  // 주요인 원문 추출
-  const mainQuote = extractMainQuote(txt);
-  if (mainQuote) document.getElementById('f-main-quote').value = mainQuote;
-
-  // 반대요인 원문 추출
+  const mainQuote    = extractMainQuote(txt);
   const counterQuote = extractCounterQuote(txt, counterSel);
-  if (counterQuote) document.getElementById('f-counter-quote').value = counterQuote;
+  if(mainQuote)    document.getElementById('f-main-quote').value    = mainQuote;
+  if(counterQuote) document.getElementById('f-counter-quote').value = counterQuote;
+  if(f.wti&&f.pct!=null)
+    document.getElementById('f-commentary').value = buildCommentary(f.wti,f.pct,f.abs??null,direction);
 
-  // 코멘터리 자동 생성
-  if (f.wti && f.pct != null) {
-    document.getElementById('f-commentary').value = buildCommentary(f.wti, f.pct, f.abs ?? null, direction);
-  }
-
-  document.getElementById('parsed-wrap').style.display = 'block';
-  document.getElementById('step-factors').style.display = 'block';
-  document.getElementById('btn-save').style.display = 'block';
+  document.getElementById('parsed-wrap').style.display='block';
+  document.getElementById('step-factors').style.display='block';
+  document.getElementById('btn-save').style.display='block';
   buildChips();
 
-  const ok = f.wti && f.pct != null;
-  const bits = [];
-  if (ok) bits.push(`✓ WTI $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%)`);
+  const ok=f.wti&&f.pct!=null;
+  const bits=[];
+  if(ok) bits.push(`✓ WTI $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%)`);
   bits.push(`주요인 ${mainSel.size}개`);
-  if (counterSel.size) bits.push(`반대요인 ${counterSel.size}개`);
-  if (mainQuote)    bits.push('주요인 원문 추출');
-  if (counterQuote) bits.push('반대요인 원문 추출');
+  if(counterSel.size) bits.push(`반대요인 ${counterSel.size}개`);
+  if(mainQuote)    bits.push('주요인 원문 추출');
+  if(counterQuote) bits.push('반대요인 원문 추출');
   bits.push('코멘터리 생성');
-  showStatus(ok?'ok':'warn', ok ? bits.join(' · ') : '⚠ 수치 직접 확인 필요 · ' + bits.slice(1).join(' · '));
+  showStatus(ok?'ok':'warn', bits.join(' · '));
 }
 
-function showStatus(t,m) {
-  const el=document.getElementById('parse-st');
-  el.style.display='block'; el.className=`parse-status ${t}`; el.textContent=m;
-}
-function autoPct() {
+function showStatus(t,m){const el=document.getElementById('parse-st');el.style.display='block';el.className=`parse-status ${t}`;el.textContent=m;}
+function autoPct(){
   const wti=parseFloat(document.getElementById('f-wti').value);
   const abs=parseFloat(document.getElementById('f-abs').value);
   if(wti&&!isNaN(abs)&&wti-abs>0) document.getElementById('f-pct').value=(abs/(wti-abs)*100).toFixed(2);
@@ -787,23 +776,20 @@ async function doSave() {
   const pct=parseFloat(document.getElementById('f-pct').value);
   const dateRaw=document.getElementById('f-date').value;
   if(!dateRaw||isNaN(wti)||isNaN(pct)){showStatus('err','기준일, WTI 종가, 변동률은 필수입니다.');return;}
-
   const date=fmtDate(dateRaw);
   const abs=parseFloat(document.getElementById('f-abs').value)||null;
   const cont=document.getElementById('f-cont').value;
   const direction=pct>0?'상승':pct<0?'하락':'보합';
   const mainArr=[]; mainSel.forEach(i=>mainArr.push(FACTORS[i].kr));
   const counterArr=[]; counterSel.forEach(i=>counterArr.push(FACTORS[i].kr));
-
   const data={
-    date, contract:cont, wti, abs:abs!==null?abs:'', pct, direction,
+    date,contract:cont,wti,abs:abs!==null?abs:'',pct,direction,
     mainFactors:    mainArr.join(', '),
     mainQuote:      document.getElementById('f-main-quote').value.trim(),
     commentary:     document.getElementById('f-commentary').value.trim(),
     counterFactors: counterArr.join(', '),
     counterQuote:   document.getElementById('f-counter-quote').value.trim(),
   };
-
   const btn=document.getElementById('btn-save');
   btn.textContent='저장 중...'; btn.disabled=true;
   try {
@@ -849,75 +835,82 @@ function renderCard(e) {
         return `<span class="factor-tag ${f?f.t:'dim'}">${kr.trim()}</span>`;
       }).join('') : '';
 
-  const hasBody = mainTags||e.mainQuote||counterTags||e.counterQuote;
-  const eJson   = encodeURIComponent(JSON.stringify(e));
+  const hasMain    = mainTags || e.mainQuote;
+  const hasCounter = counterTags || e.counterQuote;
+  const hasFacts   = hasMain || hasCounter;
+  const eJson      = encodeURIComponent(JSON.stringify(e));
 
   return `<div class="brief" id="${cardId}">
 
-    <div class="brief-strip">
-      <div class="strip-date">
-        <div class="sd-date">${e.date}</div>
-        <div class="sd-cont">NYMEX · ${e.contract}월물</div>
+    <!-- ① 가격 헤더 -->
+    <div class="brief-header">
+      <div class="bh-date">
+        <div class="bh-date-val">${e.date}</div>
+        <div class="bh-date-cont">NYMEX · ${e.contract}월물</div>
       </div>
-      <div class="strip-price">
-        <div class="sp-main">
-          <div class="sp-val ${dir}">${arrow} ${e.wti.toFixed(2)}</div>
-          <div class="sp-unit">USD / bbl</div>
-        </div>
-        <div class="sp-delta">
-          ${absStr?`<div class="sp-d-row">
-            <span class="sp-d-label">Δ$</span>
-            <span class="sp-d-val ${dir}">${absStr}</span>
-          </div>`:''}
-          <div class="sp-d-row">
-            <span class="sp-d-label">Δ%</span>
-            <span class="sp-d-val ${dir}">${pctStr}</span>
-          </div>
-        </div>
-        <div class="sp-dir">
-          <div class="sp-dir-badge ${dir}">${dirTxt}</div>
-          <div class="sp-dir-label">direction</div>
+      <div class="bh-price">
+        <div class="bh-price-arrow ${dir}">${arrow}</div>
+        <div class="bh-price-val ${dir}">${e.wti.toFixed(2)}</div>
+        <div class="bh-price-unit">USD<br>/ bbl</div>
+      </div>
+      <div class="bh-delta">
+        ${absStr?`<div class="bh-d-row">
+          <span class="bh-d-label">Δ$</span>
+          <span class="bh-d-val ${dir}">${absStr}</span>
+        </div>`:''}
+        <div class="bh-d-row">
+          <span class="bh-d-label">Δ%</span>
+          <span class="bh-d-val ${dir}">${pctStr}</span>
         </div>
       </div>
-      <div class="strip-actions">
+      <div class="bh-dir">
+        <div class="bh-dir-badge ${dir}">${dirTxt}</div>
+        <div class="bh-dir-label">direction</div>
+      </div>
+      <div class="bh-actions">
         <button class="act-btn edit" onclick="openModal(JSON.parse(decodeURIComponent('${eJson}')))">✎ EDIT</button>
         <button class="act-btn del"  onclick="deleteEntry('${e.date}','${e.contract}')">✕ DEL</button>
       </div>
     </div>
 
-    ${hasBody?`<div class="brief-body">
+    <!-- ② 2컬럼 팩트 패널 -->
+    ${hasFacts?`<div class="brief-facts">
 
-      ${mainTags?`<div class="factor-section">
-        <div class="fc-hdr main">
+      <!-- 주요인 컬럼 -->
+      <div class="fact-col">
+        <div class="fact-col-title main">
           <span class="fc-dot ${dir==='up'?'bull':'bear'}"></span>
           주요인 · ${dirTxt}
         </div>
-        <div class="factor-tags">${mainTags}</div>
+        ${mainTags?`<div class="factor-tags">${mainTags}</div>`:'<div class="fact-empty">감지된 주요인 없음</div>'}
         ${e.mainQuote?`<div class="source-quote">
           <div class="sq-label">📰 원문 참고</div>
           <div class="sq-text">${e.mainQuote}</div>
         </div>`:''}
-      </div>`:''}
+      </div>
 
-      ${counterTags?`<div class="factor-section">
-        <div class="fc-hdr counter">
+      <!-- 반대요인 컬럼 -->
+      <div class="fact-col">
+        <div class="fact-col-title counter">
           <span class="fc-dot dim"></span>
           반대요인 · 제한적 영향
         </div>
-        <div class="factor-tags">${counterTags}</div>
+        ${counterTags?`<div class="factor-tags">${counterTags}</div>`:'<div class="fact-empty">반대요인 없음</div>'}
         ${e.counterQuote?`<div class="source-quote counter">
           <div class="sq-label">📰 반대요인 원문</div>
           <div class="sq-text">${e.counterQuote}</div>
         </div>`:''}
-      </div>`:''}
+      </div>
 
     </div>`:''}
 
+    <!-- ③ 코멘터리 -->
     ${e.commentary?`<div class="brief-commentary">
       <div class="co-label">코멘터리</div>
       <div class="co-text">${e.commentary}</div>
     </div>`:''}
 
+    <!-- 버튼 -->
     <div class="brief-copy">
       <button class="cp-btn img" onclick="downloadImage('${cardId}','${e.date}')">⬇ 이미지</button>
       <button class="cp-btn"     onclick="copyText('${cardId}')">Copy</button>
