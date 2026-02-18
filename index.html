@@ -933,7 +933,29 @@ function doParse(){
   }
   const f={};let m;
 
-  // ══ WTI 종가 추출 ══
+  // ══ 보고서 형식 파싱 ($N/b, ▲▼ $N/b, +N%) ══
+  // "WTI M-1: $65.19/b (▲ $2.86/b, +4.59%)"
+  const reportLine=(txt.match(/WTI[^\n]{0,20}\$[\d.]+\/b[^\n]*/)||[''])[0];
+  const rWti=reportLine.match(/\$\s*([\d.]+)\s*\/b/);
+  const rDelta=reportLine.match(/([▲▼])\s*\$\s*([\d.]+)\s*\/b/);
+  const rPct=reportLine.match(/([+\-])\s*([\d.]+)%/);
+  if(rWti){f.wti=parseFloat(rWti[1]);}
+  if(rDelta){f.abs=rDelta[1]==='▲'?parseFloat(rDelta[2]):-parseFloat(rDelta[2]);}
+  if(rPct&&f.wti){f.pct=rPct[1]==='+'?parseFloat(rPct[2]):-parseFloat(rPct[2]);}
+  // "$65.19/b" 단독 (WTI 줄 없어도)
+  if(!f.wti){const m2=txt.match(/\$\s*([\d.]+)\s*\/b/);if(m2)f.wti=parseFloat(m2[1]);}
+  // "▲ $2.86/b" 또는 "▼ $2.86/b" 단독
+  if(f.wti&&f.abs==null){
+    const m2=txt.match(/▲\s*\$\s*([\d.]+)\s*\/b/);if(m2)f.abs=parseFloat(m2[1]);
+    else{const m3=txt.match(/▼\s*\$\s*([\d.]+)\s*\/b/);if(m3)f.abs=-parseFloat(m3[1]);}
+  }
+  // "(+N%)" 또는 "(-N%)" 단독
+  if(f.wti&&f.pct==null){
+    const m2=txt.match(/\(([+\-])\s*([\d.]+)%\)/);
+    if(m2)f.pct=m2[1]==='+'?parseFloat(m2[2]):-parseFloat(m2[2]);
+  }
+
+  // ══ WTI 종가 추출 (뉴스 기사 형식) ══
   // A: "급등한/급락한/상승한/하락한 배럴당 N달러" (배럴당이 가격 앞)
   m=txt.match(/(?:급등한|급락한|상승한|하락한|오른|내린|밀린)\s*배럴당\s*([\d.]+)달러/);
   if(m)f.wti=parseFloat(m[1]);
