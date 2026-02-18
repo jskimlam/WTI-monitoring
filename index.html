@@ -8,93 +8,137 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root {
-  --bg:      #1a1f2e;
-  --surface: #222838;
-  --card:    #262d3f;
-  --inset:   #1e2434;
-  --border:  #323d55;
-  --border2: #3d4d6a;
-  --acc:     #e8c46a;
-  --acc2:    #5b9cf6;
-  --green:   #34d875;
-  --red:     #f26b6b;
-  --text:    #e2e8f4;
-  --text2:   #b0bcd4;
-  --dim:     #6a7a99;
-  --quote:   #c8d6f0;
-  --mono:    'DM Mono', monospace;
-  --sans:    'Noto Sans KR', sans-serif;
-  --display: 'Bebas Neue', sans-serif;
+  /* ── B안: 라이트 블루 그레이 팔레트 ── */
+  --bg:        #eef3fb;
+  --surface:   #ffffff;
+  --card:      #f5f8ff;
+  --inset:     #e8f0fe;
+  --hdr-bg:    #1e3a5f;
+  --border:    #c5d8f0;
+  --border2:   #93b8e0;
+  --acc:       #1d4ed8;
+  --acc2:      #0ea5e9;
+  --green:     #16a34a;
+  --red:       #dc2626;
+  --text:      #0f172a;
+  --text2:     #334155;
+  --dim:       #64748b;
+  --quote-bg:  #eff6ff;
+  --quote-txt: #1e40af;
+  --tag-bear-bg:  #fef2f2;
+  --tag-bear-txt: #dc2626;
+  --tag-bear-bd:  #fca5a5;
+  --tag-bull-bg:  #f0fdf4;
+  --tag-bull-txt: #16a34a;
+  --tag-bull-bd:  #86efac;
+  --tag-dim-bg:   #f1f5f9;
+  --tag-dim-txt:  #64748b;
+  --tag-dim-bd:   #cbd5e1;
+  --mono:  'DM Mono', monospace;
+  --sans:  'Noto Sans KR', sans-serif;
+  --disp:  'Bebas Neue', sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { min-height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); }
 
-/* ── HEADER ── */
+/* ══ HEADER ══ */
 .hdr {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(26,31,46,.96); backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
+  background: var(--hdr-bg);
+  border-bottom: 3px solid var(--acc2);
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 32px; height: 62px;
+  padding: 0 36px; height: 66px;
+  box-shadow: 0 2px 16px rgba(30,58,95,.3);
 }
-.hdr-left  { display: flex; align-items: baseline; gap: 16px; }
-.hdr-logo  { font-family: var(--display); font-size: 30px; letter-spacing: .12em; color: var(--acc); }
-.hdr-sub   { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: var(--dim); text-transform: uppercase; }
-.hdr-right { display: flex; align-items: center; gap: 10px; }
-.hdr-clock { font-family: var(--mono); font-size: 13px; color: var(--text2); }
+.hdr-left  { display: flex; align-items: baseline; gap: 18px; }
+.hdr-logo  { font-family: var(--disp); font-size: 32px; letter-spacing: .14em; color: #fff; }
+.hdr-sub   { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+.hdr-right { display: flex; align-items: center; gap: 12px; }
+.hdr-clock { font-family: var(--mono); font-size: 13px; color: rgba(255,255,255,.65); letter-spacing: .05em; }
+
 .btn-new {
   display: flex; align-items: center; gap: 7px;
-  background: var(--acc); color: #1a1f2e; border: none; border-radius: 4px;
-  padding: 9px 20px; font-family: var(--mono); font-size: 12px;
+  background: var(--acc2); color: #fff; border: none; border-radius: 5px;
+  padding: 9px 22px; font-family: var(--mono); font-size: 12px;
   font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
   cursor: pointer; transition: background .15s;
 }
-.btn-new:hover { background: #f0d080; }
+.btn-new:hover { background: #38bdf8; }
 .btn-refresh {
-  background: transparent; border: 1px solid var(--border2); color: var(--dim);
-  padding: 8px 14px; border-radius: 4px; font-family: var(--mono); font-size: 11px;
+  background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.65);
+  padding: 8px 16px; border-radius: 5px; font-family: var(--mono); font-size: 11px;
   letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: all .15s;
 }
-.btn-refresh:hover { border-color: var(--acc2); color: var(--acc2); }
+.btn-refresh:hover { border-color: var(--acc2); color: #fff; }
 
-/* ── LAYOUT ── */
-.wrap { max-width: 980px; margin: 0 auto; padding: 32px 24px 80px; }
-.empty { text-align: center; padding: 90px 0; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--dim); }
-.empty .e-icon { font-size: 40px; margin-bottom: 18px; opacity: .25; }
-.loading { text-align: center; padding: 60px 0; font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .1em; }
-.spinner { width: 28px; height: 28px; border: 2px solid var(--border2); border-top-color: var(--acc2); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 14px; }
+/* ══ LAYOUT ══ */
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 28px 80px; }
+
+.empty { text-align: center; padding: 90px 0; font-family: var(--mono); font-size: 13px; letter-spacing: .12em; color: var(--dim); }
+.empty .e-icon { font-size: 44px; margin-bottom: 18px; opacity: .2; }
+
+.loading { text-align: center; padding: 60px 0; font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: .1em; }
+.spinner { width: 30px; height: 30px; border: 2px solid var(--border2); border-top-color: var(--acc); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 14px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── BRIEF CARD ── */
+/* ══ BRIEF CARD ══ */
 .brief {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
-  margin-bottom: 24px; overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0,0,0,.2);
-  animation: fadeUp .28s ease both;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(30,58,95,.08), 0 1px 4px rgba(30,58,95,.06);
+  animation: fadeUp .3s ease both;
 }
-@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
 
-/* PRICE STRIP */
-.brief-strip { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); background: var(--card); }
-.strip-date {
-  padding: 20px 26px; border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; justify-content: center; gap: 5px; min-width: 170px;
+/* ── 가격 스트립 ── */
+.brief-strip {
+  display: flex; align-items: stretch;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 }
-.sd-date { font-family: var(--mono); font-size: 16px; color: var(--text); font-weight: 500; }
-.sd-cont { font-family: var(--mono); font-size: 11px; color: var(--dim); }
-.strip-price { flex: 1; display: flex; align-items: center; padding: 20px 30px; gap: 28px; }
-.sp-val { font-family: var(--display); font-size: 72px; letter-spacing: .02em; line-height: 1; }
+
+.strip-date {
+  padding: 22px 28px; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  min-width: 185px;
+}
+.sd-date { font-family: var(--mono); font-size: 20px; color: var(--text); font-weight: 600; letter-spacing: .04em; }
+.sd-cont { font-family: var(--mono); font-size: 12px; color: var(--dim); margin-top: 2px; }
+
+.strip-price { flex: 1; display: flex; align-items: center; padding: 22px 34px; gap: 32px; }
+.sp-val { font-family: var(--disp); font-size: 88px; letter-spacing: .02em; line-height: 1; }
 .sp-val.up  { color: var(--green); }
 .sp-val.dn  { color: var(--red); }
 .sp-val.flt { color: var(--text); }
-.sp-unit { font-family: var(--mono); font-size: 13px; color: var(--dim); align-self: flex-end; padding-bottom: 8px; }
-.sp-delta { display: flex; flex-direction: column; gap: 8px; padding-left: 28px; border-left: 1px solid var(--border); }
-.sp-d-row   { display: flex; align-items: center; gap: 10px; }
-.sp-d-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--dim); width: 32px; text-transform: uppercase; }
-.sp-d-val   { font-family: var(--mono); font-size: 19px; font-weight: 500; }
-.sp-d-val.up { color: var(--green); } .sp-d-val.dn { color: var(--red); }
+.sp-unit { font-family: var(--mono); font-size: 14px; color: var(--dim); align-self: flex-end; padding-bottom: 10px; }
 
-.strip-actions { display: flex; flex-direction: column; border-left: 1px solid var(--border); }
+.sp-delta { display: flex; flex-direction: column; gap: 10px; padding-left: 32px; border-left: 2px solid var(--border); }
+.sp-d-row   { display: flex; align-items: center; gap: 12px; }
+.sp-d-label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--dim); width: 34px; text-transform: uppercase; }
+.sp-d-val   { font-family: var(--mono); font-size: 24px; font-weight: 600; }
+.sp-d-val.up  { color: var(--green); }
+.sp-d-val.dn  { color: var(--red); }
+
+/* 방향 뱃지 */
+.sp-dir {
+  padding-left: 32px; border-left: 2px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  gap: 6px; min-width: 90px;
+}
+.sp-dir-badge {
+  font-family: var(--sans); font-size: 18px; font-weight: 700;
+  padding: 6px 16px; border-radius: 20px;
+}
+.sp-dir-badge.up  { background: #f0fdf4; color: var(--green); border: 1px solid #bbf7d0; }
+.sp-dir-badge.dn  { background: #fef2f2; color: var(--red);   border: 1px solid #fecaca; }
+.sp-dir-badge.flt { background: #f8fafc; color: var(--dim);   border: 1px solid var(--border); }
+.sp-dir-label { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: .1em; text-transform: uppercase; }
+
+/* EDIT / DEL */
+.strip-actions { display: flex; flex-direction: column; border-left: 1px solid var(--border); min-width: 80px; }
 .act-btn {
   flex: 1; display: flex; align-items: center; justify-content: center;
   background: transparent; border: none; cursor: pointer;
@@ -103,169 +147,220 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   border-bottom: 1px solid var(--border);
 }
 .act-btn:last-child { border-bottom: none; }
-.act-btn.edit:hover { background: rgba(91,156,246,.1); color: var(--acc2); }
-.act-btn.del:hover  { background: rgba(242,107,107,.08); color: var(--red); }
+.act-btn.edit:hover { background: #eff6ff; color: var(--acc); }
+.act-btn.del:hover  { background: #fef2f2; color: var(--red); }
 
-/* BODY */
-.brief-body { padding: 22px 26px; border-bottom: 1px solid var(--border); }
-.factors-row { display: flex; gap: 20px; }
-.factor-col  { flex: 1; }
-.fc-title {
-  font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
-  padding-bottom: 9px; margin-bottom: 10px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 7px;
+/* ══ BODY ══ */
+.brief-body { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 18px; }
+
+/* 요인 섹션 */
+.factor-section { display: flex; flex-direction: column; gap: 10px; }
+.fc-hdr {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
 }
-.fc-title.main    { color: var(--text2); }
-.fc-title.counter { color: var(--dim); }
-.fc-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.fc-hdr.main    { color: var(--acc); }
+.fc-hdr.counter { color: var(--dim); }
+.fc-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .fc-dot.bear { background: var(--red); }
 .fc-dot.bull { background: var(--green); }
 .fc-dot.dim  { background: var(--dim); }
 
+.factor-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .factor-tag {
-  display: inline-block; padding: 3px 10px; border-radius: 3px;
-  font-size: 13px; font-weight: 500; margin: 3px 4px 3px 0;
+  display: inline-block; padding: 5px 14px; border-radius: 20px;
+  font-size: 15px; font-weight: 500;
 }
-.factor-tag.bear { background: rgba(242,107,107,.12); color: var(--red); border: 1px solid rgba(242,107,107,.25); }
-.factor-tag.bull { background: rgba(52,216,117,.12);  color: var(--green); border: 1px solid rgba(52,216,117,.25); }
-.factor-tag.dim  { background: rgba(106,122,153,.1);  color: var(--dim); border: 1px solid rgba(106,122,153,.2); }
+.factor-tag.bear { background: var(--tag-bear-bg); color: var(--tag-bear-txt); border: 1px solid var(--tag-bear-bd); }
+.factor-tag.bull { background: var(--tag-bull-bg); color: var(--tag-bull-txt); border: 1px solid var(--tag-bull-bd); }
+.factor-tag.dim  { background: var(--tag-dim-bg);  color: var(--tag-dim-txt);  border: 1px solid var(--tag-dim-bd); }
 
-/* 원문 참고 */
+/* 원문 인용 */
 .source-quote {
-  background: var(--inset); border: 1px solid var(--border);
-  border-left: 3px solid var(--acc); border-radius: 4px;
-  padding: 11px 16px; margin-top: 14px;
+  background: var(--quote-bg);
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid var(--acc);
+  border-radius: 6px;
+  padding: 13px 18px;
 }
-.sq-label { font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--acc); margin-bottom: 6px; }
-.sq-text  { font-size: 13px; line-height: 1.78; color: var(--quote); font-style: italic; }
-.sq-text::before { content: '"'; color: var(--acc); font-size: 18px; line-height: 0; vertical-align: -3px; margin-right: 3px; }
-.sq-text::after  { content: '"'; color: var(--acc); font-size: 18px; line-height: 0; vertical-align: -3px; margin-left:  3px; }
+.sq-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--acc); margin-bottom: 7px; display: flex; align-items: center; gap: 6px;
+}
+.sq-text {
+  font-size: 15px; line-height: 1.8; color: var(--quote-txt); font-style: italic;
+}
+.sq-text::before { content: '"'; font-size: 20px; line-height: 0; vertical-align: -4px; margin-right: 3px; color: var(--acc2); }
+.sq-text::after  { content: '"'; font-size: 20px; line-height: 0; vertical-align: -4px; margin-left:  3px; color: var(--acc2); }
 
-.source-quote.counter { border-left-color: var(--dim); margin-top: 10px; }
+.source-quote.counter {
+  background: #f8fafc; border-color: var(--border); border-left-color: var(--dim);
+}
 .source-quote.counter .sq-label { color: var(--dim); }
+.source-quote.counter .sq-text  { color: var(--text2); }
 .source-quote.counter .sq-text::before,
 .source-quote.counter .sq-text::after { color: var(--dim); }
 
-/* COMMENTARY */
-.brief-commentary { padding: 20px 26px; border-bottom: 1px solid var(--border); }
+/* ══ COMMENTARY ══ */
+.brief-commentary {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+  background: #fafcff;
+}
 .co-label {
-  font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--dim); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
 }
 .co-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.co-text { font-size: 14px; line-height: 1.9; color: var(--text2); white-space: pre-wrap; }
+.co-text { font-size: 16px; line-height: 1.9; color: var(--text2); white-space: pre-wrap; font-weight: 400; }
 
-/* COPY / DOWNLOAD ROW */
+/* ══ COPY ROW ══ */
 .brief-copy {
-  padding: 12px 26px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  padding: 14px 28px; display: flex; align-items: center; justify-content: flex-end; gap: 10px;
   background: var(--card);
 }
 .cp-btn {
-  font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
   background: transparent; border: 1px solid var(--border2); color: var(--dim);
-  padding: 7px 15px; border-radius: 3px; cursor: pointer; transition: all .15s;
+  padding: 8px 18px; border-radius: 5px; cursor: pointer; transition: all .15s;
 }
-.cp-btn:hover    { border-color: var(--acc); color: var(--acc); }
-.cp-btn.pri      { background: var(--acc2); color: #fff; border-color: var(--acc2); }
-.cp-btn.pri:hover{ background: #4a8ef0; }
-.cp-btn.img      { border-color: var(--border2); color: var(--dim); }
-.cp-btn.img:hover{ border-color: var(--green); color: var(--green); }
-.cp-btn.ok       { border-color: var(--green); color: var(--green); }
+.cp-btn:hover    { border-color: var(--acc); color: var(--acc); background: #eff6ff; }
+.cp-btn.img      { border-color: var(--border2); }
+.cp-btn.img:hover{ border-color: var(--green); color: var(--green); background: #f0fdf4; }
+.cp-btn.ok       { border-color: var(--green); color: var(--green); background: #f0fdf4; }
 
-/* ── MODAL ── */
+/* ══ MODAL ══ */
 #overlay {
   position: fixed; inset: 0; z-index: 200;
-  background: rgba(14,18,30,.88); backdrop-filter: blur(10px);
+  background: rgba(15,23,42,.55); backdrop-filter: blur(8px);
   display: none; align-items: center; justify-content: center;
 }
 #overlay.open { display: flex; }
+
 #modal {
-  width: 740px; max-height: 92vh;
-  background: var(--surface); border: 1px solid var(--border2); border-radius: 8px;
+  width: 760px; max-height: 92vh;
+  background: var(--surface); border: 1px solid var(--border2); border-radius: 12px;
   display: flex; flex-direction: column; overflow: hidden;
-  box-shadow: 0 32px 80px rgba(0,0,0,.5); animation: mIn .2s ease;
+  box-shadow: 0 24px 80px rgba(15,23,42,.22);
+  animation: mIn .22s ease;
 }
-@keyframes mIn { from{opacity:0;transform:translateY(14px) scale(.98)} to{opacity:1;transform:none} }
+@keyframes mIn { from{opacity:0;transform:translateY(12px) scale(.98)} to{opacity:1;transform:none} }
+
 .mhdr {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 24px; border-bottom: 1px solid var(--border); background: var(--card); flex-shrink: 0;
+  padding: 18px 26px; border-bottom: 1px solid var(--border);
+  background: var(--hdr-bg); flex-shrink: 0;
 }
-.mhdr-title { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--acc); }
+.mhdr-title { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #fff; }
 .mhdr-close {
-  background: transparent; border: 1px solid var(--border2); color: var(--dim);
-  width: 30px; height: 30px; border-radius: 3px; cursor: pointer; font-size: 16px;
+  background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7);
+  width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 16px;
   display: flex; align-items: center; justify-content: center; transition: all .15s;
 }
-.mhdr-close:hover { border-color: var(--red); color: var(--red); }
-.mbody { flex: 1; overflow-y: auto; padding: 22px 24px; display: flex; flex-direction: column; gap: 18px; }
-.m-sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+.mhdr-close:hover { border-color: #fca5a5; color: #fca5a5; }
+
+.mbody {
+  flex: 1; overflow-y: auto; padding: 24px 26px;
+  display: flex; flex-direction: column; gap: 20px;
+  background: var(--bg);
+}
+
+.m-sec-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 8px;
+}
+.m-sec-label span { color: var(--acc2); margin-right: 4px; }
+
 #news-ta {
-  width: 100%; height: 140px; resize: vertical;
-  background: var(--card); border: 1px solid var(--border); border-radius: 4px;
-  color: var(--text); font-family: var(--sans); font-size: 13px; line-height: 1.72;
-  padding: 12px 14px; outline: none; transition: border-color .15s;
+  width: 100%; height: 150px; resize: vertical;
+  background: var(--surface); border: 1px solid var(--border2); border-radius: 6px;
+  color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.72;
+  padding: 13px 15px; outline: none; transition: border-color .15s;
 }
-#news-ta:focus { border-color: var(--acc2); }
-#news-ta::placeholder { color: var(--dim); font-size: 12px; }
+#news-ta:focus { border-color: var(--acc); box-shadow: 0 0 0 3px rgba(29,78,216,.08); }
+#news-ta::placeholder { color: var(--dim); font-size: 13px; }
+
 #parsed-wrap, #step-factors { display: none; }
-.pf-grid   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.pf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.pfield { display: flex; flex-direction: column; gap: 5px; }
-.pfield label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
-.pfield input, .pfield select, .pfield textarea {
-  background: var(--card); border: 1px solid var(--border); border-radius: 4px;
-  color: var(--text); font-family: var(--mono); font-size: 14px;
-  padding: 9px 11px; outline: none; width: 100%; transition: border-color .15s;
+
+.pf-grid   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.pf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pfield { display: flex; flex-direction: column; gap: 6px; }
+.pfield label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--dim); font-weight: 500;
 }
-.pfield input:focus, .pfield select:focus, .pfield textarea:focus { border-color: var(--acc2); }
-.pfield input.hi { color: var(--acc); border-color: rgba(232,196,106,.35); }
-.pfield input.up { color: var(--green); } .pfield input.dn { color: var(--red); }
-.pfield textarea { resize: vertical; min-height: 52px; font-family: var(--sans); font-size: 13px; line-height: 1.65; }
+.pfield input, .pfield select, .pfield textarea {
+  background: var(--surface); border: 1px solid var(--border2); border-radius: 6px;
+  color: var(--text); font-family: var(--mono); font-size: 15px;
+  padding: 10px 13px; outline: none; width: 100%; transition: all .15s;
+}
+.pfield input:focus, .pfield select:focus, .pfield textarea:focus {
+  border-color: var(--acc); box-shadow: 0 0 0 3px rgba(29,78,216,.08);
+}
+.pfield input.hi { color: var(--acc); font-weight: 600; border-color: #93c5fd; background: #eff6ff; }
+.pfield input.up { color: var(--green); }
+.pfield input.dn { color: var(--red); }
+.pfield textarea { resize: vertical; min-height: 56px; font-family: var(--sans); font-size: 14px; line-height: 1.65; }
 
 .parse-status {
-  font-family: var(--mono); font-size: 12px; padding: 9px 13px;
-  border-radius: 4px; margin-top: 6px; display: none;
+  font-family: var(--mono); font-size: 12px; padding: 10px 14px;
+  border-radius: 6px; margin-top: 8px; display: none;
 }
-.parse-status.ok   { background: rgba(52,216,117,.08);  border: 1px solid rgba(52,216,117,.25);  color: var(--green); }
-.parse-status.warn { background: rgba(232,196,106,.08); border: 1px solid rgba(232,196,106,.25); color: var(--acc); }
-.parse-status.err  { background: rgba(242,107,107,.08); border: 1px solid rgba(242,107,107,.25); color: var(--red); }
+.parse-status.ok   { background: #f0fdf4; border: 1px solid #86efac; color: #15803d; }
+.parse-status.warn { background: #fffbeb; border: 1px solid #fcd34d; color: #92400e; }
+.parse-status.err  { background: #fef2f2; border: 1px solid #fca5a5; color: #b91c1c; }
 
-.divider { height: 1px; background: var(--border); margin: 4px 0; }
+.divider { height: 1px; background: var(--border); }
 
-.chip-wrap  { display: flex; flex-wrap: wrap; gap: 7px; }
-.chip-group { margin-bottom: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.chip-wrap  { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-group {
+  margin-bottom: 8px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--dim); font-weight: 500;
+}
 .chip {
-  font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
-  padding: 5px 13px; border-radius: 3px; border: 1px solid var(--border2);
-  color: var(--dim); cursor: pointer; transition: all .12s; user-select: none;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border2);
+  color: var(--dim); background: var(--surface);
+  cursor: pointer; transition: all .12s; user-select: none;
 }
-.chip:hover { color: var(--text2); border-color: var(--dim); }
-.chip.sel-bear { background: rgba(242,107,107,.1); border-color: rgba(242,107,107,.45); color: var(--red); }
-.chip.sel-bull { background: rgba(52,216,117,.1);  border-color: rgba(52,216,117,.45);  color: var(--green); }
+.chip:hover { border-color: var(--acc2); color: var(--acc); background: #eff6ff; }
+.chip.sel-bear { background: var(--tag-bear-bg); border-color: var(--tag-bear-bd); color: var(--tag-bear-txt); }
+.chip.sel-bull { background: var(--tag-bull-bg); border-color: var(--tag-bull-bd); color: var(--tag-bull-txt); }
 
 .mftr {
-  flex-shrink: 0; padding: 14px 24px; border-top: 1px solid var(--border);
-  display: flex; gap: 8px; background: var(--card);
+  flex-shrink: 0; padding: 16px 26px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; background: var(--surface);
 }
-.mf-btn { padding: 11px 18px; border: none; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; transition: all .15s; }
-.mf-parse       { flex: 1; background: var(--border2); color: var(--text); }
-.mf-parse:hover { background: var(--acc2); color: #fff; }
-.mf-save        { flex: 2; background: var(--acc); color: #1a1f2e; display: none; }
-.mf-save:hover  { background: #f0d080; }
-.mf-close { background: transparent; border: 1px solid var(--border2); color: var(--dim); padding: 11px 16px; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: 12px; transition: all .15s; }
-.mf-close:hover { border-color: var(--red); color: var(--red); }
+.mf-btn {
+  padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+  text-transform: uppercase; font-weight: 600; transition: all .15s;
+}
+.mf-parse       { flex: 1; background: var(--inset); color: var(--acc); border: 1px solid var(--border2); }
+.mf-parse:hover { background: #dbeafe; border-color: var(--acc); }
+.mf-save        { flex: 2; background: var(--acc); color: #fff; display: none; }
+.mf-save:hover  { background: #1e40af; }
+.mf-close {
+  background: transparent; border: 1px solid var(--border2); color: var(--dim);
+  padding: 12px 18px; border-radius: 6px; cursor: pointer;
+  font-family: var(--mono); font-size: 12px; transition: all .15s;
+}
+.mf-close:hover { border-color: var(--red); color: var(--red); background: #fef2f2; }
 
-/* TOAST */
+/* ══ TOAST ══ */
 #toast {
   position: fixed; bottom: 28px; right: 28px; z-index: 9999;
-  padding: 12px 18px; border-radius: 6px; font-family: var(--mono); font-size: 12px;
-  font-weight: 500; color: #fff; opacity: 0; transform: translateY(10px);
-  transition: all .24s; pointer-events: none; max-width: 300px;
+  padding: 13px 20px; border-radius: 8px;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  color: #fff; opacity: 0; transform: translateY(10px);
+  transition: all .24s; pointer-events: none; max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
 }
 #toast.show { opacity: 1; transform: translateY(0); }
-#toast.ok  { background: #1e6e40; }
-#toast.err { background: #7a1f1f; }
-#toast.inf { background: #1a2a4a; }
+#toast.ok  { background: #15803d; }
+#toast.err { background: #b91c1c; }
+#toast.inf { background: #1e3a5f; }
 
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
@@ -273,6 +368,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 </head>
 <body>
 
+<!-- ══ HEADER ══ -->
 <header class="hdr">
   <div class="hdr-left">
     <div class="hdr-logo">WTI BRIEF</div>
@@ -285,17 +381,22 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   </div>
 </header>
 
+<!-- ══ MAIN ══ -->
 <div class="wrap">
-  <div id="loading" style="display:none"><div class="spinner"></div>데이터 불러오는 중...</div>
+  <div id="loading" style="display:none">
+    <div class="spinner"></div>데이터 불러오는 중...
+  </div>
   <div class="empty" id="empty" style="display:none">
     <div class="e-icon">◈</div>
     <div>NO ENTRIES YET</div>
-    <div style="margin-top:8px;font-size:10px">Click <strong style="color:var(--acc)">+ NEW ENTRY</strong> to add today's WTI brief</div>
+    <div style="margin-top:8px;font-size:11px">
+      <strong style="color:var(--acc)">+ NEW ENTRY</strong> 버튼으로 첫 번째 브리프를 추가하세요
+    </div>
   </div>
   <div id="cards"></div>
 </div>
 
-<!-- MODAL -->
+<!-- ══ MODAL ══ -->
 <div id="overlay">
   <div id="modal">
     <div class="mhdr">
@@ -304,27 +405,40 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
     </div>
     <div class="mbody">
 
-      <!-- 01 뉴스 파싱 -->
+      <!-- 01 -->
       <div>
-        <div class="m-sec-label">01 · 뉴스 텍스트 붙여넣기</div>
+        <div class="m-sec-label"><span>01</span> 뉴스 텍스트 붙여넣기</div>
         <textarea id="news-ta" placeholder="연합·KBS·초이스경제 등 WTI 기사 전문 붙여넣기
-→ 수치 자동 파싱 + 참고 문장 자동 추출
+→ 수치 자동 파싱 + 월물 감지 + 참고 문장 자동 추출
 
-텍스트 없이 파싱 버튼 → 수동 입력 모드"></textarea>
+텍스트 없이 파싱 버튼 클릭 → 수동 입력 모드"></textarea>
         <div class="parse-status" id="parse-st"></div>
       </div>
 
-      <!-- 02 수치 -->
+      <!-- 02 -->
       <div id="parsed-wrap">
-        <div class="m-sec-label">02 · 수치 확인 및 수정</div>
-        <div class="pf-grid" style="margin-bottom:10px">
-          <div class="pfield"><label>WTI 종가 ($/bbl) *</label><input type="number" id="f-wti" step="0.01" placeholder="62.33" class="hi"></div>
-          <div class="pfield"><label>전일比 $</label><input type="number" id="f-abs" step="0.01" placeholder="-0.56" oninput="autoPct()"></div>
-          <div class="pfield"><label>변동률 %</label><input type="number" id="f-pct" step="0.01" placeholder="-0.89"></div>
+        <div class="m-sec-label"><span>02</span> 수치 확인 및 수정</div>
+        <div class="pf-grid" style="margin-bottom:12px">
+          <div class="pfield">
+            <label>WTI 종가 ($/bbl) *</label>
+            <input type="number" id="f-wti" step="0.01" placeholder="62.33" class="hi">
+          </div>
+          <div class="pfield">
+            <label>전일比 $</label>
+            <input type="number" id="f-abs" step="0.01" placeholder="-0.56" oninput="autoPct()">
+          </div>
+          <div class="pfield">
+            <label>변동률 %</label>
+            <input type="number" id="f-pct" step="0.01" placeholder="-0.89">
+          </div>
         </div>
-        <div class="pf-grid-2" style="margin-bottom:10px">
-          <div class="pfield"><label>기준일 *</label><input type="date" id="f-date"></div>
-          <div class="pfield"><label>월물 *</label>
+        <div class="pf-grid-2" style="margin-bottom:12px">
+          <div class="pfield">
+            <label>기준일 *</label>
+            <input type="date" id="f-date">
+          </div>
+          <div class="pfield">
+            <label>월물 *</label>
             <select id="f-cont">
               <option value="Mar">3월물 (Mar)</option>
               <option value="Apr">4월물 (Apr)</option>
@@ -334,20 +448,38 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
           </div>
         </div>
         <div class="pf-grid-2">
-          <div class="pfield"><label>코멘터리</label><textarea id="f-commentary" placeholder="오늘 시황 한 줄 요약..."></textarea></div>
-          <div class="pfield"><label>주요인 원문 (한 문장)</label><textarea id="f-main-quote" placeholder="자동 추출 또는 직접 입력"></textarea></div>
+          <div class="pfield">
+            <label>코멘터리</label>
+            <textarea id="f-commentary" placeholder="오늘 시황 한 줄 요약..."></textarea>
+          </div>
+          <div class="pfield">
+            <label>주요인 원문 (한 문장)</label>
+            <textarea id="f-main-quote" placeholder="자동 추출 또는 직접 입력"></textarea>
+          </div>
         </div>
       </div>
 
-      <!-- 03 요인 -->
+      <!-- 03 -->
       <div id="step-factors">
-        <div class="m-sec-label">03 · 주요인 선택 (방향과 일치하는 요인)</div>
-        <div class="chip-wrap" id="main-chips"></div>
-        <div class="divider" style="margin:14px 0"></div>
-        <div class="m-sec-label" style="margin-bottom:8px">04 · 반대요인 선택 (선택사항)</div>
-        <div class="chip-wrap" id="counter-chips"></div>
-        <div style="margin-top:12px">
-          <div class="pfield"><label>반대요인 원문 (한 문장, 선택사항)</label><textarea id="f-counter-quote" placeholder="반대요인 언급 원문..."></textarea></div>
+        <div class="m-sec-label"><span>03</span> 주요인 선택</div>
+        <div class="chip-group">▼ BEARISH 하락 요인</div>
+        <div class="chip-wrap" id="main-chips-bear"></div>
+        <div class="chip-group" style="margin-top:12px">▲ BULLISH 상승 요인</div>
+        <div class="chip-wrap" id="main-chips-bull"></div>
+
+        <div class="divider" style="margin:18px 0"></div>
+
+        <div class="m-sec-label"><span>04</span> 반대요인 선택 (선택사항)</div>
+        <div class="chip-group">▼ BEARISH</div>
+        <div class="chip-wrap" id="counter-chips-bear"></div>
+        <div class="chip-group" style="margin-top:12px">▲ BULLISH</div>
+        <div class="chip-wrap" id="counter-chips-bull"></div>
+
+        <div style="margin-top:14px">
+          <div class="pfield">
+            <label>반대요인 원문 (한 문장, 선택사항)</label>
+            <textarea id="f-counter-quote" placeholder="반대요인 언급 원문..."></textarea>
+          </div>
         </div>
       </div>
 
@@ -373,22 +505,37 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
+// ── 날짜 포맷 정리 ──
+function fmtDate(raw) {
+  if (!raw) return '';
+  // ISO timestamp 또는 다양한 형식 → YYYY.MM.DD
+  const s = String(raw).trim();
+  const m = s.match(/(\d{4})[.\-\/](\d{1,2})[.\-\/](\d{1,2})/);
+  if (m) return `${m[1]}.${m[2].padStart(2,'0')}.${m[3].padStart(2,'0')}`;
+  // Google Sheets Date serial 등 숫자형
+  if (!isNaN(s) && s.length < 6) {
+    const d = new Date(Math.round((parseFloat(s) - 25569) * 86400 * 1000));
+    return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+  }
+  return s.slice(0,10).replace(/-/g,'.');
+}
+
 // ── FACTORS ──
 const FACTORS = [
-  { t:'bear', kr:'미·이란 핵 협상 진전',      en:'US-Iran nuclear deal progress',    kw:['이란',['합의','진전']] },
-  { t:'bear', kr:'중동 지정학 리스크 완화',    en:'Easing Middle East risk premium',  kw:['중동','완화'] },
-  { t:'bear', kr:'IEA 수요 전망 하향',          en:'IEA demand forecast downgraded',   kw:['iea','하향'] },
-  { t:'bear', kr:'OPEC+ 증산 논의',             en:'OPEC+ output increase discussed',  kw:['opec','증산'] },
-  { t:'bear', kr:'카자흐 텡기즈 유전 재개',     en:'Tengiz oilfield ramping up',       kw:[['텡기즈','카자흐']] },
-  { t:'bear', kr:'미 원유 재고 증가 (EIA)',      en:'US crude inventory build',         kw:['재고','증가'] },
-  { t:'bear', kr:'달러 강세',                   en:'USD strengthened',                 kw:['달러','강세'] },
-  { t:'bear', kr:'경기침체 우려',               en:'Recession concerns',               kw:['경기침체'] },
-  { t:'bull', kr:'중동 긴장 고조',              en:'Middle East tensions escalating',  kw:['중동','긴장'] },
-  { t:'bull', kr:'호르무즈 해협 리스크',        en:'Hormuz Strait risk',               kw:['호르무즈'] },
-  { t:'bull', kr:'OPEC+ 감산 유지·강화',        en:'OPEC+ cuts maintained/deepened',   kw:['opec','감산'] },
-  { t:'bull', kr:'미 원유 재고 감소 (EIA)',      en:'US crude inventory draw',          kw:['재고','감소'] },
-  { t:'bull', kr:'IEA/EIA 수요 전망 상향',      en:'IEA/EIA demand upgrade',           kw:['iea','상향'] },
-  { t:'bull', kr:'달러 약세',                   en:'USD weakened',                     kw:['달러','약세'] },
+  { t:'bear', kr:'미·이란 핵 협상 진전',      en:'US-Iran nuclear deal progress',   kw:['이란',['합의','진전']] },
+  { t:'bear', kr:'중동 지정학 리스크 완화',    en:'Easing Middle East risk premium', kw:['중동','완화'] },
+  { t:'bear', kr:'IEA 수요 전망 하향',          en:'IEA demand forecast downgraded',  kw:['iea','하향'] },
+  { t:'bear', kr:'OPEC+ 증산 논의',             en:'OPEC+ output increase discussed', kw:['opec','증산'] },
+  { t:'bear', kr:'카자흐 텡기즈 유전 재개',     en:'Tengiz oilfield ramping up',      kw:[['텡기즈','카자흐']] },
+  { t:'bear', kr:'미 원유 재고 증가 (EIA)',      en:'US crude inventory build',        kw:['재고','증가'] },
+  { t:'bear', kr:'달러 강세',                   en:'USD strengthened',                kw:['달러','강세'] },
+  { t:'bear', kr:'경기침체 우려',               en:'Recession concerns',              kw:['경기침체'] },
+  { t:'bull', kr:'중동 긴장 고조',              en:'Middle East tensions escalating', kw:['중동','긴장'] },
+  { t:'bull', kr:'호르무즈 해협 리스크',        en:'Hormuz Strait risk',              kw:['호르무즈'] },
+  { t:'bull', kr:'OPEC+ 감산 유지·강화',        en:'OPEC+ cuts maintained/deepened',  kw:['opec','감산'] },
+  { t:'bull', kr:'미 원유 재고 감소 (EIA)',      en:'US crude inventory draw',         kw:['재고','감소'] },
+  { t:'bull', kr:'IEA/EIA 수요 전망 상향',      en:'IEA/EIA demand upgrade',          kw:['iea','상향'] },
+  { t:'bull', kr:'달러 약세',                   en:'USD weakened',                    kw:['달러','약세'] },
 ];
 
 const mainSel    = new Set();
@@ -410,9 +557,24 @@ function extractQuote(txt) {
   ];
   for (const p of causal) {
     const found = sents.find(s => p.test(s));
-    if (found) return found.replace(/^[^가-힣a-zA-Z\$\d]+/,'').trim();
+    if (found) return found.replace(/^[^가-힣a-zA-Z$\d]+/, '').trim();
   }
   return null;
+}
+
+// ── 코멘터리 자동 생성 ──
+function buildCommentary(wti, pct, abs, direction, mainFactors, counterFactors) {
+  const pctStr = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+  const absStr = abs !== null ? ` (${(abs >= 0 ? '+' : '')}${abs.toFixed(2)} USD, ${pctStr})` : ` (${pctStr})`;
+  const mainArr = mainFactors.size > 0
+    ? [...mainFactors].map(i => FACTORS[i].kr) : [];
+  const counterArr = counterFactors.size > 0
+    ? [...counterFactors].map(i => FACTORS[i].kr) : [];
+
+  let text = `WTI 원유는 배럴당 $${wti.toFixed(2)}${absStr}로 ${direction} 마감.`;
+  if (mainArr.length) text += ` ${mainArr.slice(0,2).join(', ')} 등이 주요 ${direction} 요인으로 작용.`;
+  if (counterArr.length) text += ` 다만 ${counterArr[0]} 등은 낙폭(상승폭)을 제한.`;
+  return text;
 }
 
 // ── LOAD DATA ──
@@ -424,11 +586,12 @@ async function loadData() {
     const res  = await fetch(GAS_URL + '?t=' + Date.now());
     const json = await res.json();
     if (!json.success) throw new Error(json.message);
-    const rows = json.data.slice(1).reverse(); // 헤더 제외, 최신순
+    const rows = (json.data || []).slice(1).reverse();
     if (!rows.length) { document.getElementById('empty').style.display = 'block'; return; }
     document.getElementById('cards').innerHTML = rows.map(rowToEntry).map(renderCard).join('');
   } catch(e) {
     toast('❌ 로드 실패: ' + e.message, 'err');
+    document.getElementById('empty').style.display = 'block';
   } finally {
     document.getElementById('loading').style.display = 'none';
   }
@@ -436,17 +599,17 @@ async function loadData() {
 
 function rowToEntry(r) {
   return {
-    date:         String(r[0]||'').trim(),
-    contract:     String(r[1]||'').trim(),
-    wti:          parseFloat(r[2]) || 0,
-    abs:          r[3] !== '' && r[3] !== null ? parseFloat(r[3]) : null,
-    pct:          parseFloat(r[4]) || 0,
-    direction:    String(r[5]||'').trim(),
-    mainFactors:  String(r[6]||'').trim(),
-    mainQuote:    String(r[7]||'').trim(),
-    commentary:   String(r[8]||'').trim(),
+    date:           fmtDate(r[0]),
+    contract:       String(r[1]||'').trim(),
+    wti:            parseFloat(r[2]) || 0,
+    abs:            (r[3] !== '' && r[3] !== null && r[3] !== undefined) ? parseFloat(r[3]) : null,
+    pct:            parseFloat(r[4]) || 0,
+    direction:      String(r[5]||'').trim(),
+    mainFactors:    String(r[6]||'').trim(),
+    mainQuote:      String(r[7]||'').trim(),
+    commentary:     String(r[8]||'').trim(),
     counterFactors: String(r[9]||'').trim(),
-    counterQuote: String(r[10]||'').trim(),
+    counterQuote:   String(r[10]||'').trim(),
   };
 }
 
@@ -471,15 +634,15 @@ function openModal(entryForEdit = null) {
 
   if (entryForEdit) {
     editKey = { date: entryForEdit.date, contract: entryForEdit.contract };
-    document.getElementById('f-wti').value         = entryForEdit.wti;
-    document.getElementById('f-abs').value         = entryForEdit.abs ?? '';
-    document.getElementById('f-pct').value         = entryForEdit.pct;
-    document.getElementById('f-date').value        = entryForEdit.date;
-    document.getElementById('f-cont').value        = entryForEdit.contract;
-    document.getElementById('f-commentary').value  = entryForEdit.commentary;
-    document.getElementById('f-main-quote').value  = entryForEdit.mainQuote;
-    document.getElementById('f-counter-quote').value = entryForEdit.counterQuote;
-    // 요인 복원
+    document.getElementById('f-wti').value          = entryForEdit.wti;
+    document.getElementById('f-abs').value          = entryForEdit.abs ?? '';
+    document.getElementById('f-pct').value          = entryForEdit.pct;
+    // date를 input[type=date] 형식으로
+    document.getElementById('f-date').value         = entryForEdit.date.replace(/\./g, '-');
+    document.getElementById('f-cont').value         = entryForEdit.contract;
+    document.getElementById('f-commentary').value   = entryForEdit.commentary;
+    document.getElementById('f-main-quote').value   = entryForEdit.mainQuote;
+    document.getElementById('f-counter-quote').value= entryForEdit.counterQuote;
     entryForEdit.mainFactors.split(',').map(s=>s.trim()).forEach(kr => {
       const idx = FACTORS.findIndex(f=>f.kr===kr); if(idx>=0) mainSel.add(idx);
     });
@@ -498,26 +661,28 @@ function openModal(entryForEdit = null) {
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 document.getElementById('overlay').addEventListener('click', e => {
-  if(e.target===document.getElementById('overlay')) closeModal();
+  if(e.target === document.getElementById('overlay')) closeModal();
 });
 
 // ── CHIPS ──
 function buildChips() {
-  buildChipGroup('main-chips',    mainSel);
-  buildChipGroup('counter-chips', counterSel);
+  buildChipGroup('main-chips-bear',    mainSel,    'bear');
+  buildChipGroup('main-chips-bull',    mainSel,    'bull');
+  buildChipGroup('counter-chips-bear', counterSel, 'bear');
+  buildChipGroup('counter-chips-bull', counterSel, 'bull');
 }
 
-function buildChipGroup(containerId, selSet) {
+function buildChipGroup(containerId, selSet, typeFilter) {
   const c = document.getElementById(containerId);
   c.innerHTML = '';
   FACTORS.forEach((f, i) => {
+    if (f.t !== typeFilter) return;
     const ch = document.createElement('div');
-    const t  = f.t;
-    ch.className = 'chip' + (selSet.has(i) ? ` sel-${t}` : '');
+    ch.className = 'chip' + (selSet.has(i) ? ` sel-${f.t}` : '');
     ch.textContent = f.kr;
     ch.addEventListener('click', () => {
-      if (selSet.has(i)) { selSet.delete(i); ch.className='chip'; }
-      else               { selSet.add(i);    ch.className=`chip sel-${t}`; }
+      if (selSet.has(i)) { selSet.delete(i); ch.className = 'chip'; }
+      else               { selSet.add(i);    ch.className = `chip sel-${f.t}`; }
     });
     c.appendChild(ch);
   });
@@ -526,7 +691,7 @@ function buildChipGroup(containerId, selSet) {
 function autoDetect(txt) {
   const lo = txt.toLowerCase();
   mainSel.clear();
-  FACTORS.forEach((f,i) => {
+  FACTORS.forEach((f, i) => {
     const hit = f.kw.every(k => Array.isArray(k) ? k.some(kk=>lo.includes(kk)) : lo.includes(k));
     if (hit) mainSel.add(i);
   });
@@ -540,69 +705,114 @@ function doParse() {
     document.getElementById('step-factors').style.display = 'block';
     document.getElementById('btn-save').style.display = 'block';
     buildChips();
-    showStatus('warn','텍스트 없음 — 수동 입력 모드');
+    showStatus('warn', '텍스트 없음 — 수동 입력 모드');
     return;
   }
-  const f = {}; let m;
-  m = txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);
-  if(m) f.wti=parseFloat(m[1]);
-  if(!f.wti){m=txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
-  const ws=(txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,200}/)||[''])[0];
-  m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
-  if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
-  if(!f.abs){m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}}
-  if(!f.abs){m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/);if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}}
-  if(!f.pct){m=txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/);if(m)f.pct=m[2]==='하락'?-parseFloat(m[1]):parseFloat(m[1]);}
-  if(!f.abs&&f.wti&&f.pct){const prev=f.wti/(1+f.pct/100);f.abs=parseFloat((f.wti-prev).toFixed(2));}
 
-  // 월물 자동 감지
+  const f = {}; let m;
+
+  // WTI 종가
+  m = txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);
+  if (m) f.wti = parseFloat(m[1]);
+  if (!f.wti) {
+    m = txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/);
+    if (m) f.wti = parseFloat(m[1]);
+  }
+
+  // 전일比
+  const ws = (txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,200}/) || [''])[0];
+  m = ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
+  if (m) { f.abs = -parseFloat(m[1]); f.pct = -parseFloat(m[2]); }
+  if (!f.abs) {
+    m = txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
+    if (m) { f.abs = -parseFloat(m[1]); f.pct = -parseFloat(m[2]); }
+  }
+  if (!f.abs) {
+    m = ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/);
+    if (m) { f.abs = parseFloat(m[1]); f.pct = parseFloat(m[2]); }
+  }
+  if (!f.pct) {
+    m = txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/);
+    if (m) f.pct = m[2] === '하락' ? -parseFloat(m[1]) : parseFloat(m[1]);
+  }
+  if (!f.abs && f.wti && f.pct) {
+    const prev = f.wti / (1 + f.pct / 100);
+    f.abs = parseFloat((f.wti - prev).toFixed(2));
+  }
+
+  // 월물 감지
   const contM = txt.match(/(3|4|5|6)월\s*(?:인도분|물)/);
-  if(contM) {
-    const map={'3':'Mar','4':'Apr','5':'May','6':'Jun'};
+  if (contM) {
+    const map = {'3':'Mar','4':'Apr','5':'May','6':'Jun'};
     document.getElementById('f-cont').value = map[contM[1]] || 'Mar';
   }
 
-  if(f.wti)  document.getElementById('f-wti').value = f.wti.toFixed(2);
-  if(f.abs)  document.getElementById('f-abs').value = f.abs.toFixed(2);
-  if(f.pct)  document.getElementById('f-pct').value = f.pct.toFixed(2);
+  // 날짜 감지
+  const dateM = txt.match(/(\d{4})[년.\-\/]?\s*(\d{1,2})[월.\-\/]?\s*(\d{1,2})[일]?/);
+  if (dateM) {
+    const dd = `${dateM[1]}-${dateM[2].padStart(2,'0')}-${dateM[3].padStart(2,'0')}`;
+    document.getElementById('f-date').value = dd;
+  }
 
+  if (f.wti) document.getElementById('f-wti').value = f.wti.toFixed(2);
+  if (f.abs) document.getElementById('f-abs').value = f.abs.toFixed(2);
+  if (f.pct) document.getElementById('f-pct').value = f.pct.toFixed(2);
+
+  // 참고 문장 추출
   parsedMainQuote = extractQuote(txt);
-  if(parsedMainQuote) document.getElementById('f-main-quote').value = parsedMainQuote;
+  if (parsedMainQuote) document.getElementById('f-main-quote').value = parsedMainQuote;
 
+  // 요인 자동 감지
   autoDetect(txt);
+
+  // 코멘터리 자동 생성
+  if (f.wti && f.pct !== undefined) {
+    const direction = f.pct > 0 ? '상승' : f.pct < 0 ? '하락' : '보합';
+    const autoComm = buildCommentary(f.wti, f.pct, f.abs, direction, mainSel, counterSel);
+    document.getElementById('f-commentary').value = autoComm;
+  }
+
   document.getElementById('parsed-wrap').style.display = 'block';
   document.getElementById('step-factors').style.display = 'block';
   document.getElementById('btn-save').style.display = 'block';
   buildChips();
 
   const ok = f.wti && f.pct !== undefined;
-  showStatus(ok?'ok':'warn',
-    ok ? `✓ $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%) · 요인 ${mainSel.size}개 감지${parsedMainQuote?' · 참고문장 추출':''}` : '⚠ 수치 직접 확인 필요');
+  showStatus(ok ? 'ok' : 'warn',
+    ok
+      ? `✓ WTI $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%) · 요인 ${mainSel.size}개 감지${parsedMainQuote ? ' · 참고문장 추출' : ''} · 코멘터리 자동 생성`
+      : '⚠ 일부 수치 미인식 — 직접 확인 후 수정하세요.');
 }
 
-function showStatus(t,m) {
-  const el=document.getElementById('parse-st');
-  el.style.display='block'; el.className=`parse-status ${t}`; el.textContent=m;
+function showStatus(t, m) {
+  const el = document.getElementById('parse-st');
+  el.style.display = 'block'; el.className = `parse-status ${t}`; el.textContent = m;
 }
+
 function autoPct() {
-  const wti=parseFloat(document.getElementById('f-wti').value);
-  const abs=parseFloat(document.getElementById('f-abs').value);
-  if(wti&&!isNaN(abs)&&wti-abs>0) document.getElementById('f-pct').value=(abs/(wti-abs)*100).toFixed(2);
+  const wti = parseFloat(document.getElementById('f-wti').value);
+  const abs = parseFloat(document.getElementById('f-abs').value);
+  if (wti && !isNaN(abs) && wti - abs > 0)
+    document.getElementById('f-pct').value = (abs / (wti - abs) * 100).toFixed(2);
 }
 
 // ── SAVE ──
 async function doSave() {
-  const wti=parseFloat(document.getElementById('f-wti').value);
-  const pct=parseFloat(document.getElementById('f-pct').value);
-  const date=document.getElementById('f-date').value;
-  if(!date||isNaN(wti)||isNaN(pct)){showStatus('err','기준일, WTI 종가, 변동률은 필수입니다.');return;}
+  const wti  = parseFloat(document.getElementById('f-wti').value);
+  const pct  = parseFloat(document.getElementById('f-pct').value);
+  const dateRaw = document.getElementById('f-date').value;
+  if (!dateRaw || isNaN(wti) || isNaN(pct)) {
+    showStatus('err', '기준일, WTI 종가, 변동률은 필수입니다.');
+    return;
+  }
 
-  const abs=parseFloat(document.getElementById('f-abs').value)||null;
-  const cont=document.getElementById('f-cont').value;
-  const direction=pct>0?'상승':pct<0?'하락':'보합';
+  const date      = fmtDate(dateRaw);
+  const abs       = parseFloat(document.getElementById('f-abs').value) || null;
+  const cont      = document.getElementById('f-cont').value;
+  const direction = pct > 0 ? '상승' : pct < 0 ? '하락' : '보합';
 
-  const mainArr=[]; mainSel.forEach(i=>mainArr.push(FACTORS[i].kr));
-  const counterArr=[]; counterSel.forEach(i=>counterArr.push(FACTORS[i].kr));
+  const mainArr = []; mainSel.forEach(i => mainArr.push(FACTORS[i].kr));
+  const counterArr = []; counterSel.forEach(i => counterArr.push(FACTORS[i].kr));
 
   const data = {
     date,
@@ -619,20 +829,16 @@ async function doSave() {
   };
 
   const btn = document.getElementById('btn-save');
-  btn.textContent='저장 중...'; btn.disabled=true;
+  btn.textContent = '저장 중...'; btn.disabled = true;
 
   try {
     const res = await fetch(GAS_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({
-        action: editKey ? 'edit' : 'save',
-        rowKey: editKey,
-        data
-      })
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: editKey ? 'edit' : 'save', rowKey: editKey, data })
     });
     const r = await res.json();
-    if(r.success) {
+    if (r.success) {
       toast('✅ ' + r.message, 'ok');
       closeModal();
       await loadData();
@@ -642,21 +848,21 @@ async function doSave() {
   } catch(e) {
     toast('❌ 오류: ' + e.message, 'err');
   } finally {
-    btn.textContent='▶ 구글시트 저장'; btn.disabled=false;
+    btn.textContent = '▶ 구글시트 저장'; btn.disabled = false;
   }
 }
 
 // ── DELETE ──
 async function deleteEntry(date, contract) {
-  if(!confirm(`${date} ${contract} 항목을 삭제하시겠습니까?`)) return;
+  if (!confirm(`${date} ${contract} 항목을 삭제하시겠습니까?`)) return;
   try {
     const res = await fetch(GAS_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({ action:'delete', rowKey:{ date, contract } })
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'delete', rowKey: { date, contract } })
     });
     const r = await res.json();
-    if(r.success) { toast('🗑 ' + r.message, 'ok'); await loadData(); }
+    if (r.success) { toast('🗑 ' + r.message, 'ok'); await loadData(); }
     else toast('❌ ' + r.message, 'err');
   } catch(e) {
     toast('❌ 오류: ' + e.message, 'err');
@@ -665,31 +871,35 @@ async function deleteEntry(date, contract) {
 
 // ── RENDER ──
 function renderCard(e) {
-  const dir    = e.pct>0?'up':e.pct<0?'dn':'flt';
-  const arrow  = e.pct>0?'▲':e.pct<0?'▼':'─';
-  const pctStr = (e.pct>=0?'+':'')+e.pct.toFixed(2)+'%';
-  const absStr = e.abs!=null?(e.abs>=0?'+':'')+e.abs.toFixed(2)+' USD':'';
-  const cardId = 'card-' + e.date.replace(/\./g,'-') + '-' + e.contract;
+  const dir    = e.pct > 0 ? 'up' : e.pct < 0 ? 'dn' : 'flt';
+  const arrow  = e.pct > 0 ? '▲' : e.pct < 0 ? '▼' : '─';
+  const dirTxt = e.direction || (e.pct > 0 ? '상승' : e.pct < 0 ? '하락' : '보합');
+  const pctStr = (e.pct >= 0 ? '+' : '') + e.pct.toFixed(2) + '%';
+  const absStr = e.abs != null ? (e.abs >= 0 ? '+' : '') + e.abs.toFixed(2) + ' USD' : '';
+  const cardId = 'card-' + e.date.replace(/\./g, '-') + '-' + e.contract;
 
   // 주요인 태그
-  const mainTags = e.mainFactors ? e.mainFactors.split(',').map(kr => {
-    const f = FACTORS.find(x=>x.kr===kr.trim());
-    const t = f ? f.t : 'dim';
-    return `<span class="factor-tag ${t}">${kr.trim()}</span>`;
-  }).join('') : '';
+  const mainTags = e.mainFactors
+    ? e.mainFactors.split(',').filter(s=>s.trim()).map(kr => {
+        const f = FACTORS.find(x => x.kr === kr.trim());
+        const t = f ? f.t : 'dim';
+        return `<span class="factor-tag ${t}">${kr.trim()}</span>`;
+      }).join('')
+    : '';
 
   // 반대요인 태그
-  const counterTags = e.counterFactors ? e.counterFactors.split(',').map(kr => {
-    if(!kr.trim()) return '';
-    return `<span class="factor-tag dim">${kr.trim()}</span>`;
-  }).join('') : '';
+  const counterTags = e.counterFactors
+    ? e.counterFactors.split(',').filter(s=>s.trim()).map(kr => {
+        return `<span class="factor-tag dim">${kr.trim()}</span>`;
+      }).join('')
+    : '';
 
   const hasBody = mainTags || e.mainQuote || counterTags || e.counterQuote;
-
-  // edit용 데이터 직렬화
-  const eJson = encodeURIComponent(JSON.stringify(e));
+  const eJson   = encodeURIComponent(JSON.stringify(e));
 
   return `<div class="brief" id="${cardId}">
+
+    <!-- 가격 스트립 -->
     <div class="brief-strip">
       <div class="strip-date">
         <div class="sd-date">${e.date}</div>
@@ -699,8 +909,18 @@ function renderCard(e) {
         <div class="sp-val ${dir}">${arrow} ${e.wti.toFixed(2)}</div>
         <div class="sp-unit">USD / bbl</div>
         <div class="sp-delta">
-          ${absStr?`<div class="sp-d-row"><span class="sp-d-label">Δ$</span><span class="sp-d-val ${dir}">${absStr}</span></div>`:''}
-          <div class="sp-d-row"><span class="sp-d-label">Δ%</span><span class="sp-d-val ${dir}">${pctStr}</span></div>
+          ${absStr ? `<div class="sp-d-row">
+            <span class="sp-d-label">Δ$</span>
+            <span class="sp-d-val ${dir}">${absStr}</span>
+          </div>` : ''}
+          <div class="sp-d-row">
+            <span class="sp-d-label">Δ%</span>
+            <span class="sp-d-val ${dir}">${pctStr}</span>
+          </div>
+        </div>
+        <div class="sp-dir">
+          <div class="sp-dir-badge ${dir}">${dirTxt}</div>
+          <div class="sp-dir-label">direction</div>
         </div>
       </div>
       <div class="strip-actions">
@@ -709,55 +929,73 @@ function renderCard(e) {
       </div>
     </div>
 
-    ${hasBody?`<div class="brief-body">
-      ${mainTags?`<div>
-        <div class="fc-title main"><span class="fc-dot ${e.pct>0?'bull':'bear'}"></span>주요인 · ${e.direction}</div>
-        <div>${mainTags}</div>
-        ${e.mainQuote?`<div class="source-quote"><div class="sq-label">📰 원문 참고</div><div class="sq-text">${e.mainQuote}</div></div>`:''}
-      </div>`:''}
-      ${counterTags?`<div style="margin-top:${mainTags?'16px':'0'}">
-        <div class="fc-title counter"><span class="fc-dot dim"></span>반대요인 (제한적 영향)</div>
-        <div>${counterTags}</div>
-        ${e.counterQuote?`<div class="source-quote counter"><div class="sq-label">📰 반대요인 원문</div><div class="sq-text">${e.counterQuote}</div></div>`:''}
-      </div>`:''}
-    </div>`:''}
+    <!-- 요인 바디 -->
+    ${hasBody ? `<div class="brief-body">
 
-    ${e.commentary?`<div class="brief-commentary">
+      ${mainTags ? `<div class="factor-section">
+        <div class="fc-hdr main">
+          <span class="fc-dot ${dir === 'up' ? 'bull' : 'bear'}"></span>
+          주요인 · ${dirTxt}
+        </div>
+        <div class="factor-tags">${mainTags}</div>
+        ${e.mainQuote ? `<div class="source-quote">
+          <div class="sq-label">📰 원문 참고</div>
+          <div class="sq-text">${e.mainQuote}</div>
+        </div>` : ''}
+      </div>` : ''}
+
+      ${counterTags ? `<div class="factor-section">
+        <div class="fc-hdr counter">
+          <span class="fc-dot dim"></span>
+          반대요인 (제한적 영향)
+        </div>
+        <div class="factor-tags">${counterTags}</div>
+        ${e.counterQuote ? `<div class="source-quote counter">
+          <div class="sq-label">📰 반대요인 원문</div>
+          <div class="sq-text">${e.counterQuote}</div>
+        </div>` : ''}
+      </div>` : ''}
+
+    </div>` : ''}
+
+    <!-- 코멘터리 -->
+    ${e.commentary ? `<div class="brief-commentary">
       <div class="co-label">코멘터리</div>
       <div class="co-text">${e.commentary}</div>
-    </div>`:''}
+    </div>` : ''}
 
+    <!-- 버튼 -->
     <div class="brief-copy">
       <button class="cp-btn img" onclick="downloadImage('${cardId}','${e.date}')">⬇ 이미지</button>
-      <button class="cp-btn"     onclick="copyCommentary('${cardId}')">Copy</button>
+      <button class="cp-btn"     onclick="copyText('${cardId}')">Copy</button>
     </div>
+
   </div>`;
 }
 
 // ── COPY ──
-function copyCommentary(cardId) {
-  const e = cardId.replace('card-','').replace(/-(?=Mar|Apr|May|Jun)/,'.').replace(/-/g,'.');
-  // commentary 텍스트 직접 추출
+function copyText(cardId) {
   const el = document.querySelector(`#${cardId} .co-text`);
-  if(!el) return;
-  navigator.clipboard.writeText(el.textContent).then(() => {
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
     const btn = document.querySelector(`#${cardId} .cp-btn:not(.img)`);
-    if(btn){btn.classList.add('ok');btn.textContent='✓ Copied';setTimeout(()=>{btn.classList.remove('ok');btn.textContent='Copy';},1800);}
+    if (btn) {
+      btn.classList.add('ok'); btn.textContent = '✓ Copied';
+      setTimeout(() => { btn.classList.remove('ok'); btn.textContent = 'Copy'; }, 1800);
+    }
   });
 }
 
 // ── IMAGE DOWNLOAD ──
 async function downloadImage(cardId, date) {
   const el = document.getElementById(cardId);
-  if(!el) return;
+  if (!el) return;
   const btn = el.querySelector('.cp-btn.img');
-  if(btn){btn.textContent='캡처 중...';btn.disabled=true;}
+  if (btn) { btn.textContent = '캡처 중...'; btn.disabled = true; }
   try {
     const canvas = await html2canvas(el, {
-      backgroundColor: '#222838',
-      scale: 2,
-      useCORS: true,
-      logging: false
+      backgroundColor: '#ffffff',
+      scale: 2, useCORS: true, logging: false
     });
     const a = document.createElement('a');
     a.download = `WTI_${date}.png`;
@@ -767,18 +1005,18 @@ async function downloadImage(cardId, date) {
   } catch(e) {
     toast('❌ 이미지 오류: ' + e.message, 'err');
   } finally {
-    if(btn){btn.textContent='⬇ 이미지';btn.disabled=false;}
+    if (btn) { btn.textContent = '⬇ 이미지'; btn.disabled = false; }
   }
 }
 
 // ── TOAST ──
-function toast(msg, type='inf', ms=3200) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className=`show ${type}`;
-  clearTimeout(t._t); t._t=setTimeout(()=>t.className='',ms);
+function toast(msg, type = 'inf', ms = 3200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `show ${type}`;
+  clearTimeout(t._t); t._t = setTimeout(() => t.className = '', ms);
 }
 
-// INIT
+// ── INIT ──
 loadData();
 </script>
 </body>
