@@ -74,6 +74,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 
+/* PRICE STRIP */
 .brief-strip { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); background: var(--card); }
 .strip-date {
   padding: 20px 26px; border-right: 1px solid var(--border);
@@ -105,7 +106,10 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 .act-btn.edit:hover { background: rgba(91,156,246,.1); color: var(--acc2); }
 .act-btn.del:hover  { background: rgba(242,107,107,.08); color: var(--red); }
 
+/* BODY */
 .brief-body { padding: 22px 26px; border-bottom: 1px solid var(--border); }
+.factors-row { display: flex; gap: 20px; }
+.factor-col  { flex: 1; }
 .fc-title {
   font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
   padding-bottom: 9px; margin-bottom: 10px; border-bottom: 1px solid var(--border);
@@ -126,6 +130,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 .factor-tag.bull { background: rgba(52,216,117,.12);  color: var(--green); border: 1px solid rgba(52,216,117,.25); }
 .factor-tag.dim  { background: rgba(106,122,153,.1);  color: var(--dim); border: 1px solid rgba(106,122,153,.2); }
 
+/* 원문 참고 */
 .source-quote {
   background: var(--inset); border: 1px solid var(--border);
   border-left: 3px solid var(--acc); border-radius: 4px;
@@ -138,7 +143,10 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 
 .source-quote.counter { border-left-color: var(--dim); margin-top: 10px; }
 .source-quote.counter .sq-label { color: var(--dim); }
+.source-quote.counter .sq-text::before,
+.source-quote.counter .sq-text::after { color: var(--dim); }
 
+/* COMMENTARY */
 .brief-commentary { padding: 20px 26px; border-bottom: 1px solid var(--border); }
 .co-label {
   font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
@@ -147,6 +155,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 .co-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 .co-text { font-size: 14px; line-height: 1.9; color: var(--text2); white-space: pre-wrap; }
 
+/* COPY / DOWNLOAD ROW */
 .brief-copy {
   padding: 12px 26px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;
   background: var(--card);
@@ -158,7 +167,9 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 }
 .cp-btn:hover    { border-color: var(--acc); color: var(--acc); }
 .cp-btn.pri      { background: var(--acc2); color: #fff; border-color: var(--acc2); }
+.cp-btn.pri:hover{ background: #4a8ef0; }
 .cp-btn.img      { border-color: var(--border2); color: var(--dim); }
+.cp-btn.img:hover{ border-color: var(--green); color: var(--green); }
 .cp-btn.ok       { border-color: var(--green); color: var(--green); }
 
 /* ── MODAL ── */
@@ -194,6 +205,8 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   color: var(--text); font-family: var(--sans); font-size: 13px; line-height: 1.72;
   padding: 12px 14px; outline: none; transition: border-color .15s;
 }
+#news-ta:focus { border-color: var(--acc2); }
+#news-ta::placeholder { color: var(--dim); font-size: 12px; }
 #parsed-wrap, #step-factors { display: none; }
 .pf-grid   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 .pf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -204,6 +217,9 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   color: var(--text); font-family: var(--mono); font-size: 14px;
   padding: 9px 11px; outline: none; width: 100%; transition: border-color .15s;
 }
+.pfield input:focus, .pfield select:focus, .pfield textarea:focus { border-color: var(--acc2); }
+.pfield input.hi { color: var(--acc); border-color: rgba(232,196,106,.35); }
+.pfield input.up { color: var(--green); } .pfield input.dn { color: var(--red); }
 .pfield textarea { resize: vertical; min-height: 52px; font-family: var(--sans); font-size: 13px; line-height: 1.65; }
 
 .parse-status {
@@ -212,13 +228,18 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 }
 .parse-status.ok   { background: rgba(52,216,117,.08);  border: 1px solid rgba(52,216,117,.25);  color: var(--green); }
 .parse-status.warn { background: rgba(232,196,106,.08); border: 1px solid rgba(232,196,106,.25); color: var(--acc); }
+.parse-status.err  { background: rgba(242,107,107,.08); border: 1px solid rgba(242,107,107,.25); color: var(--red); }
+
+.divider { height: 1px; background: var(--border); margin: 4px 0; }
 
 .chip-wrap  { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip-group { margin-bottom: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
 .chip {
   font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
   padding: 5px 13px; border-radius: 3px; border: 1px solid var(--border2);
   color: var(--dim); cursor: pointer; transition: all .12s; user-select: none;
 }
+.chip:hover { color: var(--text2); border-color: var(--dim); }
 .chip.sel-bear { background: rgba(242,107,107,.1); border-color: rgba(242,107,107,.45); color: var(--red); }
 .chip.sel-bull { background: rgba(52,216,117,.1);  border-color: rgba(52,216,117,.45);  color: var(--green); }
 
@@ -228,8 +249,11 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 }
 .mf-btn { padding: 11px 18px; border: none; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; transition: all .15s; }
 .mf-parse       { flex: 1; background: var(--border2); color: var(--text); }
+.mf-parse:hover { background: var(--acc2); color: #fff; }
 .mf-save        { flex: 2; background: var(--acc); color: #1a1f2e; display: none; }
+.mf-save:hover  { background: #f0d080; }
 .mf-close { background: transparent; border: 1px solid var(--border2); color: var(--dim); padding: 11px 16px; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: 12px; transition: all .15s; }
+.mf-close:hover { border-color: var(--red); color: var(--red); }
 
 /* TOAST */
 #toast {
@@ -241,6 +265,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 #toast.show { opacity: 1; transform: translateY(0); }
 #toast.ok  { background: #1e6e40; }
 #toast.err { background: #7a1f1f; }
+#toast.inf { background: #1a2a4a; }
 
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
@@ -270,6 +295,7 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
   <div id="cards"></div>
 </div>
 
+<!-- MODAL -->
 <div id="overlay">
   <div id="modal">
     <div class="mhdr">
@@ -277,18 +303,24 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
       <button class="mhdr-close" onclick="closeModal()">✕</button>
     </div>
     <div class="mbody">
+
+      <!-- 01 뉴스 파싱 -->
       <div>
         <div class="m-sec-label">01 · 뉴스 텍스트 붙여넣기</div>
-        <textarea id="news-ta" placeholder="WTI 기사 전문 붙여넣기 → 자동 파싱"></textarea>
+        <textarea id="news-ta" placeholder="연합·KBS·초이스경제 등 WTI 기사 전문 붙여넣기
+→ 수치 자동 파싱 + 참고 문장 자동 추출
+
+텍스트 없이 파싱 버튼 → 수동 입력 모드"></textarea>
         <div class="parse-status" id="parse-st"></div>
       </div>
 
+      <!-- 02 수치 -->
       <div id="parsed-wrap">
         <div class="m-sec-label">02 · 수치 확인 및 수정</div>
         <div class="pf-grid" style="margin-bottom:10px">
-          <div class="pfield"><label>WTI 종가 ($/bbl) *</label><input type="number" id="f-wti" step="0.01"></div>
-          <div class="pfield"><label>전일比 $</label><input type="number" id="f-abs" step="0.01" oninput="autoPct()"></div>
-          <div class="pfield"><label>변동률 %</label><input type="number" id="f-pct" step="0.01"></div>
+          <div class="pfield"><label>WTI 종가 ($/bbl) *</label><input type="number" id="f-wti" step="0.01" placeholder="62.33" class="hi"></div>
+          <div class="pfield"><label>전일比 $</label><input type="number" id="f-abs" step="0.01" placeholder="-0.56" oninput="autoPct()"></div>
+          <div class="pfield"><label>변동률 %</label><input type="number" id="f-pct" step="0.01" placeholder="-0.89"></div>
         </div>
         <div class="pf-grid-2" style="margin-bottom:10px">
           <div class="pfield"><label>기준일 *</label><input type="date" id="f-date"></div>
@@ -302,26 +334,28 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
           </div>
         </div>
         <div class="pf-grid-2">
-          <div class="pfield"><label>코멘터리 (자동 추출)</label><textarea id="f-commentary" placeholder="기사 내용 요약..."></textarea></div>
-          <div class="pfield"><label>주요인 원문 (자동 추출)</label><textarea id="f-main-quote" placeholder="원인 문장..."></textarea></div>
+          <div class="pfield"><label>코멘터리</label><textarea id="f-commentary" placeholder="오늘 시황 한 줄 요약..."></textarea></div>
+          <div class="pfield"><label>주요인 원문 (한 문장)</label><textarea id="f-main-quote" placeholder="자동 추출 또는 직접 입력"></textarea></div>
         </div>
       </div>
 
+      <!-- 03 요인 -->
       <div id="step-factors">
-        <div class="m-sec-label">03 · 주요인 선택</div>
+        <div class="m-sec-label">03 · 주요인 선택 (방향과 일치하는 요인)</div>
         <div class="chip-wrap" id="main-chips"></div>
-        <div style="height:1px; background:var(--border); margin:14px 0"></div>
-        <div class="m-sec-label">04 · 반대요인 선택 (선택사항)</div>
+        <div class="divider" style="margin:14px 0"></div>
+        <div class="m-sec-label" style="margin-bottom:8px">04 · 반대요인 선택 (선택사항)</div>
         <div class="chip-wrap" id="counter-chips"></div>
         <div style="margin-top:12px">
-          <div class="pfield"><label>반대요인 원문</label><textarea id="f-counter-quote" placeholder="반대요인 언급 문장..."></textarea></div>
+          <div class="pfield"><label>반대요인 원문 (한 문장, 선택사항)</label><textarea id="f-counter-quote" placeholder="반대요인 언급 원문..."></textarea></div>
         </div>
       </div>
+
     </div>
     <div class="mftr">
       <button class="mf-btn mf-parse" id="btn-parse" onclick="doParse()">🔍 파싱</button>
       <button class="mf-btn mf-save"  id="btn-save"  onclick="doSave()">▶ 구글시트 저장</button>
-      <button class="mf-close" onclick="closeModal()">닫기</button>
+      <button class="mf-close"                        onclick="closeModal()">닫기</button>
     </div>
   </div>
 </div>
@@ -329,75 +363,100 @@ html, body { min-height: 100%; background: var(--bg); color: var(--text); font-f
 <div id="toast"></div>
 
 <script>
-// 알려주신 새로운 GAS URL 적용
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhEYfc54h-rmf3bORWJCMapYFiZ162Rrnh1ScnBLT0z_wzRc5mSL6lMC10XZPBCHbn/exec';
 
+// ── CLOCK ──
 function tick() {
   const k = new Date(Date.now() + 9*3600000);
-  document.getElementById('clock').textContent = k.toISOString().slice(0,10) + '  ' + k.toISOString().slice(11,19) + ' KST';
+  document.getElementById('clock').textContent =
+    k.toISOString().slice(0,10) + '  ' + k.toISOString().slice(11,19) + ' KST';
 }
 tick(); setInterval(tick, 1000);
 
+// ── FACTORS ──
 const FACTORS = [
-  { t:'bear', kr:'미·이란 핵 협상 진전', kw:['이란',['합의','진전']] },
-  { t:'bear', kr:'중동 지정학 리스크 완화', kw:['중동','완화'] },
-  { t:'bear', kr:'IEA 수요 전망 하향', kw:['iea','하향'] },
-  { t:'bear', kr:'OPEC+ 증산 논의', kw:['opec','증산'] },
-  { t:'bear', kr:'미 원유 재고 증가 (EIA)', kw:['재고','증가'] },
-  { t:'bear', kr:'달러 강세', kw:['달러','강세'] },
-  { t:'bear', kr:'경기침체 우려', kw:['경기침체'] },
-  { t:'bull', kr:'중동 긴장 고조', kw:['중동','긴장'] },
-  { t:'bull', kr:'OPEC+ 감산 유지·강화', kw:['opec','감산'] },
-  { t:'bull', kr:'미 원유 재고 감소 (EIA)', kw:['재고','감소'] },
-  { t:'bull', kr:'IEA/EIA 수요 전망 상향', kw:['iea','상향'] },
-  { t:'bull', kr:'달러 약세', kw:['달러','약세'] },
+  { t:'bear', kr:'미·이란 핵 협상 진전',      en:'US-Iran nuclear deal progress',    kw:['이란',['합의','진전']] },
+  { t:'bear', kr:'중동 지정학 리스크 완화',    en:'Easing Middle East risk premium',  kw:['중동','완화'] },
+  { t:'bear', kr:'IEA 수요 전망 하향',          en:'IEA demand forecast downgraded',   kw:['iea','하향'] },
+  { t:'bear', kr:'OPEC+ 증산 논의',             en:'OPEC+ output increase discussed',  kw:['opec','증산'] },
+  { t:'bear', kr:'카자흐 텡기즈 유전 재개',     en:'Tengiz oilfield ramping up',       kw:[['텡기즈','카자흐']] },
+  { t:'bear', kr:'미 원유 재고 증가 (EIA)',      en:'US crude inventory build',         kw:['재고','증가'] },
+  { t:'bear', kr:'달러 강세',                   en:'USD strengthened',                 kw:['달러','강세'] },
+  { t:'bear', kr:'경기침체 우려',               en:'Recession concerns',               kw:['경기침체'] },
+  { t:'bull', kr:'중동 긴장 고조',              en:'Middle East tensions escalating',  kw:['중동','긴장'] },
+  { t:'bull', kr:'호르무즈 해협 리스크',        en:'Hormuz Strait risk',               kw:['호르무즈'] },
+  { t:'bull', kr:'OPEC+ 감산 유지·강화',        en:'OPEC+ cuts maintained/deepened',   kw:['opec','감산'] },
+  { t:'bull', kr:'미 원유 재고 감소 (EIA)',      en:'US crude inventory draw',          kw:['재고','감소'] },
+  { t:'bull', kr:'IEA/EIA 수요 전망 상향',      en:'IEA/EIA demand upgrade',           kw:['iea','상향'] },
+  { t:'bull', kr:'달러 약세',                   en:'USD weakened',                     kw:['달러','약세'] },
 ];
 
-const mainSel = new Set();
+const mainSel    = new Set();
 const counterSel = new Set();
 let editKey = null;
+let parsedMainQuote = null;
 
-// ── 추가된 로직: 코멘터리 자동 추출 (핵심 문장 찾기) ──
-function extractCommentary(txt) {
-  const sents = txt.split(/(?<=[다습니다까요]\.)\s+/).map(s => s.trim());
-  const summary = sents.find(s => s.includes('마감') || s.includes('기록') || s.includes('보였다')) || sents[0];
-  return summary ? summary.substring(0, 150) : "";
-}
-
-// ── 주요인 원문 추출 로직 ──
+// ── 참고 문장 추출 ──
 function extractQuote(txt) {
-  const sents = txt.split(/(?<=[다습니다까요]\.)\s+/).map(s => s.trim()).filter(s => s.length > 20 && s.length < 220);
-  const patterns = [/가운데.{4,50}(?:하락|상승|마감)/, /소식[이에].{2,40}(?:하락|상승)/, /영향으로.{4,40}(?:하락|상승)/, /우려[가에].{4,40}(?:하락|상승)/];
-  for (const p of patterns) {
+  const sents = txt.split(/(?<=[다습니다까요]\.)\s+/)
+    .map(s => s.trim()).filter(s => s.length > 20 && s.length < 220);
+  const causal = [
+    /가운데.{4,50}(?:하락|상승|약세|강세|마감)/,
+    /소식[이에].{2,40}(?:하락|상승|압박|지지)/,
+    /영향으로.{4,40}(?:하락|상승|마감)/,
+    /우려[가에].{4,40}(?:하락|상승|작용|부담)/,
+    /(?:하락|상승)세를\s*보였/,
+    /(?:하락|상승)을\s*(?:부추|지지|견인|주도)/,
+  ];
+  for (const p of causal) {
     const found = sents.find(s => p.test(s));
-    if (found) return found.trim();
+    if (found) return found.replace(/^[^가-힣a-zA-Z\$\d]+/,'').trim();
   }
   return null;
 }
 
+// ── LOAD DATA ──
 async function loadData() {
   document.getElementById('loading').style.display = 'block';
   document.getElementById('cards').innerHTML = '';
   document.getElementById('empty').style.display = 'none';
   try {
-    const res = await fetch(GAS_URL + '?t=' + Date.now());
+    const res  = await fetch(GAS_URL + '?t=' + Date.now());
     const json = await res.json();
     if (!json.success) throw new Error(json.message);
-    const rows = json.data.slice(1).reverse();
+    const rows = json.data.slice(1).reverse(); // 헤더 제외, 최신순
     if (!rows.length) { document.getElementById('empty').style.display = 'block'; return; }
-    document.getElementById('cards').innerHTML = rows.map(r => ({
-      date: String(r[0]||'').trim(), contract: String(r[1]||'').trim(),
-      wti: parseFloat(r[2])||0, abs: r[3]!==''?parseFloat(r[3]):null, pct: parseFloat(r[4])||0,
-      direction: String(r[5]||'').trim(), mainFactors: String(r[6]||'').trim(), mainQuote: String(r[7]||'').trim(),
-      commentary: String(r[8]||'').trim(), counterFactors: String(r[9]||'').trim(), counterQuote: String(r[10]||'').trim()
-    })).map(renderCard).join('');
-  } catch(e) { toast('❌ 로드 실패: ' + e.message, 'err'); }
-  finally { document.getElementById('loading').style.display = 'none'; }
+    document.getElementById('cards').innerHTML = rows.map(rowToEntry).map(renderCard).join('');
+  } catch(e) {
+    toast('❌ 로드 실패: ' + e.message, 'err');
+  } finally {
+    document.getElementById('loading').style.display = 'none';
+  }
 }
 
-function openModal(e = null) {
-  editKey = null; mainSel.clear(); counterSel.clear();
-  document.getElementById('modal-title').textContent = e ? '◈ EDIT ENTRY' : '◈ NEW WTI ENTRY';
+function rowToEntry(r) {
+  return {
+    date:         String(r[0]||'').trim(),
+    contract:     String(r[1]||'').trim(),
+    wti:          parseFloat(r[2]) || 0,
+    abs:          r[3] !== '' && r[3] !== null ? parseFloat(r[3]) : null,
+    pct:          parseFloat(r[4]) || 0,
+    direction:    String(r[5]||'').trim(),
+    mainFactors:  String(r[6]||'').trim(),
+    mainQuote:    String(r[7]||'').trim(),
+    commentary:   String(r[8]||'').trim(),
+    counterFactors: String(r[9]||'').trim(),
+    counterQuote: String(r[10]||'').trim(),
+  };
+}
+
+// ── MODAL ──
+function openModal(entryForEdit = null) {
+  editKey = null;
+  mainSel.clear(); counterSel.clear();
+  parsedMainQuote = null;
+
+  document.getElementById('modal-title').textContent = entryForEdit ? '◈ EDIT ENTRY' : '◈ NEW WTI ENTRY';
   document.getElementById('news-ta').value = '';
   document.getElementById('parse-st').style.display = 'none';
   document.getElementById('parsed-wrap').style.display = 'none';
@@ -406,177 +465,320 @@ function openModal(e = null) {
 
   const today = new Date(Date.now() + 9*3600000).toISOString().slice(0,10);
   document.getElementById('f-date').value = today;
-  ['f-wti','f-abs','f-pct','f-commentary','f-main-quote','f-counter-quote'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-cont').value = 'Mar';
+  ['f-wti','f-abs','f-pct','f-commentary','f-main-quote','f-counter-quote']
+    .forEach(id => document.getElementById(id).value = '');
 
-  if (e) {
-    editKey = { date: e.date, contract: e.contract };
-    document.getElementById('f-wti').value = e.wti;
-    document.getElementById('f-abs').value = e.abs ?? '';
-    document.getElementById('f-pct').value = e.pct;
-    document.getElementById('f-date').value = e.date;
-    document.getElementById('f-cont').value = e.contract;
-    document.getElementById('f-commentary').value = e.commentary;
-    document.getElementById('f-main-quote').value = e.mainQuote;
-    document.getElementById('f-counter-quote').value = e.counterQuote;
-    e.mainFactors.split(',').forEach(k => { const i = FACTORS.findIndex(f=>f.kr===k.trim()); if(i>=0) mainSel.add(i); });
-    e.counterFactors.split(',').forEach(k => { const i = FACTORS.findIndex(f=>f.kr===k.trim()); if(i>=0) counterSel.add(i); });
+  if (entryForEdit) {
+    editKey = { date: entryForEdit.date, contract: entryForEdit.contract };
+    document.getElementById('f-wti').value         = entryForEdit.wti;
+    document.getElementById('f-abs').value         = entryForEdit.abs ?? '';
+    document.getElementById('f-pct').value         = entryForEdit.pct;
+    document.getElementById('f-date').value        = entryForEdit.date;
+    document.getElementById('f-cont').value        = entryForEdit.contract;
+    document.getElementById('f-commentary').value  = entryForEdit.commentary;
+    document.getElementById('f-main-quote').value  = entryForEdit.mainQuote;
+    document.getElementById('f-counter-quote').value = entryForEdit.counterQuote;
+    // 요인 복원
+    entryForEdit.mainFactors.split(',').map(s=>s.trim()).forEach(kr => {
+      const idx = FACTORS.findIndex(f=>f.kr===kr); if(idx>=0) mainSel.add(idx);
+    });
+    entryForEdit.counterFactors.split(',').map(s=>s.trim()).forEach(kr => {
+      const idx = FACTORS.findIndex(f=>f.kr===kr); if(idx>=0) counterSel.add(idx);
+    });
     document.getElementById('parsed-wrap').style.display = 'block';
     document.getElementById('step-factors').style.display = 'block';
     document.getElementById('btn-save').style.display = 'block';
   }
+
   buildChips();
   document.getElementById('overlay').classList.add('open');
 }
 
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+document.getElementById('overlay').addEventListener('click', e => {
+  if(e.target===document.getElementById('overlay')) closeModal();
+});
 
+// ── CHIPS ──
 function buildChips() {
-  const b = (id, s) => {
-    const c = document.getElementById(id); c.innerHTML = '';
-    FACTORS.forEach((f, i) => {
-      const d = document.createElement('div');
-      d.className = 'chip' + (s.has(i) ? ` sel-${f.t}` : '');
-      d.textContent = f.kr;
-      d.onclick = () => { if(s.has(i)) { s.delete(i); d.className='chip'; } else { s.add(i); d.className=`chip sel-${f.t}`; } };
-      c.appendChild(d);
-    });
-  };
-  b('main-chips', mainSel); b('counter-chips', counterSel);
+  buildChipGroup('main-chips',    mainSel);
+  buildChipGroup('counter-chips', counterSel);
 }
 
-// ── 수정된 doParse: 코멘터리 및 주요인 자동 채우기 ──
+function buildChipGroup(containerId, selSet) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = '';
+  FACTORS.forEach((f, i) => {
+    const ch = document.createElement('div');
+    const t  = f.t;
+    ch.className = 'chip' + (selSet.has(i) ? ` sel-${t}` : '');
+    ch.textContent = f.kr;
+    ch.addEventListener('click', () => {
+      if (selSet.has(i)) { selSet.delete(i); ch.className='chip'; }
+      else               { selSet.add(i);    ch.className=`chip sel-${t}`; }
+    });
+    c.appendChild(ch);
+  });
+}
+
+function autoDetect(txt) {
+  const lo = txt.toLowerCase();
+  mainSel.clear();
+  FACTORS.forEach((f,i) => {
+    const hit = f.kw.every(k => Array.isArray(k) ? k.some(kk=>lo.includes(kk)) : lo.includes(k));
+    if (hit) mainSel.add(i);
+  });
+}
+
+// ── PARSE ──
 function doParse() {
   const txt = document.getElementById('news-ta').value.trim();
   if (!txt) {
     document.getElementById('parsed-wrap').style.display = 'block';
     document.getElementById('step-factors').style.display = 'block';
     document.getElementById('btn-save').style.display = 'block';
-    buildChips(); return;
+    buildChips();
+    showStatus('warn','텍스트 없음 — 수동 입력 모드');
+    return;
+  }
+  const f = {}; let m;
+  m = txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);
+  if(m) f.wti=parseFloat(m[1]);
+  if(!f.wti){m=txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
+  const ws=(txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,200}/)||[''])[0];
+  m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
+  if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
+  if(!f.abs){m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}}
+  if(!f.abs){m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/);if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}}
+  if(!f.pct){m=txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/);if(m)f.pct=m[2]==='하락'?-parseFloat(m[1]):parseFloat(m[1]);}
+  if(!f.abs&&f.wti&&f.pct){const prev=f.wti/(1+f.pct/100);f.abs=parseFloat((f.wti-prev).toFixed(2));}
+
+  // 월물 자동 감지
+  const contM = txt.match(/(3|4|5|6)월\s*(?:인도분|물)/);
+  if(contM) {
+    const map={'3':'Mar','4':'Apr','5':'May','6':'Jun'};
+    document.getElementById('f-cont').value = map[contM[1]] || 'Mar';
   }
 
-  const f = {}; let m;
-  m = txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/); if(m) f.wti=parseFloat(m[1]);
-  const ws = (txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,200}/)||[''])[0];
-  m = ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
-  if(m){ f.abs=-parseFloat(m[1]); f.pct=-parseFloat(m[2]); }
-  else { m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/); if(m){f.abs=parseFloat(m[1]); f.pct=parseFloat(m[2]);} }
+  if(f.wti)  document.getElementById('f-wti').value = f.wti.toFixed(2);
+  if(f.abs)  document.getElementById('f-abs').value = f.abs.toFixed(2);
+  if(f.pct)  document.getElementById('f-pct').value = f.pct.toFixed(2);
 
-  if(f.wti) document.getElementById('f-wti').value = f.wti.toFixed(2);
-  if(f.abs) document.getElementById('f-abs').value = f.abs.toFixed(2);
-  if(f.pct) document.getElementById('f-pct').value = f.pct.toFixed(2);
+  parsedMainQuote = extractQuote(txt);
+  if(parsedMainQuote) document.getElementById('f-main-quote').value = parsedMainQuote;
 
-  // 코멘터리 및 주요인 추출 결과 입력
-  document.getElementById('f-commentary').value = extractCommentary(txt);
-  const q = extractQuote(txt); if(q) document.getElementById('f-main-quote').value = q;
-
-  const lo = txt.toLowerCase();
-  mainSel.clear();
-  FACTORS.forEach((f,i) => { if(f.kw.every(k => Array.isArray(k)?k.some(kk=>lo.includes(kk)):lo.includes(k))) mainSel.add(i); });
-
+  autoDetect(txt);
   document.getElementById('parsed-wrap').style.display = 'block';
   document.getElementById('step-factors').style.display = 'block';
   document.getElementById('btn-save').style.display = 'block';
   buildChips();
+
   const ok = f.wti && f.pct !== undefined;
-  const el = document.getElementById('parse-st');
-  el.style.display='block'; el.className=`parse-status ${ok?'ok':'warn'}`;
-  el.textContent = ok ? '✓ 데이터 및 코멘터리 자동 추출 완료' : '⚠ 수치 직접 확인 필요';
+  showStatus(ok?'ok':'warn',
+    ok ? `✓ $${f.wti.toFixed(2)} (${f.pct>=0?'+':''}${f.pct.toFixed(2)}%) · 요인 ${mainSel.size}개 감지${parsedMainQuote?' · 참고문장 추출':''}` : '⚠ 수치 직접 확인 필요');
 }
 
+function showStatus(t,m) {
+  const el=document.getElementById('parse-st');
+  el.style.display='block'; el.className=`parse-status ${t}`; el.textContent=m;
+}
 function autoPct() {
-  const w = parseFloat(document.getElementById('f-wti').value);
-  const a = parseFloat(document.getElementById('f-abs').value);
-  if(w && !isNaN(a) && w-a>0) document.getElementById('f-pct').value = (a/(w-a)*100).toFixed(2);
+  const wti=parseFloat(document.getElementById('f-wti').value);
+  const abs=parseFloat(document.getElementById('f-abs').value);
+  if(wti&&!isNaN(abs)&&wti-abs>0) document.getElementById('f-pct').value=(abs/(wti-abs)*100).toFixed(2);
 }
 
+// ── SAVE ──
 async function doSave() {
-  const w = parseFloat(document.getElementById('f-wti').value);
-  const p = parseFloat(document.getElementById('f-pct').value);
-  const d = document.getElementById('f-date').value;
-  if(!d || isNaN(w) || isNaN(p)){ alert('필수 항목을 입력하세요.'); return; }
+  const wti=parseFloat(document.getElementById('f-wti').value);
+  const pct=parseFloat(document.getElementById('f-pct').value);
+  const date=document.getElementById('f-date').value;
+  if(!date||isNaN(wti)||isNaN(pct)){showStatus('err','기준일, WTI 종가, 변동률은 필수입니다.');return;}
+
+  const abs=parseFloat(document.getElementById('f-abs').value)||null;
+  const cont=document.getElementById('f-cont').value;
+  const direction=pct>0?'상승':pct<0?'하락':'보합';
+
+  const mainArr=[]; mainSel.forEach(i=>mainArr.push(FACTORS[i].kr));
+  const counterArr=[]; counterSel.forEach(i=>counterArr.push(FACTORS[i].kr));
 
   const data = {
-    date: d, contract: document.getElementById('f-cont').value, wti: w,
-    abs: document.getElementById('f-abs').value||'', pct: p, direction: p>0?'상승':p<0?'하락':'보합',
-    mainFactors: Array.from(mainSel).map(i=>FACTORS[i].kr).join(', '),
-    mainQuote: document.getElementById('f-main-quote').value.trim(),
-    commentary: document.getElementById('f-commentary').value.trim(),
-    counterFactors: Array.from(counterSel).map(i=>FACTORS[i].kr).join(', '),
-    counterQuote: document.getElementById('f-counter-quote').value.trim()
+    date,
+    contract:       cont,
+    wti,
+    abs:            abs !== null ? abs : '',
+    pct,
+    direction,
+    mainFactors:    mainArr.join(', '),
+    mainQuote:      document.getElementById('f-main-quote').value.trim(),
+    commentary:     document.getElementById('f-commentary').value.trim(),
+    counterFactors: counterArr.join(', '),
+    counterQuote:   document.getElementById('f-counter-quote').value.trim(),
   };
 
-  const b = document.getElementById('btn-save'); b.textContent='저장 중...'; b.disabled=true;
+  const btn = document.getElementById('btn-save');
+  btn.textContent='저장 중...'; btn.disabled=true;
+
   try {
-    const res = await fetch(GAS_URL, { method:'POST', body: JSON.stringify({ action: editKey?'edit':'save', rowKey:editKey, data }) });
+    const res = await fetch(GAS_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({
+        action: editKey ? 'edit' : 'save',
+        rowKey: editKey,
+        data
+      })
+    });
     const r = await res.json();
-    if(r.success) { toast('✅ 저장 완료', 'ok'); closeModal(); loadData(); }
-    else toast('❌ ' + r.message, 'err');
-  } catch(e) { toast('❌ 오류: ' + e.message, 'err'); }
-  finally { b.textContent='▶ 구글시트 저장'; b.disabled=false; }
+    if(r.success) {
+      toast('✅ ' + r.message, 'ok');
+      closeModal();
+      await loadData();
+    } else {
+      toast('❌ ' + r.message, 'err');
+    }
+  } catch(e) {
+    toast('❌ 오류: ' + e.message, 'err');
+  } finally {
+    btn.textContent='▶ 구글시트 저장'; btn.disabled=false;
+  }
 }
 
+// ── DELETE ──
 async function deleteEntry(date, contract) {
-  if(!confirm('삭제하시겠습니까?')) return;
+  if(!confirm(`${date} ${contract} 항목을 삭제하시겠습니까?`)) return;
   try {
-    const res = await fetch(GAS_URL, { method:'POST', body: JSON.stringify({ action:'delete', rowKey:{ date, contract } }) });
+    const res = await fetch(GAS_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({ action:'delete', rowKey:{ date, contract } })
+    });
     const r = await res.json();
-    if(r.success) { toast('🗑 삭제됨', 'ok'); loadData(); }
-  } catch(e) { toast('❌ 오류', 'err'); }
+    if(r.success) { toast('🗑 ' + r.message, 'ok'); await loadData(); }
+    else toast('❌ ' + r.message, 'err');
+  } catch(e) {
+    toast('❌ 오류: ' + e.message, 'err');
+  }
 }
 
+// ── RENDER ──
 function renderCard(e) {
-  const dir = e.pct>0?'up':e.pct<0?'dn':'flt';
-  const arrow = e.pct>0?'▲':e.pct<0?'▼':'─';
-  const eJson = encodeURIComponent(JSON.stringify(e));
-  const mainTags = e.mainFactors ? e.mainFactors.split(',').map(k => `<span class="factor-tag ${FACTORS.find(x=>x.kr===k.trim())?.t||'dim'}">${k.trim()}</span>`).join('') : '';
-  const counterTags = e.counterFactors ? e.counterFactors.split(',').map(k => k.trim()?`<span class="factor-tag dim">${k.trim()}</span>`:'').join('') : '';
+  const dir    = e.pct>0?'up':e.pct<0?'dn':'flt';
+  const arrow  = e.pct>0?'▲':e.pct<0?'▼':'─';
+  const pctStr = (e.pct>=0?'+':'')+e.pct.toFixed(2)+'%';
+  const absStr = e.abs!=null?(e.abs>=0?'+':'')+e.abs.toFixed(2)+' USD':'';
+  const cardId = 'card-' + e.date.replace(/\./g,'-') + '-' + e.contract;
 
-  return `<div class="brief" id="card-${e.date}-${e.contract}">
+  // 주요인 태그
+  const mainTags = e.mainFactors ? e.mainFactors.split(',').map(kr => {
+    const f = FACTORS.find(x=>x.kr===kr.trim());
+    const t = f ? f.t : 'dim';
+    return `<span class="factor-tag ${t}">${kr.trim()}</span>`;
+  }).join('') : '';
+
+  // 반대요인 태그
+  const counterTags = e.counterFactors ? e.counterFactors.split(',').map(kr => {
+    if(!kr.trim()) return '';
+    return `<span class="factor-tag dim">${kr.trim()}</span>`;
+  }).join('') : '';
+
+  const hasBody = mainTags || e.mainQuote || counterTags || e.counterQuote;
+
+  // edit용 데이터 직렬화
+  const eJson = encodeURIComponent(JSON.stringify(e));
+
+  return `<div class="brief" id="${cardId}">
     <div class="brief-strip">
-      <div class="strip-date"><div class="sd-date">${e.date}</div><div class="sd-cont">NYMEX · ${e.contract}월물</div></div>
+      <div class="strip-date">
+        <div class="sd-date">${e.date}</div>
+        <div class="sd-cont">NYMEX · ${e.contract}월물</div>
+      </div>
       <div class="strip-price">
         <div class="sp-val ${dir}">${arrow} ${e.wti.toFixed(2)}</div>
         <div class="sp-unit">USD / bbl</div>
         <div class="sp-delta">
-          <div class="sp-d-row"><span class="sp-d-label">Δ$</span><span class="sp-d-val ${dir}">${e.abs??''}</span></div>
-          <div class="sp-d-row"><span class="sp-d-label">Δ%</span><span class="sp-d-val ${dir}">${(e.pct>=0?'+':'')+e.pct.toFixed(2)}%</span></div>
+          ${absStr?`<div class="sp-d-row"><span class="sp-d-label">Δ$</span><span class="sp-d-val ${dir}">${absStr}</span></div>`:''}
+          <div class="sp-d-row"><span class="sp-d-label">Δ%</span><span class="sp-d-val ${dir}">${pctStr}</span></div>
         </div>
       </div>
       <div class="strip-actions">
         <button class="act-btn edit" onclick="openModal(JSON.parse(decodeURIComponent('${eJson}')))">✎ EDIT</button>
-        <button class="act-btn del" onclick="deleteEntry('${e.date}','${e.contract}')">✕ DEL</button>
+        <button class="act-btn del"  onclick="deleteEntry('${e.date}','${e.contract}')">✕ DEL</button>
       </div>
     </div>
-    <div class="brief-body">
-      ${mainTags?`<div><div class="fc-title main"><span class="fc-dot ${e.pct>0?'bull':'bear'}"></span>주요인 · ${e.direction}</div><div>${mainTags}</div>
-      ${e.mainQuote?`<div class="source-quote"><div class="sq-label">📰 원문 참고</div><div class="sq-text">${e.mainQuote}</div></div>`:''}</div>`:''}
-      ${counterTags?`<div style="margin-top:16px"><div class="fc-title counter"><span class="fc-dot dim"></span>반대요인</div><div>${counterTags}</div>
-      ${e.counterQuote?`<div class="source-quote counter"><div class="sq-label">📰 반대요인 원문</div><div class="sq-text">${e.counterQuote}</div></div>`:''}</div>`:''}
-    </div>
-    ${e.commentary?`<div class="brief-commentary"><div class="co-label">코멘터리</div><div class="co-text">${e.commentary}</div></div>`:''}
+
+    ${hasBody?`<div class="brief-body">
+      ${mainTags?`<div>
+        <div class="fc-title main"><span class="fc-dot ${e.pct>0?'bull':'bear'}"></span>주요인 · ${e.direction}</div>
+        <div>${mainTags}</div>
+        ${e.mainQuote?`<div class="source-quote"><div class="sq-label">📰 원문 참고</div><div class="sq-text">${e.mainQuote}</div></div>`:''}
+      </div>`:''}
+      ${counterTags?`<div style="margin-top:${mainTags?'16px':'0'}">
+        <div class="fc-title counter"><span class="fc-dot dim"></span>반대요인 (제한적 영향)</div>
+        <div>${counterTags}</div>
+        ${e.counterQuote?`<div class="source-quote counter"><div class="sq-label">📰 반대요인 원문</div><div class="sq-text">${e.counterQuote}</div></div>`:''}
+      </div>`:''}
+    </div>`:''}
+
+    ${e.commentary?`<div class="brief-commentary">
+      <div class="co-label">코멘터리</div>
+      <div class="co-text">${e.commentary}</div>
+    </div>`:''}
+
     <div class="brief-copy">
-      <button class="cp-btn img" onclick="downloadImage('card-${e.date}-${e.contract}','${e.date}')">⬇ 이미지</button>
-      <button class="cp-btn" onclick="copyText('${e.date}-${e.contract}')">Copy</button>
+      <button class="cp-btn img" onclick="downloadImage('${cardId}','${e.date}')">⬇ 이미지</button>
+      <button class="cp-btn"     onclick="copyCommentary('${cardId}')">Copy</button>
     </div>
   </div>`;
 }
 
-function copyText(id) {
-  const el = document.querySelector(`#card-${id} .co-text`);
-  if(el) { navigator.clipboard.writeText(el.textContent); toast('✓ 복사됨', 'ok'); }
+// ── COPY ──
+function copyCommentary(cardId) {
+  const e = cardId.replace('card-','').replace(/-(?=Mar|Apr|May|Jun)/,'.').replace(/-/g,'.');
+  // commentary 텍스트 직접 추출
+  const el = document.querySelector(`#${cardId} .co-text`);
+  if(!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = document.querySelector(`#${cardId} .cp-btn:not(.img)`);
+    if(btn){btn.classList.add('ok');btn.textContent='✓ Copied';setTimeout(()=>{btn.classList.remove('ok');btn.textContent='Copy';},1800);}
+  });
 }
 
-async function downloadImage(id, date) {
-  const el = document.getElementById(id);
-  const canvas = await html2canvas(el, { backgroundColor: '#222838', scale: 2 });
-  const a = document.createElement('a'); a.download = `WTI_${date}.png`; a.href = canvas.toDataURL(); a.click();
+// ── IMAGE DOWNLOAD ──
+async function downloadImage(cardId, date) {
+  const el = document.getElementById(cardId);
+  if(!el) return;
+  const btn = el.querySelector('.cp-btn.img');
+  if(btn){btn.textContent='캡처 중...';btn.disabled=true;}
+  try {
+    const canvas = await html2canvas(el, {
+      backgroundColor: '#222838',
+      scale: 2,
+      useCORS: true,
+      logging: false
+    });
+    const a = document.createElement('a');
+    a.download = `WTI_${date}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    toast('✅ 이미지 저장됨', 'ok');
+  } catch(e) {
+    toast('❌ 이미지 오류: ' + e.message, 'err');
+  } finally {
+    if(btn){btn.textContent='⬇ 이미지';btn.disabled=false;}
+  }
 }
 
-function toast(m, t) {
-  const el = document.getElementById('toast'); el.textContent = m; el.className = `show ${t}`;
-  setTimeout(() => el.className = '', 3000);
+// ── TOAST ──
+function toast(msg, type='inf', ms=3200) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`show ${type}`;
+  clearTimeout(t._t); t._t=setTimeout(()=>t.className='',ms);
 }
 
+// INIT
 loadData();
 </script>
 </body>
