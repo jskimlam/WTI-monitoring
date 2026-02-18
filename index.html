@@ -805,12 +805,12 @@ function renderGroup(group){
       </div>
     </div>
 
-    ${renderFactPanel(p,dir,dirTxt)}
-
     ${p.commentary?`<div class="brief-commentary">
       <div class="co-label">코멘터리 · 소스 1</div>
       <div class="co-text">${p.commentary}</div>
     </div>`:''}
+
+    ${renderFactPanel(p,dir,dirTxt)}
 
     <div class="brief-copy">
       <button class="cp-btn img" onclick="downloadImage('${cardId}','${p.date}')">⬇ 이미지</button>
@@ -836,11 +836,11 @@ function renderGroup(group){
             <button class="src-act-btn del" onclick="deleteEntry('${ex.date}','${ex.contract}',${ex.seq})">✕ DEL</button>
           </div>
         </div>
-        ${renderFactPanel(ex,dir,dirTxt)}
         ${ex.commentary?`<div class="brief-commentary">
           <div class="co-label">코멘터리 · 소스 ${ex.seq}</div>
           <div class="co-text">${ex.commentary}</div>
         </div>`:''}
+        ${renderFactPanel(ex,dir,dirTxt)}
         <div class="brief-copy">
           <button class="cp-btn" onclick="copyText('${exCardId}')">Copy</button>
         </div>
