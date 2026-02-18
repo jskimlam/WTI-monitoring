@@ -413,110 +413,107 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
-  /* ══ RESPONSIVE: Tablet & Fold (1024px 이하) ══ */
-@media (max-width: 1024px) {
-  .wrap { padding: 20px 24px; }
-  .hdr { padding: 0 24px; }
-  .search-bar { padding: 14px 24px; }
-  
-  /* 폴드 등 넓은 화면에서 폰트 크기 미세 조정 */
-  .bh-val { font-size: 120px; } 
-  #modal { width: 90%; }
+
+/* ══ MOBILE : Galaxy S25 (≤480px) ══ */
+@media (max-width: 480px) {
+  /* 헤더 */
+  .hdr{padding:10px 16px;height:auto;flex-wrap:wrap;gap:6px;}
+  .hdr-sub{display:none;}
+  .hdr-logo{font-size:26px;}
+  .hdr-right{gap:8px;}
+  .hdr-clock{font-size:12px;}
+  .btn-new{padding:8px 14px;font-size:11px;}
+  .btn-refresh{padding:7px 12px;font-size:11px;}
+
+  /* 검색바 */
+  .search-bar{padding:10px 16px;flex-wrap:wrap;gap:8px;}
+  .sb-result{margin-left:0;width:100%;font-size:11px;}
+  .sb-input{width:140px;font-size:13px;}
+
+  /* 메인 래퍼 */
+  .wrap{padding:16px 10px 60px;}
+  .date-group{margin-bottom:28px;}
+
+  /* 가격 헤더 — 세로 스택 */
+  .brief-header{flex-direction:column;min-height:unset;}
+  .bh-date{
+    padding:12px 16px;border-right:none;border-bottom:1px solid var(--border);
+    min-width:unset;flex-direction:row;align-items:center;justify-content:space-between;gap:0;
+  }
+  .bh-date-val{font-size:17px;}
+  .bh-date-cont{font-size:12px;}
+  .bh-price{padding:14px 16px;gap:8px;}
+  .bh-val{font-size:78px;}
+  .bh-arrow{font-size:34px;}
+  .bh-unit{font-size:13px;padding-bottom:10px;}
+  .bh-delta{
+    flex-direction:row;padding:10px 16px;
+    border-left:none;border-top:1px solid var(--border);gap:20px;
+  }
+  .bh-d-val{font-size:26px;}
+  .bh-d-label{font-size:11px;}
+  .bh-dir{
+    padding:10px 16px;border-left:none;border-top:1px solid var(--border);
+    flex-direction:row;justify-content:space-between;
+  }
+  .bh-dir-badge{font-size:18px;padding:8px 20px;}
+  .bh-actions{
+    flex-direction:row;border-left:none;border-top:1px solid var(--border);
+    min-width:unset;align-self:auto;
+  }
+  .act-btn{border-bottom:none;border-right:1px solid var(--border);}
+  .act-btn:last-child{border-right:none;}
+
+  /* 코멘터리 */
+  .brief-commentary{padding:18px 16px;}
+  .co-text{font-size:15px;line-height:1.75;}
+
+  /* 팩트 패널 — 1컬럼 */
+  .brief-facts{grid-template-columns:1fr;}
+  .fact-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
+  .fact-col{padding:18px 16px;}
+  .factor-tag{font-size:14px;padding:6px 14px;}
+
+  /* 원문 인용 */
+  .source-quote{padding:12px 14px;}
+  .sq-text{font-size:14px;}
+
+  /* 아코디언 */
+  .accordion-toggle{padding:12px 16px;}
+  .source-header{padding:12px 16px;}
+
+  /* 카피 버튼 */
+  .brief-copy{padding:12px 14px;}
+
+  /* 모달 */
+  #modal{width:95vw;max-height:96vh;}
+  .mbody{padding:14px 12px;gap:12px;}
+  .m-sec{padding:14px 14px;}
+  .pf-grid{grid-template-columns:1fr 1fr;}
+  .pf-grid-2{grid-template-columns:1fr;}
+  .mftr{padding:12px 14px;gap:8px;}
+  .mf-btn{padding:11px 14px;font-size:12px;}
+
+  /* 토스트 */
+  #toast{bottom:16px;right:12px;left:12px;max-width:unset;font-size:13px;}
 }
-/* ══ RESPONSIVE: Mobile (768px 이하) - 한 화면 최적화 ══ */
-@media (max-width: 768px) {
-  .wrap { padding: 12px 10px; }
-  
-  /* 1. 헤더 최소화 */
-  .hdr { height: 50px; padding: 0 12px; }
-  .hdr-logo { font-size: 22px; letter-spacing: 0.05em; }
-  .hdr-sub { display: none; }
-  .hdr-clock { display: none; } /* 시계 숨김으로 공간 확보 */
-  .btn-new { padding: 6px 12px; font-size: 11px; }
-  .btn-refresh { padding: 5px 10px; font-size: 10px; }
 
-  /* 2. 검색바 슬림화 */
-  .search-bar { padding: 8px 12px; gap: 6px; }
-  .sb-label { font-size: 10px; }
-  .sb-input { height: 32px; font-size: 12px; width: 110px; padding: 4px 8px; }
-  .sb-btn { padding: 6px 10px; font-size: 10px; }
-
-  /* 3. 카드 헤더 구조 재배치 (가로 활용) */
-  .brief-header { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; /* 2단 구조 */
-    min-height: auto; 
-    padding-bottom: 10px;
-  }
-
-  /* 날짜와 액션 버튼 상단 배치 */
-  .bh-date { 
-    grid-column: 1 / 3; 
-    padding: 12px 16px 8px; 
-    flex-direction: row; 
-    justify-content: space-between; 
-    align-items: center;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-  .bh-date-val { font-size: 20px; }
-  .bh-date-cont { font-size: 11px; }
-
-  /* 가격 섹션 크기 대폭 축소 */
-  .bh-price { 
-    padding: 12px 16px; 
-    gap: 8px;
-    align-items: center;
-  }
-  .bh-val { font-size: 52px; line-height: 1; } /* 160px -> 52px */
-  .bh-arrow { font-size: 32px; }
-  .bh-unit { font-size: 12px; padding-bottom: 4px; }
-
-  /* 델타와 방향을 우측에 배치 */
-  .bh-delta { 
-    padding: 12px 16px; 
-    border-left: 1px solid var(--border);
-    gap: 4px;
-    justify-content: center;
-  }
-  .bh-d-val { font-size: 18px; }
-  .bh-d-label { font-size: 10px; width: 24px; }
-
-  /* 방향 뱃지 축소 */
-  .bh-dir { 
-    grid-column: 1 / 3;
-    padding: 8px; 
-    border-top: 1px solid var(--border);
-    border-left: none;
-    flex-direction: row;
-    gap: 10px;
-  }
-  .bh-dir-badge { font-size: 14px; padding: 4px 16px; }
-  .bh-dir-label { display: none; }
-
-  /* 수정/삭제 버튼을 하단으로 */
-  .bh-actions {
-    grid-column: 1 / 3;
-    flex-direction: row;
-    width: 100%;
-    border-left: none;
-    border-top: 1px solid var(--border);
-  }
-  .act-btn { padding: 10px 0; border-right: 1px solid var(--border); }
-  .act-btn:last-child { border-right: none; }
-
-  /* 4. 팩트 패널 및 코멘터리 슬림화 */
-  .brief-facts { grid-template-columns: 1fr; }
-  .fact-col { padding: 15px 16px; gap: 10px; }
-  .factor-tag { font-size: 13px; padding: 4px 12px; }
-  .sq-text { font-size: 14px; line-height: 1.5; }
-  .co-text { font-size: 16px; line-height: 1.6; }
-  .brief-commentary { padding: 18px 20px; }
-
-  /* 모달 최적화 */
-  #modal { width: 98%; max-height: 98vh; }
-  .mbody { padding: 15px; gap: 12px; }
-  .pf-grid, .pf-grid-2 { grid-template-columns: 1fr; gap: 8px; }
+/* ══ MOBILE : Galaxy Z Fold7 펼침 (481px~820px) ══ */
+@media (min-width:481px) and (max-width:820px) {
+  .hdr{padding:0 24px;}
+  .hdr-logo{font-size:30px;}
+  .hdr-sub{font-size:11px;}
+  .search-bar{padding:12px 24px;}
+  .wrap{padding:28px 20px 80px;}
+  .brief-header{min-height:unset;}
+  .bh-val{font-size:100px;}
+  .bh-date{min-width:160px;padding:20px 20px;}
+  .bh-date-val{font-size:22px;}
+  .bh-d-val{font-size:32px;}
+  .bh-dir-badge{font-size:20px;padding:10px 24px;}
+  .co-text{font-size:18px;}
+  #modal{width:90vw;}
+  .pf-grid{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
@@ -626,7 +623,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 <div id="toast"></div>
 
 <script>
-const GAS_URL='https://script.google.com/macros/s/AKfycbw-pDuq9xGaVmGg56lAxzV8bGLeHecSQdRK5bEpGY-_u1ibPgEHxE0eiRBxjXQSWQx7/exec';
+const GAS_URL='https://script.google.com/macros/s/AKfycbwhEYfc54h-rmf3bORWJCMapYFiZ162Rrnh1ScnBLT0z_wzRc5mSL6lMC10XZPBCHbn/exec';
 
 // ── CLOCK ──
 function tick(){
@@ -901,12 +898,12 @@ function renderGroup(group){
       </div>
     </div>
 
-    ${renderFactPanel(p,dir,dirTxt)}
-
     ${p.commentary?`<div class="brief-commentary">
       <div class="co-label">코멘터리 · 소스 1</div>
       <div class="co-text">${p.commentary}</div>
     </div>`:''}
+
+    ${renderFactPanel(p,dir,dirTxt)}
 
     <div class="brief-copy">
       <button class="cp-btn img" onclick="downloadImage('${cardId}','${p.date}')">⬇ 이미지</button>
@@ -932,11 +929,11 @@ function renderGroup(group){
             <button class="src-act-btn del" onclick="deleteEntry('${ex.date}','${ex.contract}',${ex.seq})">✕ DEL</button>
           </div>
         </div>
-        ${renderFactPanel(ex,dir,dirTxt)}
         ${ex.commentary?`<div class="brief-commentary">
           <div class="co-label">코멘터리 · 소스 ${ex.seq}</div>
           <div class="co-text">${ex.commentary}</div>
         </div>`:''}
+        ${renderFactPanel(ex,dir,dirTxt)}
         <div class="brief-copy">
           <button class="cp-btn" onclick="copyText('${exCardId}')">Copy</button>
         </div>
