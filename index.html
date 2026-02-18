@@ -672,9 +672,9 @@ function renderCardBody(e, seqLabel){
   // 전망
   if(e.outlook){
     html+=`<div class="brief-outlook">
-      <div class="sec-label blue" style="display:flex;align-items:center;justify-content:space-between;width:100%">
-        <span>🔭 결론 및 전망${seqLabel}</span>
-        ${e.link?`<a href="${e.link}" target="_blank" style="font-family:var(--mono);font-size:11px;color:#60a5fa;border:1px solid rgba(96,165,250,.3);padding:3px 10px;border-radius:4px;text-decoration:none;letter-spacing:.06em;">🔗 원본</a>`:''}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div class="sec-label blue" style="margin-bottom:0">🔭 결론 및 전망${seqLabel}</div>
+        ${e.link?`<a href="${e.link}" target="_blank" style="font-family:var(--mono);font-size:12px;color:#60a5fa;border:1px solid rgba(96,165,250,.35);padding:5px 14px;border-radius:5px;text-decoration:none;letter-spacing:.08em;white-space:nowrap;flex-shrink:0;">🔗 원본 링크</a>`:''}
       </div>
       <div class="outlook-text">${e.outlook}</div>
     </div>`;
