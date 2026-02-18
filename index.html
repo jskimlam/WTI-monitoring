@@ -98,8 +98,8 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   animation:fadeUp .3s ease both;
 }
 .brief.dir-dn{border-left:6px solid var(--red);}
-.brief.dir-up{border-left:6px solid var(--ylw);}
-.brief.dir-flt{border-left:6px solid var(--text);}
+.brief.dir-up{border-left:6px solid var(--green);}
+.brief.dir-flt{border-left:6px solid var(--dim);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .brief.sub-source{margin-top:8px;border-radius:8px;border-left:6px solid var(--ylw-dim);}
 
@@ -125,13 +125,13 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   padding:24px 40px;flex-shrink:0;
 }
 .bh-arrow{font-family:var(--disp);font-size:56px;line-height:1;flex-shrink:0;}
-.bh-arrow.up{color:var(--ylw);}
+.bh-arrow.up{color:var(--green);}
 .bh-arrow.dn{color:var(--red);}
-.bh-arrow.flt{color:var(--text);}
+.bh-arrow.flt{color:var(--dim);}
 .bh-price-block{display:flex;flex-direction:column;gap:4px;}
 .bh-price-label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ylw);opacity:.8;}
 .bh-val{font-family:var(--disp);font-size:160px;line-height:.88;letter-spacing:.01em;}
-.bh-val.up{color:var(--ylw);}
+.bh-val.up{color:var(--green);}
 .bh-val.dn{color:var(--red);}
 .bh-val.flt{color:var(--text);}
 .bh-unit{font-family:var(--mono);font-size:16px;color:var(--dim);align-self:flex-end;padding-bottom:16px;line-height:1.6;}
@@ -144,7 +144,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .bh-d-row{display:flex;align-items:center;gap:14px;}
 .bh-d-label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--dim);width:36px;text-transform:uppercase;}
 .bh-d-val{font-family:var(--mono);font-size:44px;font-weight:700;line-height:1;}
-.bh-d-val.up{color:var(--ylw);}
+.bh-d-val.up{color:var(--green);}
 .bh-d-val.dn{color:var(--red);}
 
 /* 방향 뱃지 */
@@ -156,9 +156,9 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   font-family:var(--sans);font-size:26px;font-weight:800;
   padding:12px 32px;border-radius:36px;white-space:nowrap;
 }
-.bh-dir-badge.up{background:rgba(251,191,36,.15);color:var(--ylw);border:1px solid rgba(251,191,36,.4);}
+.bh-dir-badge.up{background:rgba(52,216,117,.18);color:var(--green);border:1px solid rgba(52,216,117,.4);}
 .bh-dir-badge.dn{background:rgba(248,113,113,.18);color:var(--red);border:1px solid rgba(248,113,113,.4);}
-.bh-dir-badge.flt{background:rgba(232,236,244,.1);color:var(--text);border:1px solid rgba(232,236,244,.3);}
+.bh-dir-badge.flt{background:rgba(106,116,144,.18);color:var(--dim);border:1px solid var(--border2);}
 .bh-dir-label{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;}
 
 /* EDIT/DEL */
@@ -219,16 +219,11 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .fact-col:first-child{border-right:1px solid var(--border);}
 
 .fact-col-title{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:var(--mono);font-size:15px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ylw);padding:7px 16px;margin-bottom:14px;
-  background:rgba(245,158,11,.12);border:1px solid var(--ylw-dim);
-  border-radius:6px;font-weight:700;
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ylw);padding-bottom:14px;border-bottom:1px solid var(--border);
 }
-.fact-col-title.counter{
-  color:var(--dim);
-  background:rgba(106,116,144,.1);border-color:var(--border2);
-}
+.fact-col-title.counter{color:var(--ylw-dim);}
 .fc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
 .fc-dot.bear{background:var(--red);}
 .fc-dot.bull{background:var(--green);}
@@ -252,11 +247,8 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   border-radius:8px;padding:16px 20px;
 }
 .sq-label{
-  font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ylw);margin-bottom:10px;
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(245,158,11,.1);border:1px solid var(--ylw-dim);
-  border-radius:5px;padding:5px 12px;font-weight:600;
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ylw);margin-bottom:10px;display:flex;align-items:center;gap:7px;
 }
 .sq-text{
   font-size:16px;line-height:1.82;
@@ -269,10 +261,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 /* 반대요인 원문 — 별도 색상 */
 .source-quote.counter{border-color:var(--border2);border-left-color:var(--dim);background:rgba(22,25,32,.7);}
-.source-quote.counter .sq-label{
-  color:var(--dim);
-  background:rgba(106,116,144,.1);border-color:var(--border2);
-}
+.source-quote.counter .sq-label{color:var(--ylw-dim);}
 .source-quote.counter .sq-text{color:var(--ctr-txt);} /* 밝은 그레이 */
 .source-quote.counter .sq-text::before,
 .source-quote.counter .sq-text::after{color:var(--dim);}
@@ -284,12 +273,10 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   border-left:6px solid var(--gold);
 }
 .co-label{
-  font-family:var(--mono);font-size:15px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ylw);margin-bottom:14px;
-  display:inline-flex;align-items:center;gap:10px;
-  background:rgba(245,158,11,.12);border:1px solid var(--ylw-dim);
-  border-radius:6px;padding:7px 16px;font-weight:700;
+  font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ylw);margin-bottom:14px;display:flex;align-items:center;gap:10px;
 }
+.co-label::after{content:'';flex:1;height:1px;background:var(--ylw-dim);opacity:.4;}
 .co-text{
   font-size:22px;line-height:1.88;
   color:var(--ylw3);           /* 아이보리 */
@@ -426,108 +413,6 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
-
-/* ══ MOBILE : Galaxy S25 (≤480px) ══ */
-@media (max-width: 480px) {
-  /* 헤더 */
-  .hdr{padding:10px 16px;height:auto;flex-wrap:wrap;gap:6px;}
-  .hdr-sub{display:none;}
-  .hdr-logo{font-size:26px;}
-  .hdr-right{gap:8px;}
-  .hdr-clock{font-size:12px;}
-  .btn-new{padding:8px 14px;font-size:11px;}
-  .btn-refresh{padding:7px 12px;font-size:11px;}
-
-  /* 검색바 */
-  .search-bar{padding:10px 16px;flex-wrap:wrap;gap:8px;}
-  .sb-result{margin-left:0;width:100%;font-size:11px;}
-  .sb-input{width:140px;font-size:13px;}
-
-  /* 메인 래퍼 */
-  .wrap{padding:16px 10px 60px;}
-  .date-group{margin-bottom:28px;}
-
-  /* 가격 헤더 — 세로 스택 */
-  .brief-header{flex-direction:column;min-height:unset;}
-  .bh-date{
-    padding:12px 16px;border-right:none;border-bottom:1px solid var(--border);
-    min-width:unset;flex-direction:row;align-items:center;justify-content:space-between;gap:0;
-  }
-  .bh-date-val{font-size:17px;}
-  .bh-date-cont{font-size:12px;}
-  .bh-price{padding:14px 16px;gap:8px;}
-  .bh-val{font-size:78px;}
-  .bh-arrow{font-size:34px;}
-  .bh-unit{font-size:13px;padding-bottom:10px;}
-  .bh-delta{
-    flex-direction:row;padding:10px 16px;
-    border-left:none;border-top:1px solid var(--border);gap:20px;
-  }
-  .bh-d-val{font-size:26px;}
-  .bh-d-label{font-size:11px;}
-  .bh-dir{
-    padding:10px 16px;border-left:none;border-top:1px solid var(--border);
-    flex-direction:row;justify-content:space-between;
-  }
-  .bh-dir-badge{font-size:18px;padding:8px 20px;}
-  .bh-actions{
-    flex-direction:row;border-left:none;border-top:1px solid var(--border);
-    min-width:unset;align-self:auto;
-  }
-  .act-btn{border-bottom:none;border-right:1px solid var(--border);}
-  .act-btn:last-child{border-right:none;}
-
-  /* 코멘터리 */
-  .brief-commentary{padding:18px 16px;}
-  .co-text{font-size:15px;line-height:1.75;}
-
-  /* 팩트 패널 — 1컬럼 */
-  .brief-facts{grid-template-columns:1fr;}
-  .fact-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
-  .fact-col{padding:18px 16px;}
-  .factor-tag{font-size:14px;padding:6px 14px;}
-
-  /* 원문 인용 */
-  .source-quote{padding:12px 14px;}
-  .sq-text{font-size:14px;}
-
-  /* 아코디언 */
-  .accordion-toggle{padding:12px 16px;}
-  .source-header{padding:12px 16px;}
-
-  /* 카피 버튼 */
-  .brief-copy{padding:12px 14px;}
-
-  /* 모달 */
-  #modal{width:95vw;max-height:96vh;}
-  .mbody{padding:14px 12px;gap:12px;}
-  .m-sec{padding:14px 14px;}
-  .pf-grid{grid-template-columns:1fr 1fr;}
-  .pf-grid-2{grid-template-columns:1fr;}
-  .mftr{padding:12px 14px;gap:8px;}
-  .mf-btn{padding:11px 14px;font-size:12px;}
-
-  /* 토스트 */
-  #toast{bottom:16px;right:12px;left:12px;max-width:unset;font-size:13px;}
-}
-
-/* ══ MOBILE : Galaxy Z Fold7 펼침 (481px~820px) ══ */
-@media (min-width:481px) and (max-width:820px) {
-  .hdr{padding:0 24px;}
-  .hdr-logo{font-size:30px;}
-  .hdr-sub{font-size:11px;}
-  .search-bar{padding:12px 24px;}
-  .wrap{padding:28px 20px 80px;}
-  .brief-header{min-height:unset;}
-  .bh-val{font-size:100px;}
-  .bh-date{min-width:160px;padding:20px 20px;}
-  .bh-date-val{font-size:22px;}
-  .bh-d-val{font-size:32px;}
-  .bh-dir-badge{font-size:20px;padding:10px 24px;}
-  .co-text{font-size:18px;}
-  #modal{width:90vw;}
-  .pf-grid{grid-template-columns:1fr 1fr;}
-}
 </style>
 </head>
 <body>
@@ -636,7 +521,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 <div id="toast"></div>
 
 <script>
-const GAS_URL='https://script.google.com/macros/s/AKfycbwhEYfc54h-rmf3bORWJCMapYFiZ162Rrnh1ScnBLT0z_wzRc5mSL6lMC10XZPBCHbn/exec';
+const GAS_URL='https://script.google.com/macros/s/AKfycbw-pDuq9xGaVmGg56lAxzV8bGLeHecSQdRK5bEpGY-_u1ibPgEHxE0eiRBxjXQSWQx7/exec';
 
 // ── CLOCK ──
 function tick(){
@@ -661,21 +546,25 @@ function fmtDate(raw){
 
 // ── FACTORS ──
 const FACTORS=[
-  {t:'bear',kr:'미·이란 핵 협상 진전',   kw:['이란',['합의','진전','협상']]},
-  {t:'bear',kr:'중동 지정학 리스크 완화', kw:['중동','완화']},
-  {t:'bear',kr:'IEA 수요 전망 하향',      kw:['iea','하향']},
-  {t:'bear',kr:'OPEC+ 증산 논의',         kw:['opec','증산']},
-  {t:'bear',kr:'카자흐 텡기즈 유전 재개', kw:[['텡기즈','카자흐']]},
-  {t:'bear',kr:'미 원유 재고 증가 (EIA)', kw:['재고','증가']},
-  {t:'bear',kr:'달러 강세',               kw:['달러','강세']},
-  {t:'bear',kr:'경기침체 우려',           kw:['경기침체']},
-  {t:'bull',kr:'중동 긴장 고조',          kw:['중동','긴장']},
-  {t:'bull',kr:'호르무즈 해협 리스크',    kw:['호르무즈']},
-  {t:'bull',kr:'OPEC+ 감산 유지·강화',   kw:['opec','감산']},
-  {t:'bull',kr:'미 원유 재고 감소 (EIA)',  kw:['재고','감소']},
-  {t:'bull',kr:'IEA/EIA 수요 전망 상향',  kw:['iea','상향']},
-  {t:'bull',kr:'달러 약세',               kw:['달러','약세']},
-  {t:'bull',kr:'항모 전단 배치',          kw:['항모','전단']},
+  // ── BEARISH ──
+  {t:'bear',kr:'미·이란 핵 협상 진전',      kw:['이란',['합의','진전']]},
+  {t:'bear',kr:'중동 지정학 리스크 완화',    kw:['중동','완화']},
+  {t:'bear',kr:'IEA 수요 전망 하향',         kw:['iea','하향']},
+  {t:'bear',kr:'OPEC+ 증산 논의',            kw:['opec','증산']},
+  {t:'bear',kr:'카자흐 텡기즈 유전 재개',    kw:[['텡기즈','카자흐']]},
+  {t:'bear',kr:'미 원유 재고 증가 (EIA)',     kw:['재고','증가']},
+  {t:'bear',kr:'달러 강세',                  kw:['달러','강세']},
+  {t:'bear',kr:'경기침체 우려',              kw:['경기침체']},
+  // ── BULLISH ──
+  {t:'bull',kr:'미·이란 핵 협상 결렬·교착', kw:['이란',['교착','결렬','레드라인','밴스']]},
+  {t:'bull',kr:'이란 군사충돌 우려',         kw:['이란',['무력','공습','군사 작전','전쟁']]},
+  {t:'bull',kr:'중동 긴장 고조',             kw:[['중동','긴장'],['지정학','리스크']]},
+  {t:'bull',kr:'호르무즈 해협 리스크',       kw:['호르무즈']},
+  {t:'bull',kr:'항모 전단 배치',             kw:['항모','전단']},
+  {t:'bull',kr:'OPEC+ 감산 유지·강화',      kw:['opec','감산']},
+  {t:'bull',kr:'미 원유 재고 감소 (EIA)',     kw:['재고','감소']},
+  {t:'bull',kr:'IEA/EIA 수요 전망 상향',     kw:['iea','상향']},
+  {t:'bull',kr:'달러 약세',                  kw:['달러','약세']},
 ];
 
 const mainSel=new Set(),counterSel=new Set();
@@ -716,7 +605,12 @@ function extractCounterQuote(txt,idxSet){
 function autoDetect(txt,direction){
   const lo=txt.toLowerCase();mainSel.clear();counterSel.clear();
   FACTORS.forEach((f,i)=>{
-    const hit=f.kw.every(k=>Array.isArray(k)?k.some(kk=>lo.includes(kk)):lo.includes(k));
+    // kw 각 항목: 문자열이면 AND, 배열이면 OR
+    // kw 전체는 AND 조건
+    const hit=f.kw.every(k=>{
+      if(Array.isArray(k)) return k.some(kk=>lo.includes(kk));
+      return lo.includes(k);
+    });
     if(!hit)return;
     if(direction==='하락'&&f.t==='bear')mainSel.add(i);
     else if(direction==='상승'&&f.t==='bull')mainSel.add(i);
@@ -911,12 +805,12 @@ function renderGroup(group){
       </div>
     </div>
 
+    ${renderFactPanel(p,dir,dirTxt)}
+
     ${p.commentary?`<div class="brief-commentary">
       <div class="co-label">코멘터리 · 소스 1</div>
       <div class="co-text">${p.commentary}</div>
     </div>`:''}
-
-    ${renderFactPanel(p,dir,dirTxt)}
 
     <div class="brief-copy">
       <button class="cp-btn img" onclick="downloadImage('${cardId}','${p.date}')">⬇ 이미지</button>
@@ -942,11 +836,11 @@ function renderGroup(group){
             <button class="src-act-btn del" onclick="deleteEntry('${ex.date}','${ex.contract}',${ex.seq})">✕ DEL</button>
           </div>
         </div>
+        ${renderFactPanel(ex,dir,dirTxt)}
         ${ex.commentary?`<div class="brief-commentary">
           <div class="co-label">코멘터리 · 소스 ${ex.seq}</div>
           <div class="co-text">${ex.commentary}</div>
         </div>`:''}
-        ${renderFactPanel(ex,dir,dirTxt)}
         <div class="brief-copy">
           <button class="cp-btn" onclick="copyText('${exCardId}')">Copy</button>
         </div>
@@ -1038,48 +932,105 @@ function doParse(){
     buildChips();showStatus('warn','텍스트 없음 — 수동 입력 모드');return;
   }
   const f={};let m;
-  m=txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);
-  if(!f.wti){m=txt.match(/배럴당\s*[\d.]+%\s*(?:하락한|상승한|오른)\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
-  if(!f.wti){m=txt.match(/배럴당\s*([\d.]+)달러에\s*(?:거래|마감|체결)/);if(m)f.wti=parseFloat(m[1]);}
-  const ws=(txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,250}/)||[''])[0];
-  m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);
-  if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
-  if(!f.abs){m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:하락|내린|밀린|떨어진)/);if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}}
-  if(!f.abs){m=ws.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:상승|오른|올라)/);if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}}
-  if(!f.pct){m=txt.match(/배럴당\s*([\d.]+)%\s*(하락|상승)/);if(m)f.pct=m[2]==='하락'?-parseFloat(m[1]):parseFloat(m[1]);}
+
+  // ══ WTI 종가 추출 ══
+  // A: "급등한/급락한/상승한/하락한 배럴당 N달러" (배럴당이 가격 앞)
+  m=txt.match(/(?:급등한|급락한|상승한|하락한|오른|내린|밀린)\s*배럴당\s*([\d.]+)달러/);
+  if(m)f.wti=parseFloat(m[1]);
+  // B: "급등한/급락한 N달러에 거래됐/마감/체결/마쳤"
+  if(!f.wti){m=txt.match(/(?:급등한|급락한|상승한|하락한|오른|내린|밀린)\s*([\d.]+)달러에\s*(?:거래|마감|체결|마쳤)/);if(m)f.wti=parseFloat(m[1]);}
+  // C: "배럴당 N달러에 거래됐/마감/마쳤"
+  if(!f.wti){m=txt.match(/배럴당\s*([\d.]+)달러에\s*(?:거래|마감|체결|장을\s*마쳤)/);if(m)f.wti=parseFloat(m[1]);}
+  // D: "배럴당 N달러" 단독 (뒤에 거래 문구 없어도)
+  if(!f.wti){m=txt.match(/배럴당\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
+  // E: "하락한|오른 배럴당 N달러" 구버전
+  if(!f.wti){m=txt.match(/(?:하락한|오른|밀린|내린)\s*배럴당\s*([\d.]+)달러/);if(m)f.wti=parseFloat(m[1]);}
+
+  // ══ 전일비 / 변동률 추출 ══
+  const ws=(txt.match(/(?:WTI|서부텍사스|텍사스산원유)[^\n。]{0,350}/)||[''])[0];
+  const searchIn=ws||txt;
+
+  // "N달러(N%) 급등/상승/급락/하락" — 전일비+변동률 동시 추출
+  m=searchIn.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급등|상승|올라|오른)/);
+  if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}
+  if(!f.abs){
+    m=searchIn.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급락|하락|내린|밀린|떨어진)/);
+    if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
+  }
+  // 전체 텍스트 재시도
+  if(!f.abs){
+    m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급등|상승|올라|오른)/);
+    if(m){f.abs=parseFloat(m[1]);f.pct=parseFloat(m[2]);}
+  }
+  if(!f.abs){
+    m=txt.match(/([\d.]+)달러\(([\d.]+)%\)\s*(?:급락|하락|내린|밀린|떨어진)/);
+    if(m){f.abs=-parseFloat(m[1]);f.pct=-parseFloat(m[2]);}
+  }
+  // 변동률만 있는 경우
+  if(!f.pct){
+    m=txt.match(/([\d.]+)%\s*(?:넘게|가량|이상)?\s*(?:폭등|급등|상승|올라)/);
+    if(m)f.pct=parseFloat(m[1]);
+  }
+  if(!f.pct){
+    m=txt.match(/([\d.]+)%\s*(?:넘게|가량|이상)?\s*(?:폭락|급락|하락|내려)/);
+    if(m)f.pct=-parseFloat(m[1]);
+  }
+  // 전일비 역산
   if(!f.abs&&f.wti&&f.pct){const p=f.wti/(1+f.pct/100);f.abs=parseFloat((f.wti-p).toFixed(2));}
 
-  // 월물
+  // ══ 월물 ══
   const contM=txt.match(/(3|4|5|6)월\s*(?:인도분|물)/);
   if(contM){const map={'3':'Mar','4':'Apr','5':'May','6':'Jun'};document.getElementById('f-cont').value=map[contM[1]]||'Mar';}
 
-  // ── 날짜 파싱 (기사 내 연월 기준) ──
+  // ══ 날짜 파싱 ══
+  // 기사 내 연월 추출
   let articleYear=null,articleMonth=null;
   const ymM=txt.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]/);
   if(ymM){articleYear=parseInt(ymM[1]);articleMonth=parseInt(ymM[2]);}
 
-  // 우선순위1: "N일 소폭 하락/상승/마감/거래" → 거래일 직접 언급
-  const tradeDayM=txt.match(/(\d{1,2})일\s+(?:소폭\s*)?(?:하락|상승|마감|거래|체결|돌아)/);
+  let dateSet=false;
+
+  // 우선순위1: "N일 소폭/폭등/급등/하락/마감/거래/마쳤" — 거래일 직접 언급
+  const tradeDayM=txt.match(/(\d{1,2})일\s+(?:소폭\s*)?(?:하락|상승|마감|거래|체결|돌아|폭등|급등|급락|폭락)/);
   if(tradeDayM&&articleYear&&articleMonth){
     const day=parseInt(tradeDayM[1]);
     document.getElementById('f-date').value=
       `${articleYear}-${String(articleMonth).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-  } else {
-    // 우선순위2: "N일(현지시간)" → 기사 내 연월 기준 +1
-    const localM=txt.match(/(\d{1,2})일\s*\(현지시간\)/);
-    if(localM&&articleYear&&articleMonth){
+    dateSet=true;
+  }
+
+  // 우선순위2: "현지시각/현지시간 N일" — +1 KST
+  if(!dateSet){
+    const localM=txt.match(/현지시각?\s*(\d{1,2})일/)||txt.match(/(\d{1,2})일\s*\(현지시간\)/);
+    if(localM){
+      // 연월은 기사 내 연월 우선, 없으면 현재 KST 연월
+      const kst=new Date(Date.now()+9*3600000);
+      const yr=articleYear||kst.getFullYear();
+      const mo=articleMonth||kst.getMonth()+1;
       let day=parseInt(localM[1])+1;
-      let mo=articleMonth,yr=articleYear;
       const maxDay=new Date(yr,mo,0).getDate();
-      if(day>maxDay){day=1;mo=mo%12+1;if(mo===1)yr++;}
+      let fmo=mo,fyr=yr;
+      if(day>maxDay){day=1;fmo=mo%12+1;if(fmo===1)fyr++;}
       document.getElementById('f-date').value=
-        `${yr}-${String(mo).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    } else {
-      // 우선순위3: 연월일 직접 명시
-      const fullDM=txt.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]\s*(\d{1,2})[일]?/);
-      if(fullDM)document.getElementById('f-date').value=
-        `${fullDM[1]}-${fullDM[2].padStart(2,'0')}-${fullDM[3].padStart(2,'0')}`;
+        `${fyr}-${String(fmo).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      dateSet=true;
     }
+  }
+
+  // 우선순위3: 연월일 직접 명시
+  if(!dateSet){
+    const fullDM=txt.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]\s*(\d{1,2})[일]?/);
+    if(fullDM){
+      document.getElementById('f-date').value=
+        `${fullDM[1]}-${fullDM[2].padStart(2,'0')}-${fullDM[3].padStart(2,'0')}`;
+      dateSet=true;
+    }
+  }
+
+  // 우선순위4: 날짜 정보 없음 → KST 전일(어제) 기본값
+  if(!dateSet){
+    const yesterday=new Date(Date.now()+9*3600000-86400000);
+    document.getElementById('f-date').value=yesterday.toISOString().slice(0,10);
   }
 
   if(f.wti)document.getElementById('f-wti').value=f.wti.toFixed(2);
