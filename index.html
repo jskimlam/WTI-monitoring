@@ -413,6 +413,58 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+  /* ══ RESPONSIVE: Tablet & Fold (1024px 이하) ══ */
+@media (max-width: 1024px) {
+  .wrap { padding: 20px 24px; }
+  .hdr { padding: 0 24px; }
+  .search-bar { padding: 14px 24px; }
+  
+  /* 폴드 등 넓은 화면에서 폰트 크기 미세 조정 */
+  .bh-val { font-size: 120px; } 
+  #modal { width: 90%; }
+}
+
+/* ══ RESPONSIVE: Mobile (768px 이하) ══ */
+@media (max-width: 768px) {
+  /* 헤더 조정 */
+  .hdr { height: 60px; padding: 0 16px; }
+  .hdr-logo { font-size: 28px; }
+  .hdr-sub { display: none; } /* 모바일에서 부제목 숨김 */
+  
+  .search-bar { flex-wrap: wrap; padding: 12px 16px; gap: 8px; }
+  .sb-input { width: 120px; }
+
+  /* 카드 헤더 세로 배치 */
+  .brief-header { flex-direction: column; min-height: auto; }
+  .bh-date { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; min-width: 100%; }
+  .bh-price { padding: 20px 16px; justify-content: space-between; }
+  .bh-val { font-size: 80px; } /* 가격 크기 대폭 축소 */
+  .bh-arrow { font-size: 40px; }
+  
+  .bh-delta { flex-direction: row; border-left: none; border-top: 1px solid var(--border); padding: 12px 16px; justify-content: space-around; }
+  .bh-d-val { font-size: 24px; }
+  
+  .bh-dir { border-left: none; border-top: 1px solid var(--border); padding: 12px; }
+  .bh-actions { flex-direction: row; border-left: none; border-top: 1px solid var(--border); width: 100%; }
+  .act-btn { border-bottom: none; border-right: 1px solid var(--border); padding: 12px 0; }
+
+  /* 팩트 패널 1열 배치 */
+  .brief-facts { grid-template-columns: 1fr; }
+  .fact-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  
+  /* 코멘터리 폰트 조정 */
+  .co-text { font-size: 18px; }
+
+  /* 모달 최적화 */
+  #modal { width: 95%; max-height: 95vh; }
+  .pf-grid, .pf-grid-2 { grid-template-columns: 1fr; } /* 입력창들 1열로 */
+}
+
+/* ══ 초소형 모바일 (360px 이하) ══ */
+@media (max-width: 360px) {
+  .bh-val { font-size: 60px; }
+  .hdr-logo { font-size: 24px; }
+}
 </style>
 </head>
 <body>
