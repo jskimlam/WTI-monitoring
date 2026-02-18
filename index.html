@@ -423,47 +423,100 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   .bh-val { font-size: 120px; } 
   #modal { width: 90%; }
 }
-
-/* ══ RESPONSIVE: Mobile (768px 이하) ══ */
+/* ══ RESPONSIVE: Mobile (768px 이하) - 한 화면 최적화 ══ */
 @media (max-width: 768px) {
-  /* 헤더 조정 */
-  .hdr { height: 60px; padding: 0 16px; }
-  .hdr-logo { font-size: 28px; }
-  .hdr-sub { display: none; } /* 모바일에서 부제목 숨김 */
+  .wrap { padding: 12px 10px; }
   
-  .search-bar { flex-wrap: wrap; padding: 12px 16px; gap: 8px; }
-  .sb-input { width: 120px; }
+  /* 1. 헤더 최소화 */
+  .hdr { height: 50px; padding: 0 12px; }
+  .hdr-logo { font-size: 22px; letter-spacing: 0.05em; }
+  .hdr-sub { display: none; }
+  .hdr-clock { display: none; } /* 시계 숨김으로 공간 확보 */
+  .btn-new { padding: 6px 12px; font-size: 11px; }
+  .btn-refresh { padding: 5px 10px; font-size: 10px; }
 
-  /* 카드 헤더 세로 배치 */
-  .brief-header { flex-direction: column; min-height: auto; }
-  .bh-date { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; min-width: 100%; }
-  .bh-price { padding: 20px 16px; justify-content: space-between; }
-  .bh-val { font-size: 80px; } /* 가격 크기 대폭 축소 */
-  .bh-arrow { font-size: 40px; }
-  
-  .bh-delta { flex-direction: row; border-left: none; border-top: 1px solid var(--border); padding: 12px 16px; justify-content: space-around; }
-  .bh-d-val { font-size: 24px; }
-  
-  .bh-dir { border-left: none; border-top: 1px solid var(--border); padding: 12px; }
-  .bh-actions { flex-direction: row; border-left: none; border-top: 1px solid var(--border); width: 100%; }
-  .act-btn { border-bottom: none; border-right: 1px solid var(--border); padding: 12px 0; }
+  /* 2. 검색바 슬림화 */
+  .search-bar { padding: 8px 12px; gap: 6px; }
+  .sb-label { font-size: 10px; }
+  .sb-input { height: 32px; font-size: 12px; width: 110px; padding: 4px 8px; }
+  .sb-btn { padding: 6px 10px; font-size: 10px; }
 
-  /* 팩트 패널 1열 배치 */
+  /* 3. 카드 헤더 구조 재배치 (가로 활용) */
+  .brief-header { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; /* 2단 구조 */
+    min-height: auto; 
+    padding-bottom: 10px;
+  }
+
+  /* 날짜와 액션 버튼 상단 배치 */
+  .bh-date { 
+    grid-column: 1 / 3; 
+    padding: 12px 16px 8px; 
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .bh-date-val { font-size: 20px; }
+  .bh-date-cont { font-size: 11px; }
+
+  /* 가격 섹션 크기 대폭 축소 */
+  .bh-price { 
+    padding: 12px 16px; 
+    gap: 8px;
+    align-items: center;
+  }
+  .bh-val { font-size: 52px; line-height: 1; } /* 160px -> 52px */
+  .bh-arrow { font-size: 32px; }
+  .bh-unit { font-size: 12px; padding-bottom: 4px; }
+
+  /* 델타와 방향을 우측에 배치 */
+  .bh-delta { 
+    padding: 12px 16px; 
+    border-left: 1px solid var(--border);
+    gap: 4px;
+    justify-content: center;
+  }
+  .bh-d-val { font-size: 18px; }
+  .bh-d-label { font-size: 10px; width: 24px; }
+
+  /* 방향 뱃지 축소 */
+  .bh-dir { 
+    grid-column: 1 / 3;
+    padding: 8px; 
+    border-top: 1px solid var(--border);
+    border-left: none;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .bh-dir-badge { font-size: 14px; padding: 4px 16px; }
+  .bh-dir-label { display: none; }
+
+  /* 수정/삭제 버튼을 하단으로 */
+  .bh-actions {
+    grid-column: 1 / 3;
+    flex-direction: row;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  .act-btn { padding: 10px 0; border-right: 1px solid var(--border); }
+  .act-btn:last-child { border-right: none; }
+
+  /* 4. 팩트 패널 및 코멘터리 슬림화 */
   .brief-facts { grid-template-columns: 1fr; }
-  .fact-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
-  
-  /* 코멘터리 폰트 조정 */
-  .co-text { font-size: 18px; }
+  .fact-col { padding: 15px 16px; gap: 10px; }
+  .factor-tag { font-size: 13px; padding: 4px 12px; }
+  .sq-text { font-size: 14px; line-height: 1.5; }
+  .co-text { font-size: 16px; line-height: 1.6; }
+  .brief-commentary { padding: 18px 20px; }
 
   /* 모달 최적화 */
-  #modal { width: 95%; max-height: 95vh; }
-  .pf-grid, .pf-grid-2 { grid-template-columns: 1fr; } /* 입력창들 1열로 */
-}
-
-/* ══ 초소형 모바일 (360px 이하) ══ */
-@media (max-width: 360px) {
-  .bh-val { font-size: 60px; }
-  .hdr-logo { font-size: 24px; }
+  #modal { width: 98%; max-height: 98vh; }
+  .mbody { padding: 15px; gap: 12px; }
+  .pf-grid, .pf-grid-2 { grid-template-columns: 1fr; gap: 8px; }
 }
 </style>
 </head>
