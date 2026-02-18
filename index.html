@@ -517,6 +517,10 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
         <div class="pfield">
           <textarea id="f-outlook" class="blue-ta" placeholder="4) 결론 및 전망 자동 추출"></textarea>
         </div>
+        <div class="pfield" style="margin-top:8px">
+          <label>원본 링크 (선택)</label>
+          <input type="url" id="f-link" placeholder="https://...">
+        </div>
       </div>
 
     </div>
@@ -572,6 +576,7 @@ function rowToEntry(r){
     factors:     String(r[8]||'').trim(),   // 줄바꿈 구분 리스트
     counter:     String(r[9]||'').trim(),
     outlook:     String(r[10]||'').trim(),
+    link:        String(r[11]||'').trim(),
   };
 }
 
@@ -667,7 +672,10 @@ function renderCardBody(e, seqLabel){
   // 전망
   if(e.outlook){
     html+=`<div class="brief-outlook">
-      <div class="sec-label blue">🔭 결론 및 전망${seqLabel}</div>
+      <div class="sec-label blue" style="display:flex;align-items:center;justify-content:space-between;width:100%">
+        <span>🔭 결론 및 전망${seqLabel}</span>
+        ${e.link?`<a href="${e.link}" target="_blank" style="font-family:var(--mono);font-size:11px;color:#60a5fa;border:1px solid rgba(96,165,250,.3);padding:3px 10px;border-radius:4px;text-decoration:none;letter-spacing:.06em;">🔗 원본</a>`:''}
+      </div>
       <div class="outlook-text">${e.outlook}</div>
     </div>`;
   }
@@ -765,7 +773,7 @@ function openModal(entry=null){
   const today=new Date(Date.now()+9*3600000).toISOString().slice(0,10);
   document.getElementById('f-date').value=today;
   document.getElementById('f-cont').value='Mar';
-  ['f-wti','f-abs','f-pct','f-commentary','f-factors','f-counter','f-outlook']
+  ['f-wti','f-abs','f-pct','f-commentary','f-factors','f-counter','f-outlook','f-link']
     .forEach(id=>document.getElementById(id).value='');
   if(entry){
     editKey={date:entry.date,contract:entry.contract,seq:entry.seq||1};
@@ -778,6 +786,7 @@ function openModal(entry=null){
     document.getElementById('f-factors').value  =entry.factors;
     document.getElementById('f-counter').value  =entry.counter;
     document.getElementById('f-outlook').value  =entry.outlook;
+    document.getElementById('f-link').value      =entry.link||'';
     document.getElementById('parsed-wrap').style.display='block';
     document.getElementById('btn-save').style.display='block';
   }
@@ -913,7 +922,9 @@ function doParse(){
   if(f.pct!=null) document.getElementById('f-pct').value=f.pct.toFixed(2);
   if(commentary) document.getElementById('f-commentary').value=commentary;
   if(factors)    document.getElementById('f-factors').value=factors;
-  if(outlook)    document.getElementById('f-outlook').value=outlook;
+  document.getElementById('f-outlook').value=outlook||'';
+  // 디버그: 파싱 결과 확인
+  console.log('[PARSE] sec4:', sec4, '| outlook:', outlook);
 
   document.getElementById('parsed-wrap').style.display='block';
   document.getElementById('btn-save').style.display='block';
@@ -960,6 +971,7 @@ async function doSave(){
     factors:    document.getElementById('f-factors').value.trim(),
     counter:    document.getElementById('f-counter').value.trim(),
     outlook:    document.getElementById('f-outlook').value.trim(),
+    link:       document.getElementById('f-link').value.trim(),
   };
   const btn=document.getElementById('btn-save');
   btn.textContent='저장 중...';btn.disabled=true;
