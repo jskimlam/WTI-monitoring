@@ -631,7 +631,7 @@ function renderEntries(entries){
   }
   document.getElementById('empty').style.display='none';
   const groups={};
-  [...entries].reverse().forEach(e=>{
+  [...entries].forEach(e=>{
     const key=e.date+'__'+e.contract;
     if(!groups[key])groups[key]=[];
     groups[key].push(e);
