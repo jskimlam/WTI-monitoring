@@ -636,7 +636,7 @@ function renderEntries(entries){
     if(!groups[key])groups[key]=[];
     groups[key].push(e);
   });
-  Object.values(groups).forEach(g=>g.sort((a,b)=>b.seq-b.seq));
+  Object.values(groups).forEach(g=>g.sort((a,b)=>b.seq-a.seq));
   const sortedKeys=Object.keys(groups).sort((a,b)=>
     b.split('__')[0].localeCompare(a.split('__')[0]));
   document.getElementById('cards').innerHTML=
