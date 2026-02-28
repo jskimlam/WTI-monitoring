@@ -1681,7 +1681,8 @@ function doParse(){
 
   function getSection(num){
 
-    const re=new RegExp(`${num}\\)[^\\n]*\\n([\\s\\S]*?)(?=\\n\\s*\\d+\\)|$)`);
+    // 1) 방식과 1. 방식 둘 다 인식
+    const re=new RegExp(`${num}[).]\\s*[^\\n]*\\n([\\s\\S]*?)(?=\\n\\s*\\d+[).]|$)`);
 
     const m=raw.match(re);
 
@@ -1725,6 +1726,24 @@ function doParse(){
   if(rWti) f.wti=parseFloat(rWti[1]);
 
   if(rDelta) f.abs=rDelta[1]==='▲'?parseFloat(rDelta[2]):-parseFloat(rDelta[2]);
+
+  // 표준 프롬프트 형식: (전일대비 +$1.81/b) 또는 (전일대비 -$0.21/b)
+
+  if(f.wti==null){
+    const stdLine=(priceSource.match(/\$[\d,.]+\/b[^\n]*/)||[''])[0];
+    const stdPrice=stdLine.match(/\$([\d.]+)\/b/);
+    if(stdPrice)f.wti=parseFloat(stdPrice[1]);
+  }
+
+  if(f.abs==null){
+    const stdChg=priceSource.match(/전일\s*대비\s*([+-])\$([\d.]+)\/b/);
+    if(stdChg){f.abs=(stdChg[1]==='-'?-1:1)*parseFloat(stdChg[2]);}
+    else{
+      const stdChg0=priceSource.match(/전일\s*대비\s*0/);
+      if(stdChg0)f.abs=0;
+    }
+  }
+
 
   if(rPct&&f.wti) f.pct=rPct[1]==='+'?parseFloat(rPct[2]):-parseFloat(rPct[2]);
 
@@ -1809,6 +1828,13 @@ function doParse(){
   let dateSet=false;
 
   let articleYear=null,articleMonth=null;
+
+  // 제목줄 날짜 최우선: "제목 : WTI 종목 브리핑 (2026-02-27)" 형식
+
+  const titleDateM=raw.match(/제목\s*:.*?\((\d{4})[-.](\d{1,2})[-.](\d{1,2})\)/);
+
+  if(titleDateM){document.getElementById('f-date').value=`${titleDateM[1]}-${String(titleDateM[2]).padStart(2,'0')}-${String(titleDateM[3]).padStart(2,'0')}`;dateSet=true;}
+
 
   const ymM=raw.match(/(\d{4})[년.\-\/]\s*(\d{1,2})[월.\-\/]/);
 
