@@ -1804,6 +1804,13 @@ function doParse(){
 
   if(!f.abs&&f.wti&&f.pct){const p=f.wti/(1+f.pct/100);f.abs=parseFloat((f.wti-p).toFixed(2));}
 
+  // f.abs는 있는데 f.pct 없으면 자동 계산
+
+  if(f.wti&&f.abs!=null&&f.pct==null&&(f.wti-f.abs)>0){
+    f.pct=parseFloat((f.abs/(f.wti-f.abs)*100).toFixed(2));
+  }
+
+
 
  
 
