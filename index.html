@@ -405,7 +405,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
  
 
-/* ══ 반대요인 ══ */
+/* ══ 추가정보 ══ */
 
 .brief-counter{
 
@@ -955,7 +955,11 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 4) 결론 및 전망
 
-* 협상 진전 전까지 변동성 확대..."></textarea>
+* 협상 진전 전까지 변동성 확대...
+
+5) 추가정보
+
+* EIA 재고, 달러, OPEC 관련 참고사항..."></textarea>
 
         <div class="parse-status" id="parse-st"></div>
 
@@ -1039,13 +1043,13 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
  
 
-        <!-- 반대요인 -->
+        <!-- 추가정보 -->
 
-        <div class="m-sec-label dim2">반대요인 (선택)</div>
+        <div class="m-sec-label dim2">추가정보 (선택)</div>
 
         <div class="pfield">
 
-          <textarea id="f-counter" placeholder="반대요인 직접 입력 (선택사항)"></textarea>
+          <textarea id="f-counter" placeholder="5) 추가정보 자동 추출 또는 직접 입력 (선택사항)"></textarea>
 
         </div>
 
@@ -1156,7 +1160,7 @@ function fmtDate(raw){
 
 //  A:기준일 B:월물 C:순번 D:WTI E:전일비 F:변동률
 
-//  G:방향 H:코멘터리 I:변동요인리스트 J:반대요인 K:전망
+//  G:방향 H:코멘터리 I:변동요인리스트 J:추가정보 K:전망
 
 // ══════════════════════════════════════════════
 
@@ -1182,7 +1186,7 @@ function rowToEntry(r){
 
     factors:     String(r[8]||'').trim(),   // 줄바꿈 구분 리스트
 
-    counter:     String(r[9]||'').trim(),
+    counter:     String(r[9]||'').trim(), // 추가정보
 
     outlook:     String(r[10]||'').trim(),
 
@@ -1374,13 +1378,13 @@ function renderCardBody(e, seqLabel){
 
   }
 
-  // 반대요인
+  // 추가정보
 
   if(e.counter){
 
     html+=`<div class="brief-counter">
 
-      <div class="sec-label dim">↔ 반대요인${seqLabel}</div>
+      <div class="sec-label dim">ℹ 추가정보${seqLabel}</div>
 
       <div class="counter-text">${e.counter}</div>
 
@@ -1698,6 +1702,8 @@ function doParse(){
 
   const sec4=getSection(4);
 
+  const sec5=getSection(5);
+
 
  
 
@@ -1909,7 +1915,7 @@ function doParse(){
 
   // ══ 섹션 2: 코멘터리 ══
 
-  const commentary=extractBullet(sec2);
+  const commentary=extractSectionText(sec2, true);
 
 
  
@@ -1929,7 +1935,11 @@ function doParse(){
 
   // ══ 섹션 4: 전망 ══
 
-  const outlook=extractBullet(sec4);
+  const outlook=extractSectionText(sec4);
+
+  // ══ 섹션 5: 추가정보 ══
+
+  const additional=extractSectionText(sec5);
 
 
  
@@ -1945,6 +1955,8 @@ function doParse(){
   if(commentary) document.getElementById('f-commentary').value=commentary;
 
   if(factors)    document.getElementById('f-factors').value=factors;
+
+  document.getElementById('f-counter').value=additional||'';
 
   document.getElementById('f-outlook').value=outlook||'';
 
@@ -1972,6 +1984,8 @@ function doParse(){
 
   if(factorLines.length) bits.push(`변동요인 ${factorLines.length}개`);
 
+  if(additional) bits.push('추가정보');
+
   if(outlook) bits.push('전망');
 
   showStatus(ok?'ok':'warn', bits.length?bits.join(' · '):'수동 입력 필요');
@@ -1981,15 +1995,18 @@ function doParse(){
 
  
 
-// 섹션에서 첫 번째 * 불릿 추출
-
-function extractBullet(sec){
+// 섹션 텍스트 정리
+function extractSectionText(sec, singleLine=false){
 
   if(!sec)return'';
 
-  const m=sec.match(/[\*\-▸·]\s*(.+)/);
+  const lines=sec.split('\n')
+    .map(s=>s.replace(/^[\*\-▸·\s]+/,'').trim())
+    .filter(Boolean);
 
-  return m?m[1].trim():'';
+  if(!lines.length)return'';
+
+  return singleLine ? lines[0] : lines.join('\n');
 
 }
 
