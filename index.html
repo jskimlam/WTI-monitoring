@@ -104,135 +104,57 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 }
 
 .btn-new:hover{background:var(--ylw);}
-
-/* ══ AUTO BRIEF 버튼 ══ */
-.btn-auto{
-  background:transparent;border:2px solid #34d875;color:#34d875;
-  padding:9px 22px;border-radius:5px;font-family:var(--mono);font-size:13px;
-  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  cursor:pointer;transition:all .15s;
-}
+.btn-auto{background:transparent;border:2px solid #34d875;color:#34d875;padding:9px 22px;border-radius:5px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s;}
 .btn-auto:hover{background:rgba(52,216,117,.12);}
 .btn-auto:disabled{opacity:.5;pointer-events:none;}
-
-/* ══ 메신저 복사 버튼 ══ */
-.btn-msg{
-  background:transparent;border:1px solid #60a5fa;color:#60a5fa;
-  padding:9px 18px;border-radius:5px;font-family:var(--mono);font-size:12px;
-  font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  cursor:pointer;transition:all .15s;
-}
+.btn-msg{background:transparent;border:1px solid #60a5fa;color:#60a5fa;padding:9px 18px;border-radius:5px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .15s;}
 .btn-msg:hover{background:rgba(96,165,250,.12);}
 .btn-msg.ok{border-color:#34d875;color:#34d875;}
-
-/* ══ AUTO MODAL ══ */
-#auto-overlay{
-  position:fixed;inset:0;z-index:300;
-  background:rgba(0,0,0,.9);backdrop-filter:blur(12px);
-  display:none;align-items:center;justify-content:center;
-}
+.cp-btn.msg{border-color:#60a5fa;color:#60a5fa;}
+.cp-btn.msg:hover{border-color:#93c5fd;color:#93c5fd;}
+#auto-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.9);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;}
 #auto-overlay.open{display:flex;}
-#auto-modal{
-  width:680px;max-height:88vh;
-  background:var(--surface);border:1px solid #343a50;border-radius:14px;
-  display:flex;flex-direction:column;overflow:hidden;
-  box-shadow:0 32px 90px rgba(0,0,0,.8);animation:mIn .22s ease;
-}
-.am-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 28px;border-bottom:1px solid #282c3a;
-  background:#0d0f15;flex-shrink:0;
-}
+#auto-modal{width:680px;max-height:88vh;background:var(--surface);border:1px solid #343a50;border-radius:14px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 32px 90px rgba(0,0,0,.8);animation:mIn .22s ease;}
+.am-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid #282c3a;background:#0d0f15;flex-shrink:0;}
 .am-title{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#34d875;}
-.am-close{
-  background:transparent;border:1px solid #343a50;color:#6a7490;
-  width:32px;height:32px;border-radius:4px;cursor:pointer;font-size:16px;
-  display:flex;align-items:center;justify-content:center;transition:all .15s;
-}
+.am-close{background:transparent;border:1px solid #343a50;color:#6a7490;width:32px;height:32px;border-radius:4px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .am-close:hover{border-color:#f87171;color:#f87171;}
-.am-body{
-  flex:1;overflow-y:auto;padding:22px 26px;
-  display:flex;flex-direction:column;gap:14px;background:#12141a;
-}
-.am-sec{
-  background:#1a1d25;border:1px solid #282c3a;
-  border-radius:9px;padding:16px 20px;
-  display:flex;flex-direction:column;gap:10px;
-}
-.am-sec-label{
-  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:#34d875;
-  display:flex;align-items:center;gap:8px;
-}
+.am-body{flex:1;overflow-y:auto;padding:22px 26px;display:flex;flex-direction:column;gap:14px;background:#12141a;}
+.am-sec{background:#1a1d25;border:1px solid #282c3a;border-radius:9px;padding:16px 20px;display:flex;flex-direction:column;gap:10px;}
+.am-sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#34d875;display:flex;align-items:center;gap:8px;}
 .am-sec-label::after{content:'';flex:1;height:1px;background:rgba(52,216,117,.2);}
 .am-sec-label.ylw{color:#fbbf24;}
 .am-sec-label.ylw::after{background:rgba(251,191,36,.2);}
-.am-key-input{
-  width:100%;background:#20242e;border:1px solid #343a50;border-radius:6px;
-  color:#e8ecf4;font-family:var(--mono);font-size:13px;
-  padding:10px 14px;outline:none;transition:border-color .15s;letter-spacing:.04em;
-}
+.am-key-input{width:100%;background:#20242e;border:1px solid #343a50;border-radius:6px;color:#e8ecf4;font-family:var(--mono);font-size:13px;padding:10px 14px;outline:none;transition:border-color .15s;}
 .am-key-input:focus{border-color:#34d875;}
 .am-key-hint{font-family:var(--mono);font-size:11px;color:#6a7490;line-height:1.6;}
 .am-key-hint a{color:#fbbf24;text-decoration:none;}
-.am-key-hint a:hover{text-decoration:underline;}
 .am-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .am-field{display:flex;flex-direction:column;gap:6px;}
 .am-field label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6a7490;}
-.am-field input,.am-field select{
-  background:#20242e;border:1px solid #343a50;border-radius:6px;
-  color:#e8ecf4;font-family:var(--mono);font-size:13px;
-  padding:10px 12px;outline:none;width:100%;transition:border-color .15s;
-}
+.am-field input,.am-field select{background:#20242e;border:1px solid #343a50;border-radius:6px;color:#e8ecf4;font-family:var(--mono);font-size:13px;padding:10px 12px;outline:none;width:100%;transition:border-color .15s;}
 .am-field input:focus,.am-field select:focus{border-color:#34d875;}
-.am-status{
-  font-family:var(--mono);font-size:12px;padding:12px 16px;
-  border-radius:6px;display:none;line-height:1.75;white-space:pre-wrap;
-}
+.am-status{font-family:var(--mono);font-size:12px;padding:12px 16px;border-radius:6px;display:none;line-height:1.75;white-space:pre-wrap;}
 .am-status.ok{background:rgba(52,216,117,.07);border:1px solid rgba(52,216,117,.28);color:#34d875;}
 .am-status.err{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.28);color:#f87171;}
 .am-status.run{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);color:#fbbf24;}
 .am-status.warn{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);color:#fde68a;}
-.am-price-hl{
-  background:rgba(52,216,117,.06);border:1px solid rgba(52,216,117,.28);
-  border-radius:8px;padding:14px 18px;display:none;
-}
+.am-price-hl{background:rgba(52,216,117,.06);border:1px solid rgba(52,216,117,.28);border-radius:8px;padding:14px 18px;display:none;}
 .am-price-confirm{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:#fbbf24;margin-bottom:8px;text-transform:uppercase;}
 .am-price-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
 .am-price-val{font-family:var(--disp);font-size:52px;line-height:1;}
 .am-price-delta{font-family:var(--mono);font-size:16px;color:#6a7490;}
-.am-preview{
-  background:#20242e;border:1px solid #343a50;border-radius:8px;
-  padding:16px;font-family:var(--sans);font-size:12.5px;line-height:1.8;
-  color:#c4cce0;white-space:pre-wrap;max-height:240px;overflow-y:auto;display:none;
-}
-.am-ftr{
-  flex-shrink:0;padding:14px 26px;border-top:1px solid #282c3a;
-  display:flex;gap:10px;background:#1a1d25;
-}
-.am-btn{
-  padding:12px 18px;border:none;border-radius:6px;cursor:pointer;
-  font-family:var(--mono);font-size:12px;letter-spacing:.1em;
-  text-transform:uppercase;font-weight:700;transition:all .15s;
-}
+.am-preview{background:#20242e;border:1px solid #343a50;border-radius:8px;padding:16px;font-family:var(--sans);font-size:12.5px;line-height:1.8;color:#c4cce0;white-space:pre-wrap;max-height:240px;overflow-y:auto;display:none;}
+.am-ftr{flex-shrink:0;padding:14px 26px;border-top:1px solid #282c3a;display:flex;gap:10px;background:#1a1d25;}
+.am-btn{padding:12px 18px;border:none;border-radius:6px;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;transition:all .15s;}
 .am-btn:disabled{opacity:.45;pointer-events:none;}
 .am-run{flex:2;background:#34d875;color:#001a0a;}
 .am-run:hover:not(:disabled){background:#5af0a0;}
 .am-apply{flex:2;background:#f59e0b;color:#140e00;display:none;}
 .am-apply:hover{background:#fbbf24;}
-.am-cancel{
-  background:transparent;border:1px solid #343a50;color:#6a7490;
-  padding:12px 16px;border-radius:6px;cursor:pointer;
-  font-family:var(--mono);font-size:12px;transition:all .15s;
-}
+.am-cancel{background:transparent;border:1px solid #343a50;color:#6a7490;padding:12px 16px;border-radius:6px;cursor:pointer;font-family:var(--mono);font-size:12px;transition:all .15s;}
 .am-cancel:hover{border-color:#f87171;color:#f87171;}
-@media(max-width:480px){
-  #auto-modal{width:95vw;max-height:94vh;}
-  .am-row{grid-template-columns:1fr;}
-  .am-body{padding:14px 12px;}
-  .btn-auto{padding:8px 12px;font-size:11px;}
-  .btn-msg{padding:8px 12px;font-size:11px;}
-}
+@media(max-width:480px){#auto-modal{width:95vw;max-height:94vh;}.am-row{grid-template-columns:1fr;}.am-body{padding:14px 12px;}.btn-auto,.btn-msg{padding:8px 12px;font-size:11px;}}
 
 .btn-refresh{
 
@@ -1234,25 +1156,16 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   <div id="auto-modal">
     <div class="am-hdr">
       <div class="am-title">🤖 WTI AUTO BRIEF GENERATOR</div>
-      <button class="am-close" onclick="closeAutoModal()">✕</button>
+      <button class="am-close" onclick="closeAutoModal()">&#10005;</button>
     </div>
     <div class="am-body">
-
-      <!-- 01 API 키 -->
       <div class="am-sec">
-        <div class="am-sec-label">01 · Anthropic API Key</div>
-        <input type="password" class="am-key-input" id="am-apikey"
-          placeholder="sk-ant-api03-..." autocomplete="off"
-          oninput="amSaveKey(this.value)">
-        <div class="am-key-hint">
-          브라우저 로컬 저장 · 외부 전송 없음 ·
-          <a href="https://console.anthropic.com/settings/keys" target="_blank">발급 → console.anthropic.com</a>
-        </div>
+        <div class="am-sec-label">01 &middot; Anthropic API Key</div>
+        <input type="password" class="am-key-input" id="am-apikey" placeholder="sk-ant-api03-..." autocomplete="off" oninput="amSaveKey(this.value)">
+        <div class="am-key-hint">브라우저 로컬 저장 &middot; 외부 전송 없음 &middot; <a href="https://console.anthropic.com/settings/keys" target="_blank">발급 &rarr; console.anthropic.com</a></div>
       </div>
-
-      <!-- 02 날짜/월물 -->
       <div class="am-sec">
-        <div class="am-sec-label ylw">02 · 기준일 &amp; 월물 (직접 지정)</div>
+        <div class="am-sec-label ylw">02 &middot; 기준일 &amp; 월물 (직접 지정)</div>
         <div class="am-row">
           <div class="am-field">
             <label>NYMEX 거래일 (종가 기준일) *</label>
@@ -1261,45 +1174,33 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
           <div class="am-field">
             <label>월물 *</label>
             <select id="am-cont">
-              <option value="Jan">1월물 (Jan)</option>
-              <option value="Feb">2월물 (Feb)</option>
-              <option value="Mar">3월물 (Mar)</option>
-              <option value="Apr">4월물 (Apr)</option>
-              <option value="May">5월물 (May)</option>
-              <option value="Jun" selected>6월물 (Jun)</option>
-              <option value="Jul">7월물 (Jul)</option>
-              <option value="Aug">8월물 (Aug)</option>
+              <option value="Jan">1월물 (Jan)</option><option value="Feb">2월물 (Feb)</option>
+              <option value="Mar">3월물 (Mar)</option><option value="Apr">4월물 (Apr)</option>
+              <option value="May">5월물 (May)</option><option value="Jun" selected>6월물 (Jun)</option>
+              <option value="Jul">7월물 (Jul)</option><option value="Aug">8월물 (Aug)</option>
               <option value="Sep">9월물 (Sep)</option>
             </select>
           </div>
         </div>
         <div class="am-status" id="am-date-warn"></div>
       </div>
-
-      <!-- 상태 -->
       <div class="am-status" id="am-status"></div>
-
-      <!-- 종가 강조박스 -->
       <div class="am-price-hl" id="am-price-hl">
-        <div class="am-price-confirm">⚠ 종가 확인 필수 — 저장 전 육안 검토</div>
+        <div class="am-price-confirm">&#9888; 종가 확인 필수 &mdash; 저장 전 육안 검토</div>
         <div class="am-price-row">
-          <span class="am-price-val" id="am-hl-price">—</span>
-          <span class="am-price-delta" id="am-hl-delta">—</span>
+          <span class="am-price-val" id="am-hl-price">&mdash;</span>
+          <span class="am-price-delta" id="am-hl-delta">&mdash;</span>
         </div>
       </div>
-
-      <!-- 미리보기 -->
       <div class="am-preview" id="am-preview"></div>
-
     </div>
     <div class="am-ftr">
-      <button class="am-btn am-run" id="am-run-btn" onclick="amRun()">⚡ 브리핑 자동 생성</button>
-      <button class="am-btn am-apply" id="am-apply-btn" onclick="amApply()">▶ 파싱창에 적용</button>
+      <button class="am-btn am-run" id="am-run-btn" onclick="amRun()">&#9889; 브리핑 자동 생성</button>
+      <button class="am-btn am-apply" id="am-apply-btn" onclick="amApply()">&#9654; 파싱창에 적용</button>
       <button class="am-cancel" onclick="closeAutoModal()">닫기</button>
     </div>
   </div>
 </div>
-
 <div id="toast"></div>
 
 
@@ -2307,379 +2208,7 @@ async function doSave(){
     const payload={action, rowKey:editKey||null, data};
     const r=await gasGet({action, p:toB64(payload)});
 
-    if(r.success){toast('✅ '+r.message,'ok');closeModal();await 
-// ════════════════════════════════════════════════════════════════
-//  WTI AUTO BRIEF + 메신저 복사
-// ════════════════════════════════════════════════════════════════
-
-const CONT_KOR = {
-  Jan:'1월물',Feb:'2월물',Mar:'3월물',Apr:'4월물',
-  May:'5월물',Jun:'6월물',Jul:'7월물',Aug:'8월물',Sep:'9월물'
-};
-
-// ── API 키 로컬 저장/로드 ──
-function amSaveKey(v){ if(v&&v.startsWith('sk-ant-')) localStorage.setItem('_wti_ak',v); }
-function amLoadKey(){ return localStorage.getItem('_wti_ak')||''; }
-
-// ── KST 기준 종가 확정 여부 (지정날짜 익일 KST 05:30) ──
-function amIsSettled(dateStr){
-  // 거래일 다음날 UTC 20:30 = KST 05:30
-  const d = new Date(dateStr+'T20:30:00Z');
-  d.setUTCDate(d.getUTCDate()+1);
-  return Date.now() >= d.getTime();
-}
-
-function amSettleETA(dateStr){
-  const d = new Date(dateStr+'T20:30:00Z');
-  d.setUTCDate(d.getUTCDate()+1);
-  // KST 표시 (UTC+9)
-  const kst = new Date(d.getTime()+9*3600*1000);
-  return kst.toISOString().slice(0,10)+' 05:30 KST';
-}
-
-function amIsWeekend(dateStr){
-  const day = new Date(dateStr+'T00:00:00Z').getUTCDay();
-  return day===0||day===6;
-}
-
-// ── 날짜 변경 시 실시간 경고 ──
-function amCheckDate(){
-  const d = document.getElementById('am-date').value;
-  const w = document.getElementById('am-date-warn');
-  if(!d){ w.style.display='none'; return; }
-  if(amIsWeekend(d)){
-    w.className='am-status warn'; w.style.display='block';
-    w.textContent='⚠ '+d+' 은 주말(NYMEX 휴장)입니다. 평일 거래일을 선택하세요.';
-    return;
-  }
-  if(!amIsSettled(d)){
-    w.className='am-status warn'; w.style.display='block';
-    w.textContent='⏰ '+d+' 종가 미확정\n확정 예정: '+amSettleETA(d)+' 이후 생성 가능';
-    return;
-  }
-  w.style.display='none';
-}
-
-// ── 근월물 자동 설정 ──
-function amSetContract(){
-  const mo = new Date(Date.now()+9*3600*1000).getUTCMonth()+1;
-  const map={1:'Feb',2:'Mar',3:'Apr',4:'May',5:'Jun',6:'Jul',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Jan'};
-  const sel = document.getElementById('am-cont');
-  const t = map[mo]||'Jun';
-  for(let i=0;i<sel.options.length;i++){
-    if(sel.options[i].value===t){sel.selectedIndex=i;break;}
-  }
-}
-
-// ── AUTO 모달 열기/닫기 ──
-function openAutoModal(){
-  const k=amLoadKey(); if(k) document.getElementById('am-apikey').value=k;
-  document.getElementById('am-date').value='';
-  amSetContract();
-  ['am-status','am-date-warn'].forEach(id=>{
-    const el=document.getElementById(id);
-    el.style.display='none'; el.textContent='';
-  });
-  document.getElementById('am-preview').style.display='none';
-  document.getElementById('am-price-hl').style.display='none';
-  document.getElementById('am-apply-btn').style.display='none';
-  document.getElementById('am-run-btn').disabled=false;
-  document.getElementById('am-run-btn').textContent='⚡ 브리핑 자동 생성';
-  document.getElementById('auto-overlay').classList.add('open');
-}
-function closeAutoModal(){ document.getElementById('auto-overlay').classList.remove('open'); }
-
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeAutoModal(); });
-document.getElementById('auto-overlay').addEventListener('click',e=>{
-  if(e.target===document.getElementById('auto-overlay')) closeAutoModal();
-});
-
-// ── 상태 표시 ──
-function amSetStatus(type,msg){
-  const el=document.getElementById('am-status');
-  el.className='am-status '+type; el.style.display='block'; el.textContent=msg;
-}
-
-// ── 종가 추출 (미리보기용) ──
-function amExtractPrice(text){
-  const m=text.match(/\$\s*([\d.]+)\s*\/b[^\n]*←[^\n]*\$\s*([\d.]+)\s*\/b/);
-  if(m){
-    const cur=parseFloat(m[1]), prev=parseFloat(m[2]);
-    const diff=parseFloat((cur-prev).toFixed(2));
-    const pct=parseFloat((diff/prev*100).toFixed(2));
-    return {cur,prev,diff,pct};
-  }
-  const m2=text.match(/\$\s*([\d.]+)\s*\/b/);
-  if(m2) return {cur:parseFloat(m2[1]),prev:null,diff:null,pct:null};
-  return null;
-}
-
-// ── 메인 AUTO 실행 ──
-async function amRun(){
-  // API 키 검증
-  const apiKey=document.getElementById('am-apikey').value.trim();
-  if(!apiKey||!apiKey.startsWith('sk-ant-')){
-    amSetStatus('err','❌ API 키를 입력하세요 (sk-ant-api03-... 형식)'); return;
-  }
-  amSaveKey(apiKey);
-
-  // 날짜 검증
-  const dateStr=document.getElementById('am-date').value;
-  if(!dateStr){ amSetStatus('err','❌ 기준일을 선택하세요.'); return; }
-  if(amIsWeekend(dateStr)){
-    amSetStatus('err','❌ '+dateStr+' 은 주말(NYMEX 휴장)입니다.'); return;
-  }
-  if(!amIsSettled(dateStr)){
-    amSetStatus('err',
-      '❌ '+dateStr+' 종가 미확정\n'+
-      'NYMEX 종가 확정 예정: '+amSettleETA(dateStr)+'\n'+
-      '해당 시각 이후 다시 시도하세요.'
-    ); return;
-  }
-
-  const cont=document.getElementById('am-cont').value;
-  const contKor=CONT_KOR[cont]||cont;
-  const [yr,mo,dd]=dateStr.split('-');
-  const dateDisp=yr+'-'+mo+'-'+dd;
-  const dateKor=yr+'년 '+parseInt(mo)+'월 '+parseInt(dd)+'일';
-
-  const runBtn=document.getElementById('am-run-btn');
-  runBtn.disabled=true; runBtn.textContent='⏳ 검색 중...';
-  document.getElementById('am-preview').style.display='none';
-  document.getElementById('am-price-hl').style.display='none';
-  document.getElementById('am-apply-btn').style.display='none';
-
-  amSetStatus('run',
-    '🔍 '+dateDisp+' WTI '+contKor+' 종가 및 시장 동향 검색 중...\n'+
-    'Reuters · Bloomberg · AP · 연합뉴스 · 한국경제 등 멀티소스'
-  );
-
-  // ── Claude API 호출 ──
-  const systemPrompt =
-`당신은 석유화학 원자재 구매 전문 애널리스트입니다.
-web_search 툴로 실제 뉴스를 검색한 후, 아래 양식을 정확히 지켜 WTI 브리핑을 작성하세요.
-
-【출력 양식 — 이 형식 그대로, 다른 텍스트 절대 추가 금지】
-
-제목 : [미국]WTI 종목 브리핑 (${dateDisp})
-
-1. 가격
-
-* WTI ${contKor} (NYMEX): $[종가]/b ← $[전일종가]/b (전일대비 [±$변동]/b, [상승/하락/보합])
-
-2. 코멘터리
-
-* [핵심 상승·하락 요인 한줄 — 40자 내외]
-
-3. 변동요인
-
-* [요인1 — 구체적 수치 포함]
-* [요인2]
-* [요인3]
-* [요인4]
-* [요인5]
-* [요인6 이상]
-
-4. 결론 및 전망
-
-* [가격 레인지($XX~$XX/b) 포함, 석유화학 구매 관점]
-
-5. 추가 정보
-
-* [브렌트유 동향 — 수치 포함]
-* [달러인덱스 / EIA재고 / OPEC 관련]
-* [나프타·BZ·SM 석유화학 원료 체인 영향]
-
-6. 분석 의견 및 예측 전망
-
-* [공급·수요 리스크 종합 판단]
-* [단기 저항·지지선 및 가격 방향성]
-* [ABS·PC 구매 관점 — 나프타·SM 비용 대응 전략]
-
-【작성 규칙】
-- web_search로 ${dateKor} NYMEX WTI 종가 반드시 확인 후 기재
-- 복수 소스 교차 확인 (Reuters, Bloomberg, 연합뉴스 등)
-- 마크다운, 코드블록, 추가 설명 텍스트 절대 사용 금지
-- 전체 한국어 작성
-- 석유화학 구매자(ABS/PC 원료: SM·AN·BD) 관점 실무 인사이트 반드시 반영`;
-
-  const userPrompt =
-    dateKor+' NYMEX WTI '+contKor+' 종가와 당일 시장 동향을 web_search로 검색하고 위 양식대로 작성하세요. '+
-    '종가 확인 우선: ① Reuters "oil prices settle" ② Bloomberg crude oil ③ 연합뉴스 WTI ④ 한국경제 국제유가.';
-
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'x-api-key':apiKey,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
-      },
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:2500,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        system:systemPrompt,
-        messages:[{role:'user',content:userPrompt}]
-      })
-    });
-
-    if(!resp.ok){
-      const err=await resp.json().catch(()=>({}));
-      throw new Error(err?.error?.message||'HTTP '+resp.status);
-    }
-
-    const data=await resp.json();
-    const generatedText=(data.content||[])
-      .filter(b=>b.type==='text')
-      .map(b=>b.text.trim())
-      .filter(Boolean)
-      .join('\n').trim();
-
-    if(!generatedText) throw new Error('생성된 텍스트 없음');
-    if(!generatedText.includes('WTI')||!generatedText.includes('가격'))
-      throw new Error('양식 불일치 — 재시도하세요\n내용: '+generatedText.slice(0,150));
-
-    // 종가 강조박스
-    const pi=amExtractPrice(generatedText);
-    if(pi){
-      const isUp=pi.diff===null?true:pi.diff>=0;
-      const color=isUp?'#34d875':'#f87171';
-      const arrow=isUp?'▲':'▼';
-      const pe=document.getElementById('am-hl-price');
-      const de=document.getElementById('am-hl-delta');
-      pe.textContent='$'+pi.cur.toFixed(2)+'/bbl'; pe.style.color=color;
-      de.textContent=pi.diff!==null
-        ? arrow+' $'+Math.abs(pi.diff).toFixed(2)+'  ('+(pi.pct>=0?'+':'')+pi.pct.toFixed(2)+'%)'
-        : '';
-      de.style.color=color;
-      document.getElementById('am-price-hl').style.display='block';
-    }
-
-    // 미리보기
-    const prev=document.getElementById('am-preview');
-    prev.textContent=generatedText; prev.style.display='block';
-    prev.dataset.text=generatedText;
-
-    amSetStatus('ok',
-      '✅ 브리핑 생성 완료\n'+
-      '⚠ 종가 확인 후 [▶ 파싱창에 적용] → doParse() 자동 실행 → 구글시트 저장'
-    );
-    document.getElementById('am-apply-btn').style.display='block';
-    runBtn.textContent='🔄 재생성'; runBtn.disabled=false;
-
-  }catch(e){
-    amSetStatus('err','❌ 오류: '+e.message);
-    runBtn.textContent='⚡ 브리핑 자동 생성'; runBtn.disabled=false;
-  }
-}
-
-// ── 파싱창에 적용 → 기존 doParse() 자동 실행 ──
-function amApply(){
-  const prev=document.getElementById('am-preview');
-  const text=prev.dataset.text||prev.textContent;
-  if(!text){ toast('❌ 생성된 텍스트 없음','err'); return; }
-  closeAutoModal();
-  openModal();                                     // 기존 NEW ENTRY 모달 열기
-  document.getElementById('news-ta').value=text;  // news-ta 주입
-  doParse();                                       // 기존 파싱 자동 실행
-  toast('✅ AUTO 브리핑 파싱 완료 — 종가 확인 후 저장','ok',5000);
-}
-
-// ════════════════════════════════════════════════
-//  💬 메신저 복사 — 두 가지 방식
-//  1) 헤더 버튼: 최신 카드(allEntries[0]) 기준 6섹션 조립
-//  2) 카드 버튼: 해당 카드 entry 기준 6섹션 조립
-// ════════════════════════════════════════════════
-
-// 공통: entry → 6섹션 텍스트 조립
-function buildBriefingText(e){
-  const contKor = CONT_KOR[e.contract] || e.contract;
-  const dir = e.direction || (e.pct>0?'상승':e.pct<0?'하락':'보합');
-  const arrow = e.pct>0?'▲':e.pct<0?'▼':'━';
-  const absStr = e.abs!=null
-    ? (e.abs>=0?'+':'')+e.abs.toFixed(2)
-    : '';
-  const pctStr = e.pct!=null
-    ? (e.pct>=0?'+':'')+e.pct.toFixed(2)+'%'
-    : '';
-  // 전일 종가 역산 (있으면 표시, 없으면 생략)
-  const prevPrice = e.abs!=null ? (e.wti - e.abs).toFixed(2) : null;
-  const priceLine = prevPrice
-    ? `* WTI ${contKor} (NYMEX): $${e.wti.toFixed(2)}/b ← $${prevPrice}/b (전일대비 ${absStr}/b, ${dir})`
-    : `* WTI ${contKor} (NYMEX): $${e.wti.toFixed(2)}/b (${pctStr}, ${dir})`;
-
-  const factors = e.factors
-    ? e.factors.split('\n').map(s=>s.trim()).filter(Boolean).map(s=>'* '+s).join('\n')
-    : '* -';
-  const counter = e.counter
-    ? e.counter.split('\n').map(s=>s.trim()).filter(Boolean).map(s=>'* '+s).join('\n')
-    : '';
-
-  let text =
-`제목 : [미국]WTI 종목 브리핑 (${e.date.replace(/\./g,'-')})
-
-1. 가격
-
-${priceLine}
-
-2. 코멘터리
-
-* ${e.commentary||'-'}
-
-3. 변동요인
-
-${factors}
-
-4. 결론 및 전망
-
-* ${e.outlook||'-'}`;
-
-  if(counter){
-    text += `\n\n5. 추가 정보\n\n${counter}`;
-  }
-
-  return text;
-}
-
-// 헤더 💬 메신저 버튼 — 최신 카드 기준
-function copyMsgBriefing(){
-  if(!allEntries||!allEntries.length){
-    toast('❌ 표시된 데이터 없음','err'); return;
-  }
-  const e = allEntries[0]; // 가장 최신 항목
-  const text = buildBriefingText(e);
-  navigator.clipboard.writeText(text)
-    .then(()=>{
-      const btn=document.getElementById('btn-msg');
-      btn.textContent='✓ 복사됨'; btn.classList.add('ok');
-      setTimeout(()=>{ btn.textContent='💬 메신저'; btn.classList.remove('ok'); },2000);
-      toast('✅ WTI 브리핑 클립보드 복사 완료 ('+e.date+')','ok');
-    })
-    .catch(()=>toast('❌ 클립보드 복사 실패','err'));
-}
-
-// 카드별 💬 메신저 버튼
-function copyCardBriefing(cardId, date, contract){
-  // allEntries에서 해당 date+contract 항목 찾기
-  const e = allEntries.find(x=>x.date===date&&x.contract===contract);
-  if(!e){ toast('❌ 데이터를 찾을 수 없음','err'); return; }
-  const text = buildBriefingText(e);
-  navigator.clipboard.writeText(text)
-    .then(()=>{
-      // 해당 카드의 메신저 버튼 피드백
-      const btn=document.querySelector('#'+cardId+' .cp-btn.msg');
-      if(btn){ btn.textContent='✓ 복사됨'; btn.classList.add('ok');
-        setTimeout(()=>{ btn.textContent='💬 메신저'; btn.classList.remove('ok'); },2000); }
-      toast('✅ WTI 브리핑 복사 완료 ('+date+')','ok');
-    })
-    .catch(()=>toast('❌ 클립보드 복사 실패','err'));
-}
-
-// ── AUTO BRIEF JS 끝 ──
-
-loadData();}
+    if(r.success){toast('✅ '+r.message,'ok');closeModal();await loadData();}
 
     else toast('❌ '+r.message,'err');
 
@@ -2782,6 +2311,175 @@ function toast(msg,type='inf',ms=3200){
  
 
 loadData();
+
+// ════════════════════════════════ AUTO BRIEF JS ════════════════════════════════
+var CONT_KOR_MAP = {Jan:'1월물',Feb:'2월물',Mar:'3월물',Apr:'4월물',May:'5월물',Jun:'6월물',Jul:'7월물',Aug:'8월물',Sep:'9월물'};
+
+function amSaveKey(v){ if(v&&v.indexOf('sk-ant-')===0) localStorage.setItem('_wti_ak',v); }
+function amLoadKey(){ return localStorage.getItem('_wti_ak')||''; }
+
+function amIsSettled(dateStr){
+  var d=new Date(dateStr+'T00:00:00Z');
+  d.setUTCDate(d.getUTCDate()+1);
+  d.setUTCHours(20,30,0,0); // 익일 UTC 20:30 = KST 05:30
+  return Date.now()>=d.getTime();
+}
+function amSettleETA(dateStr){
+  var d=new Date(dateStr+'T00:00:00Z');
+  d.setUTCDate(d.getUTCDate()+1);
+  d.setUTCHours(20,30,0,0);
+  var kst=new Date(d.getTime()+9*3600*1000);
+  return kst.toISOString().slice(0,10)+' 05:30 KST';
+}
+function amIsWeekend(dateStr){
+  var day=new Date(dateStr+'T00:00:00Z').getUTCDay();
+  return day===0||day===6;
+}
+function amCheckDate(){
+  var d=document.getElementById('am-date').value;
+  var w=document.getElementById('am-date-warn');
+  if(!d){w.style.display='none';return;}
+  if(amIsWeekend(d)){w.className='am-status warn';w.style.display='block';w.textContent='⚠ '+d+' 은 주말(NYMEX 휴장)입니다. 평일 거래일을 선택하세요.';return;}
+  if(!amIsSettled(d)){w.className='am-status warn';w.style.display='block';w.textContent='⏰ '+d+' 종가 미확정\n확정 예정: '+amSettleETA(d)+' 이후 생성 가능';return;}
+  w.style.display='none';
+}
+function amSetContract(){
+  var mo=new Date(Date.now()+9*3600*1000).getUTCMonth()+1;
+  var map={1:'Feb',2:'Mar',3:'Apr',4:'May',5:'Jun',6:'Jul',7:'Aug',8:'Sep',9:'Oct',10:'Nov',11:'Dec',12:'Jan'};
+  var sel=document.getElementById('am-cont');
+  var t=map[mo]||'Jun';
+  for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===t){sel.selectedIndex=i;break;}}
+}
+function openAutoModal(){
+  var k=amLoadKey(); if(k) document.getElementById('am-apikey').value=k;
+  document.getElementById('am-date').value='';
+  amSetContract();
+  ['am-status','am-date-warn'].forEach(function(id){var el=document.getElementById(id);el.style.display='none';el.textContent='';});
+  document.getElementById('am-preview').style.display='none';
+  document.getElementById('am-price-hl').style.display='none';
+  document.getElementById('am-apply-btn').style.display='none';
+  document.getElementById('am-run-btn').disabled=false;
+  document.getElementById('am-run-btn').textContent='⚡ 브리핑 자동 생성';
+  document.getElementById('auto-overlay').classList.add('open');
+}
+function closeAutoModal(){document.getElementById('auto-overlay').classList.remove('open');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAutoModal();});
+document.getElementById('auto-overlay').addEventListener('click',function(e){if(e.target===document.getElementById('auto-overlay'))closeAutoModal();});
+
+function amSetStatus(type,msg){var el=document.getElementById('am-status');el.className='am-status '+type;el.style.display='block';el.textContent=msg;}
+
+function amExtractPrice(text){
+  var m=text.match(/\$\s*([\d.]+)\s*\/b[^\n]*←[^\n]*\$\s*([\d.]+)\s*\/b/);
+  if(m){var cur=parseFloat(m[1]),prev=parseFloat(m[2]),diff=parseFloat((cur-prev).toFixed(2)),pct=parseFloat((diff/prev*100).toFixed(2));return{cur:cur,prev:prev,diff:diff,pct:pct};}
+  var m2=text.match(/\$\s*([\d.]+)\s*\/b/);
+  if(m2)return{cur:parseFloat(m2[1]),prev:null,diff:null,pct:null};
+  return null;
+}
+
+async function amRun(){
+  var apiKey=document.getElementById('am-apikey').value.trim();
+  if(!apiKey||apiKey.indexOf('sk-ant-')!==0){amSetStatus('err','❌ API 키를 입력하세요 (sk-ant-api03-... 형식)');return;}
+  amSaveKey(apiKey);
+  var dateStr=document.getElementById('am-date').value;
+  if(!dateStr){amSetStatus('err','❌ 기준일을 선택하세요.');return;}
+  if(amIsWeekend(dateStr)){amSetStatus('err','❌ '+dateStr+' 은 주말(NYMEX 휴장)입니다.');return;}
+  if(!amIsSettled(dateStr)){amSetStatus('err','❌ '+dateStr+' 종가 미확정\n확정 예정: '+amSettleETA(dateStr)+'\n해당 시각 이후 다시 시도하세요.');return;}
+  var cont=document.getElementById('am-cont').value;
+  var contKor=CONT_KOR_MAP[cont]||cont;
+  var parts=dateStr.split('-');
+  var dateDisp=parts[0]+'-'+parts[1]+'-'+parts[2];
+  var dateKor=parts[0]+'년 '+parseInt(parts[1])+'월 '+parseInt(parts[2])+'일';
+  var runBtn=document.getElementById('am-run-btn');
+  runBtn.disabled=true; runBtn.textContent='⏳ 검색 중...';
+  document.getElementById('am-preview').style.display='none';
+  document.getElementById('am-price-hl').style.display='none';
+  document.getElementById('am-apply-btn').style.display='none';
+  amSetStatus('run','🔍 '+dateDisp+' WTI '+contKor+' 종가 검색 중...\nReuters · Bloomberg · 연합뉴스 · 한국경제 멀티소스');
+  var systemPrompt='당신은 석유화학 원자재 구매 전문 애널리스트입니다.\nweb_search 툴로 실제 뉴스를 검색한 후, 아래 양식을 정확히 지켜 WTI 브리핑을 작성하세요.\n\n【출력 양식】\n\n제목 : [미국]WTI 종목 브리핑 ('+dateDisp+')\n\n1. 가격\n\n* WTI '+contKor+' (NYMEX): $[종가]/b ← $[전일종가]/b (전일대비 [±$변동]/b, [상승/하락/보합])\n\n2. 코멘터리\n\n* [핵심 요인 한줄]\n\n3. 변동요인\n\n* [요인1]\n* [요인2]\n* [요인3]\n* [요인4]\n* [요인5]\n* [요인6 이상]\n\n4. 결론 및 전망\n\n* [가격 레인지 포함]\n\n5. 추가 정보\n\n* [브렌트유 동향]\n* [달러/EIA재고/OPEC]\n* [나프타 SM BZ 석유화학 영향]\n\n6. 분석 의견 및 예측 전망\n\n* [수급 리스크 판단]\n* [단기 방향성]\n* [ABS PC 구매 대응]\n\n규칙: 마크다운 금지, 한국어, 종가 반드시 web_search 확인';
+  var userPrompt=dateKor+' NYMEX WTI '+contKor+' 종가와 시장 동향을 web_search로 검색하고 위 양식대로 작성하세요.';
+  try{
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2500,tools:[{type:'web_search_20250305',name:'web_search'}],system:systemPrompt,messages:[{role:'user',content:userPrompt}]})
+    });
+    if(!resp.ok){var err=await resp.json().catch(function(){return{};});throw new Error((err&&err.error&&err.error.message)||'HTTP '+resp.status);}
+    var data=await resp.json();
+    var generatedText=(data.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text.trim();}).filter(Boolean).join('\n').trim();
+    if(!generatedText)throw new Error('생성된 텍스트 없음');
+    if(generatedText.indexOf('WTI')<0||generatedText.indexOf('가격')<0)throw new Error('양식 불일치 — 재시도하세요');
+    var pi=amExtractPrice(generatedText);
+    if(pi){
+      var isUp=pi.diff===null?true:pi.diff>=0;
+      var color=isUp?'#34d875':'#f87171';
+      var arrow=isUp?'▲':'▼';
+      var pe=document.getElementById('am-hl-price');
+      var de=document.getElementById('am-hl-delta');
+      pe.textContent='$'+pi.cur.toFixed(2)+'/bbl'; pe.style.color=color;
+      de.textContent=pi.diff!==null?arrow+' $'+Math.abs(pi.diff).toFixed(2)+'  ('+(pi.pct>=0?'+':'')+pi.pct.toFixed(2)+'%)':'';
+      de.style.color=color;
+      document.getElementById('am-price-hl').style.display='block';
+    }
+    var prev=document.getElementById('am-preview');
+    prev.textContent=generatedText; prev.style.display='block'; prev.dataset.text=generatedText;
+    amSetStatus('ok','✅ 브리핑 생성 완료\n⚠ 종가 확인 후 [파싱창에 적용] 클릭 → 구글시트 저장');
+    document.getElementById('am-apply-btn').style.display='block';
+    runBtn.textContent='🔄 재생성'; runBtn.disabled=false;
+  }catch(e){
+    amSetStatus('err','❌ 오류: '+e.message);
+    runBtn.textContent='⚡ 브리핑 자동 생성'; runBtn.disabled=false;
+  }
+}
+
+function amApply(){
+  var prev=document.getElementById('am-preview');
+  var text=prev.dataset.text||prev.textContent;
+  if(!text){toast('❌ 생성된 텍스트 없음','err');return;}
+  closeAutoModal();
+  openModal();
+  document.getElementById('news-ta').value=text;
+  doParse();
+  toast('✅ AUTO 브리핑 파싱 완료 — 종가 확인 후 저장','ok',5000);
+}
+
+function buildBriefingText(e){
+  var contKor=CONT_KOR_MAP[e.contract]||e.contract;
+  var dir=e.direction||(e.pct>0?'상승':e.pct<0?'하락':'보합');
+  var absStr=e.abs!=null?(e.abs>=0?'+':'')+e.abs.toFixed(2):'';
+  var prevPrice=e.abs!=null?(e.wti-e.abs).toFixed(2):null;
+  var priceLine=prevPrice
+    ?'* WTI '+contKor+' (NYMEX): $'+e.wti.toFixed(2)+'/b ← $'+prevPrice+'/b (전일대비 '+absStr+'/b, '+dir+')'
+    :'* WTI '+contKor+' (NYMEX): $'+e.wti.toFixed(2)+'/b ('+dir+')';
+  var factors=e.factors?e.factors.split('\n').map(function(s){return s.trim();}).filter(Boolean).map(function(s){return'* '+s;}).join('\n'):'* -';
+  var counter=e.counter?e.counter.split('\n').map(function(s){return s.trim();}).filter(Boolean).map(function(s){return'* '+s;}).join('\n'):'';
+  var text='제목 : [미국]WTI 종목 브리핑 ('+e.date.replace(/\./g,'-')+')\n\n1. 가격\n\n'+priceLine+'\n\n2. 코멘터리\n\n* '+(e.commentary||'-')+'\n\n3. 변동요인\n\n'+factors+'\n\n4. 결론 및 전망\n\n* '+(e.outlook||'-');
+  if(counter)text+='\n\n5. 추가 정보\n\n'+counter;
+  return text;
+}
+
+function copyMsgBriefing(){
+  if(!allEntries||!allEntries.length){toast('❌ 표시된 데이터 없음','err');return;}
+  var e=allEntries[0];
+  var text=buildBriefingText(e);
+  navigator.clipboard.writeText(text).then(function(){
+    var btn=document.getElementById('btn-msg');
+    btn.textContent='✓ 복사됨'; btn.classList.add('ok');
+    setTimeout(function(){btn.textContent='💬 메신저';btn.classList.remove('ok');},2000);
+    toast('✅ WTI 브리핑 복사 완료 ('+e.date+')','ok');
+  }).catch(function(){toast('❌ 클립보드 복사 실패','err');});
+}
+
+function copyCardBriefing(cardId,date,contract){
+  var e=allEntries.find(function(x){return x.date===date&&x.contract===contract;});
+  if(!e){toast('❌ 데이터를 찾을 수 없음','err');return;}
+  var text=buildBriefingText(e);
+  navigator.clipboard.writeText(text).then(function(){
+    var btn=document.querySelector('#'+cardId+' .cp-btn.msg');
+    if(btn){btn.textContent='✓ 복사됨';btn.classList.add('ok');setTimeout(function(){btn.textContent='💬 메신저';btn.classList.remove('ok');},2000);}
+    toast('✅ WTI 브리핑 복사 완료 ('+date+')','ok');
+  }).catch(function(){toast('❌ 클립보드 복사 실패','err');});
+}
+// ════════════════════════════════ AUTO BRIEF JS 끝 ════════════════════════════════
 
 </script>
 
